@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 5044161433516213751}
   - component: {fileID: 7431154556740212158}
   - component: {fileID: 5508898678486070381}
-  - component: {fileID: 772952288266292079}
+  - component: {fileID: 7118268269905250874}
   m_Layer: 0
   m_Name: Player1
   m_TagString: Untagged
@@ -66,7 +66,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -89,12 +89,12 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 5335497262919622659, guid: b76030b28b4f8c540ab663b6012b437b, type: 3}
+  m_Sprite: {fileID: 5335497262919622659, guid: c2b21c6cf01800744a7056c75e019807, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2.765625, y: 3.390625}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -111,7 +111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 3928643507
+  GlobalObjectIdHash: 3053837811
   InScenePlacedSourceGlobalObjectIdHash: 3053837811
   DeferredDespawnTick: 0
   Ownership: 1
@@ -189,8 +189,8 @@ MonoBehaviour:
   TransitionStateInfoList: []
   AnimatorParameterEntries:
     ParameterEntries:
-    - name: Speed
-      NameHash: -823668238
+    - name: Viteza
+      NameHash: -1173118521
       Synchronize: 1
       ParameterType: 1
   AnimatorParametersExpanded: 0
@@ -282,14 +282,14 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 2.765625, y: 3.390625}
-    newSize: {x: 1, y: 1}
+    newSize: {x: 2.765625, y: 3.390625}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   m_Size: {x: 2.8302093, y: 3.3259525}
   m_EdgeRadius: 0
---- !u!114 &772952288266292079
+--- !u!114 &7118268269905250874
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -298,15 +298,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 6501798312373291870}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8acc8a41235b5f4183e876288510453, type: 3}
+  m_Script: {fileID: 11500000, guid: 0de0569d8d5adb643b9267fd8abc03bb, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerInput
   ShowTopMostFoldoutHeaderGroup: 1
-  viteza: 5
-  jumpForce: 5
-  groundCheck: {fileID: 2732546838691258911}
-  groundCheckRadius: 0.2
-  groundLayer:
+  spriteHost: {fileID: 5335497262919622659, guid: c2b21c6cf01800744a7056c75e019807, type: 3}
+  spriteClient: {fileID: 5335497262919622659, guid: c2b21c6cf01800744a7056c75e019807, type: 3}
+  vitezaMiscare: 5
+  fortaSarit: 10
+  verificarePodea: {fileID: 2732546838691258911}
+  razaVerificare: 0.2
+  stratPodea:
     serializedVersion: 2
     m_Bits: 64
 --- !u!1 &8975131632674171672
