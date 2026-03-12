@@ -44,6 +44,11 @@ public class PlayerInput : NetworkBehaviour
         {
             spriteRenderer.sprite = spriteClient;
         }
+
+        if (!IsOwner)
+        {
+            GetComponent<UnityEngine.InputSystem.PlayerInput>().enabled = false; // Dezactiveaza componenta de input pentru clientii care nu sunt owner
+        }
     }
    
 
