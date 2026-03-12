@@ -34,6 +34,7 @@ public class PlayerInput : NetworkBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
+    //test
     public override void OnNetworkSpawn()
     {
         if (OwnerClientId == 0)
