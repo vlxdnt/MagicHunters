@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 8502351503626913192}
   - component: {fileID: 6009793661328709499}
   - component: {fileID: 8578725457812561309}
-  - component: {fileID: 5044161433516213751}
   - component: {fileID: 7431154556740212158}
   - component: {fileID: 5508898678486070381}
   - component: {fileID: 7118268269905250874}
@@ -186,37 +185,11 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   NetworkAnimatorExpanded: 0
   AuthorityMode: 1
-  m_Animator: {fileID: 5044161433516213751}
+  m_Animator: {fileID: 0}
   TransitionStateInfoList: []
   AnimatorParameterEntries:
-    ParameterEntries:
-    - name: Viteza
-      NameHash: -1173118521
-      Synchronize: 1
-      ParameterType: 1
+    ParameterEntries: []
   AnimatorParametersExpanded: 0
---- !u!95 &5044161433516213751
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6501798312373291870}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 23a7ad1b7ae95a94a9277d186fb49533, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!50 &7431154556740212158
 Rigidbody2D:
   serializedVersion: 5
