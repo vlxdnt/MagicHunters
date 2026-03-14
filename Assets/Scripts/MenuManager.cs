@@ -1,10 +1,14 @@
 ﻿using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
+using Unity.Services.Core;
+using Unity.Services.Authentication;
+using Unity.Services.Relay;
+using Unity.Services.Relay.Models;
+using Unity.Networking.Transport.Relay;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using System.Net;
-using System.Net.Sockets;
+using System.Threading.Tasks;
 
 public class MeniuManager : MonoBehaviour
 {
@@ -13,47 +17,94 @@ public class MeniuManager : MonoBehaviour
     public GameObject panelLobby;
 
     [Header("Input & Info")]
-    public TMP_InputField inputFieldIP;   // InputIP
-    public Button inputButton;             // InputButton
-    public TextMeshProUGUI textIPLocal;
+    public TMP_InputField inputFieldCod;  // Clientul introduce codul aici
+    public Button inputButton;             // Butonul OK
+    public TextMeshProUGUI textCodJoin;   // Afiseaza codul pentru host
 
     [Header("Butoane Lobby")]
-    public Button butonStart; // Doar host il vede
+    public Button butonStart;
 
-    private void Start()
+    private async void Start()
     {
+        DontDestroyOnLoad(gameObject);
+
         panelMeniu.SetActive(true);
         panelLobby.SetActive(false);
-        inputFieldIP.gameObject.SetActive(false);
+        inputFieldCod.gameObject.SetActive(false);
         inputButton.gameObject.SetActive(false);
-        DontDestroyOnLoad(gameObject);
+
+        // Initializam Unity Services
+        await UnityServices.InitializeAsync();
+
+        if (!AuthenticationService.Instance.IsSignedIn)
+            await AuthenticationService.Instance.SignInAnonymouslyAsync();
     }
 
     // Butonul HOST
-    public void ButonHost_Apasat()
+    public async void ButonHost_Apasat()
     {
-        NetworkManager.Singleton.StartHost();
-        textIPLocal.text = "IP-ul tau: " + GetLocalIPAddress();
-        AfiseazaLobby();
+        try
+        {
+            // Cream un relay pentru 2 jucatori (1 host + 1 client)
+            Allocation allocation = await RelayService.Instance.CreateAllocationAsync(1);
+            string codJoin = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
+
+            // Configuram transport
+            var transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
+            transport.SetHostRelayData(
+                allocation.RelayServer.IpV4,
+                (ushort)allocation.RelayServer.Port,
+                allocation.AllocationIdBytes,
+                allocation.Key,
+                allocation.ConnectionData
+            );
+
+            NetworkManager.Singleton.StartHost();
+
+            // Afisam codul
+            textCodJoin.text = "Cod Join: " + codJoin;
+
+            AfiseazaLobby();
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("Eroare Host Relay: " + e.Message);
+        }
     }
 
-    // Butonul JOIN - deschide panoul cu input field pentru IP
+    // Butonul JOIN - arata input field pentru cod
     public void ButonDeschideIntroducereIP()
     {
-        inputFieldIP.gameObject.SetActive(true);
+        inputFieldCod.gameObject.SetActive(true);
         inputButton.gameObject.SetActive(true);
     }
 
-    // Butonul OK din panoul de IP
-    public void ButonFinalizeazaConexiuneClient()
+    // Butonul OK - clientul se conecteaza cu codul
+    public async void ButonFinalizeazaConexiuneClient()
     {
-        var transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
-        if (transport != null && !string.IsNullOrEmpty(inputFieldIP.text))
+        try
         {
-            transport.ConnectionData.Address = inputFieldIP.text;
+            string cod = inputFieldCod.text.Trim();
+            JoinAllocation joinAllocation = await RelayService.Instance.JoinAllocationAsync(cod);
+
+            var transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
+            transport.SetClientRelayData(
+                joinAllocation.RelayServer.IpV4,
+                (ushort)joinAllocation.RelayServer.Port,
+                joinAllocation.AllocationIdBytes,
+                joinAllocation.Key,
+                joinAllocation.ConnectionData,
+                joinAllocation.HostConnectionData
+            );
+
+            NetworkManager.Singleton.StartClient();
+
+            AfiseazaLobby();
         }
-        NetworkManager.Singleton.StartClient();
-        AfiseazaLobby();
+        catch (System.Exception e)
+        {
+            Debug.LogError("Eroare Client Relay: " + e.Message);
+        }
     }
 
     // Butonul START (doar host)
@@ -68,25 +119,14 @@ public class MeniuManager : MonoBehaviour
     void AfiseazaLobby()
     {
         panelMeniu.SetActive(false);
-        panelLobby.SetActive(true);
-        inputFieldIP.gameObject.SetActive(false);
+        inputFieldCod.gameObject.SetActive(false);
         inputButton.gameObject.SetActive(false);
+        panelLobby.SetActive(true);
 
         if (butonStart != null)
         {
             butonStart.gameObject.SetActive(NetworkManager.Singleton.IsHost);
-            butonStart.interactable = false; // blocat pana sunt 2 jucatori
+            butonStart.interactable = false;
         }
-    }
-
-    public string GetLocalIPAddress()
-    {
-        var host = Dns.GetHostEntry(Dns.GetHostName());
-        foreach (var ip in host.AddressList)
-        {
-            if (ip.AddressFamily == AddressFamily.InterNetwork)
-                return ip.ToString();
-        }
-        return "127.0.0.1";
     }
 }

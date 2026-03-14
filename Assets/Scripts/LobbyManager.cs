@@ -43,6 +43,7 @@ public class LobbySelection : NetworkBehaviour
     [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     void TrimiteAlegereaRpc(int choice, ulong clientId)
     {
+        Debug.Log("RPC primit! ClientId: " + clientId + " Choice: " + choice);
         if (clientId == 0)
             hostSelection.Value = choice;
         else
@@ -51,6 +52,8 @@ public class LobbySelection : NetworkBehaviour
 
     void Update()
     {
+        if (!IsSpawned) return;
+
         if (textJucatori != null)
             textJucatori.text = "Jucatori conectati: " + nrJucatori.Value + "/2";
 

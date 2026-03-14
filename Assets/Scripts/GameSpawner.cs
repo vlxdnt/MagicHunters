@@ -11,9 +11,14 @@ public class GameSpawner : NetworkBehaviour
     public Transform spawnHost;
     public Transform spawnClient;
 
-    public override void OnNetworkSpawn()
+    void Awake()
     {
-        if (!IsServer) return;
+        DontDestroyOnLoad(gameObject);
+    }
+
+    void Start()
+    {
+        if (!NetworkManager.Singleton.IsServer) return;
 
         LobbySelection lobby = FindFirstObjectByType<LobbySelection>();
         if (lobby == null)
@@ -21,6 +26,8 @@ public class GameSpawner : NetworkBehaviour
             Debug.LogError("GameSpawner: Nu gasesc LobbySelection!");
             return;
         }
+        Debug.Log("Host: " + lobby.hostSelection.Value);
+        Debug.Log("Client: " + lobby.clientSelection.Value);
 
         SpawneazaJucator(0, lobby.hostSelection.Value, spawnHost);
         SpawneazaJucator(1, lobby.clientSelection.Value, spawnClient);
@@ -28,7 +35,7 @@ public class GameSpawner : NetworkBehaviour
 
     void SpawneazaJucator(ulong clientId, int selectie, Transform punct)
     {
-        GameObject prefab = (selectie == 2) ? prefabCat : prefabWitch;
+        GameObject prefab = (selectie == 1) ? prefabWitch : prefabCat;
         Vector3 pozitie = punct != null ? punct.position : (clientId == 0 ? new Vector3(-2, 0, 0) : new Vector3(2, 0, 0));
 
         GameObject obj = Instantiate(prefab, pozitie, Quaternion.identity);

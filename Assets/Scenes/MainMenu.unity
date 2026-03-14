@@ -949,8 +949,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 14
-  m_fontSizeBase: 14
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1415,10 +1415,11 @@ MonoBehaviour:
   NetworkConfig:
     ProtocolVersion: 0
     NetworkTransport: {fileID: 772819425}
-    PlayerPrefab: {fileID: 6501798312373291870, guid: 4dcfb2c8fdcbdbc4db6e91725bd200e3, type: 3}
+    PlayerPrefab: {fileID: 0}
     Prefabs:
       NetworkPrefabsLists:
-      - {fileID: 0}
+      - {fileID: 11400000, guid: c2ffe79224d21c347b1f472903fe8de5, type: 2}
+      - {fileID: 11400000, guid: 09b0a09f50fa7494283820923145bf3c, type: 2}
     TickRate: 30
     ClientConnectionBufferTimeout: 10
     ConnectionApproval: 0
@@ -1758,9 +1759,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MeniuManager
   panelMeniu: {fileID: 1405553470}
   panelLobby: {fileID: 1076643251}
-  inputFieldIP: {fileID: 1860057212}
+  inputFieldCod: {fileID: 1860057212}
   inputButton: {fileID: 1572844147}
-  textIPLocal: {fileID: 231875210}
+  textCodJoin: {fileID: 231875210}
   butonStart: {fileID: 887286946}
 --- !u!114 &948215705
 MonoBehaviour:
@@ -2415,8 +2416,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 14
-  m_fontSizeBase: 14
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2818,8 +2819,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -382, y: -240}
-  m_SizeDelta: {x: 50, y: 30}
+  m_AnchoredPosition: {x: -300, y: -240}
+  m_SizeDelta: {x: 70, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1572844147
 MonoBehaviour:
@@ -3131,7 +3132,7 @@ MonoBehaviour:
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: 0
+  m_TextStyleHashCode: -1183493901
   m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2
@@ -3225,8 +3226,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -520, y: -240}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: -500, y: -240}
+  m_SizeDelta: {x: 300, y: 90}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1860057212
 MonoBehaviour:

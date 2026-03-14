@@ -112,7 +112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 3137236415
+  GlobalObjectIdHash: 3053837811
   InScenePlacedSourceGlobalObjectIdHash: 3053837811
   DeferredDespawnTick: 0
   Ownership: 1
@@ -303,15 +303,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInput
   ShowTopMostFoldoutHeaderGroup: 1
-  spriteHost: {fileID: 5335497262919622659, guid: c2b21c6cf01800744a7056c75e019807, type: 3}
-  spriteClient: {fileID: 5335497262919622659, guid: c2b21c6cf01800744a7056c75e019807, type: 3}
   vitezaMiscare: 5
-  fortaSarit: 10
+  fortaSarit: 7
   verificarePodea: {fileID: 2732546838691258911}
   razaVerificare: 0.2
   stratPodea:
     serializedVersion: 2
     m_Bits: 64
+  flipX:
+    m_InternalValue: 0
 --- !u!114 &3626957795071789294
 MonoBehaviour:
   m_ObjectHideFlags: 0
