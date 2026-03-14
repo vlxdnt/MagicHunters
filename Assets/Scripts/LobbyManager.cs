@@ -28,8 +28,17 @@ public class LobbySelection : NetworkBehaviour
         nrJucatori.Value = NetworkManager.Singleton.ConnectedClients.Count;
     }
 
-    public void AlegeWitch() { TrimiteAlegereaRpc(1, NetworkManager.Singleton.LocalClientId); }
-    public void AlegeCat() { TrimiteAlegereaRpc(2, NetworkManager.Singleton.LocalClientId); }
+    public void AlegeWitch()
+    {
+        if (!IsSpawned) return;
+        TrimiteAlegereaRpc(1, NetworkManager.Singleton.LocalClientId);
+    }
+
+    public void AlegeCat()
+    {
+        if (!IsSpawned) return;
+        TrimiteAlegereaRpc(2, NetworkManager.Singleton.LocalClientId);
+    }
 
     [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     void TrimiteAlegereaRpc(int choice, ulong clientId)
