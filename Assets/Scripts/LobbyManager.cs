@@ -18,8 +18,10 @@ public class LobbySelection : NetworkBehaviour
     [Header("Buton iesire lobby")]
     public Button butonQuit;
 
-    [Header("Text nr jucatori")]
+    [Header("Text")]
     public TextMeshProUGUI textJucatori;
+    public TextMeshProUGUI textSelectieHost;
+    public TextMeshProUGUI textSelectieClient;
 
     // Se apeleaza cand obiectul e spawnat in retea
     public override void OnNetworkSpawn()
@@ -43,7 +45,7 @@ public class LobbySelection : NetworkBehaviour
     // Se apeleaza cand un client se deconecteaza
     void OnClientDisconnected(ulong clientId)
     {
-        nrJucatori.Value = NetworkManager.Singleton.ConnectedClients.Count - 1;
+        nrJucatori.Value = NetworkManager.Singleton.ConnectedClients.Count;
         // Resetam selectia clientului daca el a iesit
         if (clientId != 0)
             clientSelection.Value = 0;
@@ -118,28 +120,18 @@ public class LobbySelection : NetworkBehaviour
         {
             MeniuManager meniu = FindFirstObjectByType<MeniuManager>();
             if (meniu != null && meniu.butonStart != null)
-                meniu.butonStart.interactable = (nrJucatori.Value == 2 && hostSelection.Value != 0 && clientSelection.Value != 0);
+                meniu.butonStart.interactable = (nrJucatori.Value == 2 && hostSelection.Value != 0 && clientSelection.Value != 0 && hostSelection.Value != clientSelection.Value);
         }
 
         if (butonWitch == null || butonCat == null) return;
 
-        if (IsHost)
+        if (hostSelection.Value != 0 && textSelectieHost != null)
         {
-            // Dezactivam butonul deja ales de client
-            butonWitch.interactable = (clientSelection.Value != 1);
-            butonCat.interactable = (clientSelection.Value != 2);
-            // Coloram verde selectia hostului
-            butonWitch.GetComponent<Image>().color = (hostSelection.Value == 1) ? Color.green : Color.white;
-            butonCat.GetComponent<Image>().color = (hostSelection.Value == 2) ? Color.green : Color.white;
+            textSelectieHost.text = "Host: " + (hostSelection.Value == 1 ? "Witch" : "Cat");
         }
-        else
+        if (clientSelection.Value != 0 && textSelectieClient != null)
         {
-            // Dezactivam butonul deja ales de host
-            butonWitch.interactable = (hostSelection.Value != 1);
-            butonCat.interactable = (hostSelection.Value != 2);
-            // Coloram albastru selectia clientului
-            butonWitch.GetComponent<Image>().color = (clientSelection.Value == 1) ? Color.blue : Color.white;
-            butonCat.GetComponent<Image>().color = (clientSelection.Value == 2) ? Color.blue : Color.white;
+            textSelectieClient.text = "Client: " + (clientSelection.Value == 1 ? "Witch" : "Cat");
         }
     }
 

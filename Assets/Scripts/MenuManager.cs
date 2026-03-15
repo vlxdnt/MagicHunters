@@ -8,6 +8,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Threading.Tasks;
+using System;
 
 // Gestioneaza meniul principal: Host, Join, Lobby si tranzitia catre joc
 public class MeniuManager : MonoBehaviour
@@ -20,6 +21,8 @@ public class MeniuManager : MonoBehaviour
     public TMP_InputField inputFieldCod; // Input field pentru codul de join
     public Button inputButton;           // Butonul OK pentru a confirma codul
     public TextMeshProUGUI textCodJoin;  // Textul care afiseaza codul generat de host
+    private string codJoinCurent = ""; // Variabila pentru a stoca codul curent 
+    public TextMeshProUGUI textEroare;
 
     [Header("Butoane Lobby")]
     public Button butonStart; // Butonul Start, vizibil doar pentru host
@@ -56,6 +59,7 @@ public class MeniuManager : MonoBehaviour
             Allocation allocation = await RelayService.Instance.CreateAllocationAsync(1);
             // Generam codul de join pe care clientul il va introduce
             string codJoin = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
+            codJoinCurent = codJoin; // Salvam codul curent 
 
             // Configuram transportul cu datele Relay
             var transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
@@ -78,6 +82,15 @@ public class MeniuManager : MonoBehaviour
         }
     }
 
+    public void ButonCopiazaCod()
+    {
+        if (!string.IsNullOrEmpty(codJoinCurent))
+        {
+            GUIUtility.systemCopyBuffer = codJoinCurent;
+            Debug.Log("Codul de join a fost copiat in clipboard: " + codJoinCurent);
+        }
+    }
+
     // Apelata cand jucatorul apasa Join
     // Arata input field-ul pentru introducerea codului
     public void ButonDeschideIntroducereIP()
@@ -90,9 +103,16 @@ public class MeniuManager : MonoBehaviour
     // Se conecteaza la sesiunea Relay a hostului
     public async void ButonFinalizeazaConexiuneClient()
     {
+        string cod = inputFieldCod.text.Trim();
+        if (string.IsNullOrEmpty(cod))
+        {
+            textEroare.gameObject.SetActive(true);
+            textEroare.text = "Te rog introdu un cod valid.";
+            return;
+        }
+
         try
         {
-            string cod = inputFieldCod.text.Trim();
             // Ne alaturem sesiunii Relay cu codul primit de la host
             JoinAllocation joinAllocation = await RelayService.Instance.JoinAllocationAsync(cod);
 
@@ -108,11 +128,46 @@ public class MeniuManager : MonoBehaviour
             );
 
             NetworkManager.Singleton.StartClient();
+            if (textCodJoin != null)
+                textCodJoin.text = "Conectat la cod: " + cod;
+            textEroare.gameObject.SetActive(false);
+
             AfiseazaLobby();
+        }
+        catch (Unity.Services.Relay.RelayServiceException e)
+        {
+            Debug.LogWarning("Eroare Relay: " + e.Message);
+            
+            if (textEroare != null)
+            {
+                // Verificam daca motivul este ca acel cod nu a fost gasit
+                if (e.Reason == Unity.Services.Relay.RelayExceptionReason.JoinCodeNotFound)
+                {
+                    textEroare.text = "Acest cod nu exista!";
+                }
+                // Verificam mesajul pentru a vedea daca lobby-ul si-a atins limita maxima de jucatori
+                else if (e.Message.ToLower().Contains("capacity") || e.Message.ToLower().Contains("full"))
+                {
+                    textEroare.text = "Acest lobby este plin!";
+                }
+                // Orice alta eroare de la serverele Unity (ex: lipsa internet)
+                else
+                {
+                    textEroare.text = "Eroare de conexiune la server!";
+                }
+                textEroare.gameObject.SetActive(true);
+            }
+            ResetLobby();
         }
         catch (System.Exception e)
         {
             Debug.LogError("Eroare Client Relay: " + e.Message);
+            if (textEroare != null)
+            {
+                textEroare.text = "A aparut o eroare necunoscuta!";
+                textEroare.gameObject.SetActive(true);
+            }
+            ResetLobby();
         }
     }
 

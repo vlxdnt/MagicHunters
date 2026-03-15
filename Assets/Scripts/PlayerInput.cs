@@ -7,8 +7,8 @@ using UnityEngine.InputSystem;
 public class PlayerInput : NetworkBehaviour
 {
     [Header("Miscare")]
-    public float vitezaMiscare = 5f;
-    public float fortaSarit = 10f;
+    public float vitezaMiscare = 2f;
+    public float fortaSarit = 5f;
 
     [Header("Verificare Podea")]
     public Transform verificarePodea; // Punctul de unde verificam daca suntem pe podea
@@ -43,6 +43,13 @@ public class PlayerInput : NetworkBehaviour
         {
             var input = GetComponent<UnityEngine.InputSystem.PlayerInput>();
             if (input != null) input.enabled = false;
+
+            // Oprim camera pentru personajul celalalt, ca sa nu ne fure ecranul
+            Camera cameraJucator = GetComponentInChildren<Camera>();
+            if (cameraJucator != null)
+            {
+                cameraJucator.gameObject.SetActive(false);
+            }
         }
     }
 
@@ -87,7 +94,7 @@ public class PlayerInput : NetworkBehaviour
 
         if (!IsOwner) return;
 
-        // Aplicam miscarea pe axa X pastrând viteza verticala
+        // Aplicam miscarea pe axa X pastrï¿½nd viteza verticala
         rb.linearVelocity = new Vector2(vectorMiscare.x * vitezaMiscare, rb.linearVelocity.y);
     }
 }
