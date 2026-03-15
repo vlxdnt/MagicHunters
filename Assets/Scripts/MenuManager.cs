@@ -27,6 +27,9 @@ public class MeniuManager : MonoBehaviour
     [Header("Butoane Lobby")]
     public Button butonStart; // Butonul Start, vizibil doar pentru host
 
+    [Header("Loading")]
+    public GameObject panelLoading; //pentru loading screen la apasarea "Host"
+
     private async void Start()
     {
         // Facem obiectul persistent intre scene
@@ -53,6 +56,9 @@ public class MeniuManager : MonoBehaviour
     // Creeaza o sesiune Relay si porneste ca host
     public async void ButonHost_Apasat()
     {
+        // Ascundem meniul si aratam loading
+        panelMeniu.SetActive(false);
+        panelLoading.SetActive(true);
         try
         {
             // Cream o alocare Relay pentru maxim 1 client (2 jucatori total)
@@ -74,11 +80,16 @@ public class MeniuManager : MonoBehaviour
             NetworkManager.Singleton.StartHost();
             // Afisam codul pe ecran ca hostul sa il poata da clientului
             textCodJoin.text = "Cod Join: " + codJoin;
+
+            panelLoading.SetActive(false); // Ascundem loading si mergem la lobby
             AfiseazaLobby();
         }
         catch (System.Exception e)
         {
             Debug.LogError("Eroare Host Relay: " + e.Message);
+            // Daca e eroare, ne intoarcem la meniu
+            panelLoading.SetActive(false);
+            panelMeniu.SetActive(true);
         }
     }
 
@@ -206,6 +217,9 @@ public class MeniuManager : MonoBehaviour
         inputFieldCod.gameObject.SetActive(false);
         inputButton.gameObject.SetActive(false);
         inputFieldCod.text = "";
+
+        if (panelLoading != null)
+            panelLoading.SetActive(false);
 
         if (butonStart != null)
         {
