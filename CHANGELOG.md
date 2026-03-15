@@ -1,13 +1,19 @@
 # Istoric Modificări (Changelog)
 
+## [v0.0.3] - 15.03.2026
+### Adăugat
+- **Font + Titlu:** Adaugat fontul tip 'Pixel Art', adaugat titlul cu animatie.
+- **Loading Screen:** Se activeaza la apasarea butonului 'Host' si va tine atat timp cat se incarca serverul.
+
+### Reparat
+- **Delay-ul la animatii:** Rezolvat Animatorul pentru pisica.
+
 ## [v0.0.2] - 15.03.2026
 
 ### Adăugat
 - **Buton Copy Code:** Adăugat un buton în lobby care copiază automat codul Relay în clipboard.
 - **Validare Cod:** Adăugat un mesaj text de eroare în meniul principal dacă Clientul încearcă să se conecteze lăsând câmpul de cod gol, daca codul nu exista si daca lobby-ul e full.
 - **Adaugat camere individuale:** Fiecare jucator are propria camera care il urmareste acum.
-- **Font + Titlu:** Adaugat fontul tip 'Pixel Art', adaugat titlul cu animatie.
-- **Loading Screen:** Se activeaza la apasarea butonului 'Host' si va tine atat timp cat se incarca serverul.
 
 ### Modificat
 - **Fizică Jucători:** Jucătorii se pot mișca liber unul prin celălalt (dezactivat coliziunea dintre layerele "Player").
@@ -17,7 +23,6 @@
 - **Bug NetworkAnimator:** Eliminat NullReferenceException-ul cauzat de sprite-urile temporare fără Animator **(am dat remove la Animator de la player 2 pana cand avem animatiile)**. 
 - **Bug numar jucatori:** Contorizarea jucatorilor din lobby functioneaza corect acum.
 - **Selectie jucati:** Reparat un bug unde nu puteai selecta pisica.
-- **Delay-ul la animatii:** Rezolvat Animatorul pentru pisica.
 
 ### De facut
 - **Animatii:** Timerul la animatii la jucatori trebuie sincronizate (la vrajitoare dupa ce le adaugam).
