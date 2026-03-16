@@ -188,6 +188,11 @@ public class MeniuManager : MonoBehaviour
     {
         if (NetworkManager.Singleton.IsServer)
         {
+            LobbySelection lobby = FindFirstObjectByType<LobbySelection>();
+            if (lobby != null)            {
+                LobbySelection.finalHostSelection = lobby.hostSelection.Value;
+                LobbySelection.finalClientSelection = lobby.clientSelection.Value;
+            }
             NetworkManager.Singleton.SceneManager.LoadScene("GameScene", UnityEngine.SceneManagement.LoadSceneMode.Single);
         }
     }

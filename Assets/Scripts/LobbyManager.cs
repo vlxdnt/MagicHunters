@@ -10,6 +10,8 @@ public class LobbySelection : NetworkBehaviour
     public NetworkVariable<int> hostSelection = new NetworkVariable<int>(0);
     public NetworkVariable<int> clientSelection = new NetworkVariable<int>(0);
     public NetworkVariable<int> nrJucatori = new NetworkVariable<int>(0);
+    public static int finalHostSelection = 0;
+    public static int finalClientSelection = 0;
 
     [Header("Butoane selectie personaj")]
     public Button butonWitch;

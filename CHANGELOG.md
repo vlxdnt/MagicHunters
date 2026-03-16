@@ -1,5 +1,10 @@
 # Istoric Modificări (Changelog)
 
+## [V0.0.3.1] - 16.03.2026
+
+### Reparat
+- **Multiplayer:** Multiplayerul pe laptopuri diferite ar trebui sa functioneze acum.
+
 ## [v0.0.3] - 15.03.2026
 ### Adăugat
 - **Font + Titlu:** Adaugat fontul tip 'Pixel Art', adaugat titlul cu animatie.
