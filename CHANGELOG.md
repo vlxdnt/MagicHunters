@@ -1,5 +1,25 @@
 # Istoric Modificări (Changelog)
 
+## [v0.0.5] - 16.03.2026
+
+### Adaugat
+- **Settings Menu:** Adaugat Settings Menu cu diferite optiuni(volum on/off, slider pentru volum, rezolutie) ~ testat
+- **Quit Button:** Adaugat optiunea de a iesi din joc
+
+### Modificat
+- **Button Sprite** Adaugat sprite-ul pentru butoane (apasat/neapasat)
+
+### De facut:
+- **Rezolutia** Setarea pentru rezolutie trebuie implementata, este doar de aspect acum.
+
+### De adaugat pe viitor:
+- **Fullscreen toggle**
+- **Limba**
+- **Luminozitate** ~ idee
+- **Muzica de fundal/efecte sonore**
+- **Fade intre scene**
+- **Pause Panel**
+
 ## [v0.0.4] - 16.03.2026
 
 ### Adaugat

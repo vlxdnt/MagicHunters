@@ -236,4 +236,9 @@ public class MeniuManager : MonoBehaviour
         if (textCodJoin != null)
             textCodJoin.text = "";
     }
+
+    public void IesiDinJoc()
+    {
+        Application.Quit();
+    }
 }
