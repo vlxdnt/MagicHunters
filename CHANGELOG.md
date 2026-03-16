@@ -1,5 +1,16 @@
 # Istoric Modificări (Changelog)
 
+## [v0.0.4] - 16.03.2026
+
+### Adaugat
+- **Harta:** Adaugat un level de testing
+
+### Modificat
+- **Jucatori:** Schimbat scale la jucatori la 1 1 1 si facut camera mai apropiata
+
+### De reparat
+- **Controale:** Nu mai merge jumpul ;(
+
 ## [V0.0.3.1] - 16.03.2026
 
 ### Reparat

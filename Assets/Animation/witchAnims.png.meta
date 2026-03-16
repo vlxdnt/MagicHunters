@@ -1,76 +1,67 @@
 fileFormatVersion: 2
-guid: c2b21c6cf01800744a7056c75e019807
+guid: 440e9c3692d27914bb44746e44a78ac7
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5335497262919622659
-    second: catAnims_0
+      213: 806330528881055505
+    second: witchAnims_0
   - first:
-      213: 855074964781005371
-    second: catAnims_1
+      213: -8058353896710377865
+    second: witchAnims_1
   - first:
-      213: 6940607056008494785
-    second: catAnims_2
+      213: -7306885197893777458
+    second: witchAnims_2
   - first:
-      213: -3462981070538777127
-    second: catAnims_3
+      213: 4621066796174499933
+    second: witchAnims_3
   - first:
-      213: -4653438476055758679
-    second: catAnims_4
+      213: 295773486944233895
+    second: witchAnims_4
   - first:
-      213: -599450151677259269
-    second: catAnims_5
+      213: 1905415806392501677
+    second: witchAnims_5
   - first:
-      213: -5275596835176696644
-    second: catAnims_6
+      213: 3148174159886119615
+    second: witchAnims_6
   - first:
-      213: -2083650373327589535
-    second: catAnims_7
+      213: -577676682480673985
+    second: witchAnims_7
   - first:
-      213: -7475402639316687361
-    second: catAnims_8
+      213: 709899991549563104
+    second: witchAnims_8
   - first:
-      213: -6065044836825780471
-    second: catAnims_9
+      213: -4986047553184219495
+    second: witchAnims_9
   - first:
-      213: 6024016068803449007
-    second: catAnims_10
+      213: 2930625673537144596
+    second: witchAnims_10
   - first:
-      213: 8161668678897068596
-    second: catAnims_11
+      213: 106348528229887958
+    second: witchAnims_11
   - first:
-      213: 5245222776525783851
-    second: catAnims_12
+      213: 1640271633401401610
+    second: witchAnims_12
   - first:
-      213: 3921954983586357303
-    second: catAnims_13
+      213: 643098901498741455
+    second: witchAnims_13
   - first:
-      213: 9030523276835041420
-    second: catAnims_14
+      213: -4317340472215006181
+    second: witchAnims_14
   - first:
-      213: -1493963791317197520
-    second: catAnims_15
+      213: 5826189217792384525
+    second: witchAnims_15
   - first:
-      213: -2860878787130452909
-    second: catAnims_16
+      213: -34836721292601854
+    second: witchAnims_16
   - first:
-      213: 938584008711725061
-    second: catAnims_17
+      213: -4916962405207073165
+    second: witchAnims_17
   - first:
-      213: 2932605225503582982
-    second: catAnims_18
+      213: -4071196611957723027
+    second: witchAnims_18
   - first:
-      213: -5127827598677715892
-    second: catAnims_19
-  - first:
-      213: -4068855086596863049
-    second: catAnims_20
-  - first:
-      213: 3367340256908663276
-    second: catAnims_21
-  - first:
-      213: -5073622457250930512
-    second: catAnims_22
+      213: 2782771586282004513
+    second: witchAnims_19
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -103,7 +94,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -117,7 +108,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 64
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -138,10 +129,10 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 512
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -162,480 +153,445 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: catAnims_0
+      name: witchAnims_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 128
+        x: 11
+        y: 191
         width: 32
-        height: 32
+        height: 60
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 300a460fd7e7b0a40800000000000000
-      internalID: 5335497262919622659
+      spriteID: 11712890859a03b00800000000000000
+      internalID: 806330528881055505
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: catAnims_1
+      name: witchAnims_1
       rect:
         serializedVersion: 2
-        x: 32
-        y: 128
+        x: 75
+        y: 191
         width: 32
-        height: 32
+        height: 60
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b3af91c6626dddb00800000000000000
-      internalID: 855074964781005371
+      spriteID: 77e613073d9fa2090800000000000000
+      internalID: -8058353896710377865
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: catAnims_2
+      name: witchAnims_2
       rect:
         serializedVersion: 2
-        x: 64
-        y: 128
+        x: 139
+        y: 191
         width: 32
-        height: 32
+        height: 60
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1ceb4f2385df15060800000000000000
-      internalID: 6940607056008494785
+      spriteID: ec74bf440aab89a90800000000000000
+      internalID: -7306885197893777458
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: catAnims_3
+      name: witchAnims_3
       rect:
         serializedVersion: 2
-        x: 96
-        y: 128
-        width: 32
-        height: 32
+        x: 206
+        y: 191
+        width: 31
+        height: 60
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9dd52a2601501ffc0800000000000000
-      internalID: -3462981070538777127
+      spriteID: d50655584c3512040800000000000000
+      internalID: 4621066796174499933
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: catAnims_4
+      name: witchAnims_4
       rect:
         serializedVersion: 2
-        x: 0
-        y: 96
-        width: 32
-        height: 32
+        x: 270
+        y: 191
+        width: 33
+        height: 60
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9a8bf8a6c5aab6fb0800000000000000
-      internalID: -4653438476055758679
+      spriteID: 7a92a475b6cca1400800000000000000
+      internalID: 295773486944233895
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: catAnims_5
+      name: witchAnims_5
       rect:
         serializedVersion: 2
-        x: 32
-        y: 96
-        width: 32
-        height: 32
+        x: 15
+        y: 127
+        width: 36
+        height: 59
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: bf119b853435ea7f0800000000000000
-      internalID: -599450151677259269
+      spriteID: da58071a495617a10800000000000000
+      internalID: 1905415806392501677
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: catAnims_6
+      name: witchAnims_6
       rect:
         serializedVersion: 2
-        x: 64
-        y: 96
-        width: 32
-        height: 32
+        x: 48
+        y: 149
+        width: 16
+        height: 15
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: cb43e1531a059c6b0800000000000000
-      internalID: -5275596835176696644
+      spriteID: fb2731bf7bf80bb20800000000000000
+      internalID: 3148174159886119615
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: catAnims_7
+      name: witchAnims_7
       rect:
         serializedVersion: 2
-        x: 96
-        y: 96
-        width: 32
-        height: 32
+        x: 78
+        y: 127
+        width: 45
+        height: 62
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 16fe2bd66036513e0800000000000000
-      internalID: -2083650373327589535
+      spriteID: f3b96b13e1eabf7f0800000000000000
+      internalID: -577676682480673985
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: catAnims_8
+      name: witchAnims_8
       rect:
         serializedVersion: 2
-        x: 0
-        y: 64
-        width: 32
-        height: 32
+        x: 113
+        y: 139
+        width: 16
+        height: 26
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ff5e28ae7e8024890800000000000000
-      internalID: -7475402639316687361
+      spriteID: 0e05d56f7421ad900800000000000000
+      internalID: 709899991549563104
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: catAnims_9
+      name: witchAnims_9
       rect:
         serializedVersion: 2
-        x: 32
-        y: 64
-        width: 32
-        height: 32
+        x: 142
+        y: 127
+        width: 33
+        height: 62
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 90fae2adad1a4dba0800000000000000
-      internalID: -6065044836825780471
+      spriteID: 99ebf37ea200ecab0800000000000000
+      internalID: -4986047553184219495
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: catAnims_10
+      name: witchAnims_10
       rect:
         serializedVersion: 2
-        x: 64
-        y: 64
-        width: 32
-        height: 32
+        x: 177
+        y: 147
+        width: 12
+        height: 14
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: fa0564ea2ba999350800000000000000
-      internalID: 6024016068803449007
+      spriteID: 41742d0e58caba820800000000000000
+      internalID: 2930625673537144596
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: catAnims_11
+      name: witchAnims_11
       rect:
         serializedVersion: 2
-        x: 96
-        y: 64
+        x: 205
+        y: 127
         width: 32
-        height: 32
+        height: 60
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 43a671ccb62144170800000000000000
-      internalID: 8161668678897068596
+      spriteID: 6df27874c63d97100800000000000000
+      internalID: 106348528229887958
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: catAnims_12
+      name: witchAnims_12
       rect:
         serializedVersion: 2
-        x: 0
-        y: 32
+        x: 269
+        y: 127
         width: 32
-        height: 32
+        height: 60
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b238b9a2356cac840800000000000000
-      internalID: 5245222776525783851
+      spriteID: a015a0c2c5a63c610800000000000000
+      internalID: 1640271633401401610
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: catAnims_13
+      name: witchAnims_13
       rect:
         serializedVersion: 2
-        x: 32
-        y: 32
+        x: 13
+        y: 63
         width: 32
-        height: 32
+        height: 59
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 730ecb537459d6630800000000000000
-      internalID: 3921954983586357303
+      spriteID: fc2c64b2b0fbce800800000000000000
+      internalID: 643098901498741455
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: catAnims_14
+      name: witchAnims_14
       rect:
         serializedVersion: 2
-        x: 64
-        y: 32
+        x: 77
+        y: 63
         width: 32
-        height: 32
+        height: 59
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c8036a3131dd25d70800000000000000
-      internalID: 9030523276835041420
+      spriteID: b14153bf6b9b514c0800000000000000
+      internalID: -4317340472215006181
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: catAnims_15
+      name: witchAnims_15
       rect:
         serializedVersion: 2
-        x: 96
-        y: 32
+        x: 141
+        y: 63
         width: 32
-        height: 32
+        height: 59
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 03d1e3fd8df544be0800000000000000
-      internalID: -1493963791317197520
+      spriteID: d0ed9b0a938cad050800000000000000
+      internalID: 5826189217792384525
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: catAnims_16
+      name: witchAnims_16
       rect:
         serializedVersion: 2
-        x: 128
-        y: 32
+        x: 204
+        y: 63
         width: 32
-        height: 32
+        height: 60
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 35493a396ed1c48d0800000000000000
-      internalID: -2860878787130452909
+      spriteID: 2061732cf2c348ff0800000000000000
+      internalID: -34836721292601854
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: catAnims_17
+      name: witchAnims_17
       rect:
         serializedVersion: 2
-        x: 0
+        x: 269
+        y: 63
+        width: 32
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 37e9eaf5eb073cbb0800000000000000
+      internalID: -4916962405207073165
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: witchAnims_18
+      rect:
+        serializedVersion: 2
+        x: 13
         y: 0
-        width: 32
-        height: 32
+        width: 33
+        height: 57
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 500ef1fde25860d00800000000000000
-      internalID: 938584008711725061
+      spriteID: d607c7560443087c0800000000000000
+      internalID: -4071196611957723027
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: catAnims_18
+      name: witchAnims_19
       rect:
         serializedVersion: 2
-        x: 32
+        x: 77
         y: 0
-        width: 32
-        height: 32
+        width: 33
+        height: 57
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 60b689c3ae4b2b820800000000000000
-      internalID: 2932605225503582982
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: catAnims_19
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: c44de57a7fb46d8b0800000000000000
-      internalID: -5127827598677715892
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: catAnims_20
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 0
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 7bb4ad04bd58887c0800000000000000
-      internalID: -4068855086596863049
+      spriteID: 120a36393046e9620800000000000000
+      internalID: 2782771586282004513
       vertices: []
       indices: 
       edges: []
@@ -644,7 +600,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 36b00d9641bb5574e881845216e443be
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -652,31 +608,28 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries:
-      - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":32.0,"y":32.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+      entries: []
     nameFileIdTable:
-      catAnims_0: 5335497262919622659
-      catAnims_1: 855074964781005371
-      catAnims_10: 6024016068803449007
-      catAnims_11: 8161668678897068596
-      catAnims_12: 5245222776525783851
-      catAnims_13: 3921954983586357303
-      catAnims_14: 9030523276835041420
-      catAnims_15: -1493963791317197520
-      catAnims_16: -2860878787130452909
-      catAnims_17: 938584008711725061
-      catAnims_18: 2932605225503582982
-      catAnims_19: -5127827598677715892
-      catAnims_2: 6940607056008494785
-      catAnims_20: -4068855086596863049
-      catAnims_3: -3462981070538777127
-      catAnims_4: -4653438476055758679
-      catAnims_5: -599450151677259269
-      catAnims_6: -5275596835176696644
-      catAnims_7: -2083650373327589535
-      catAnims_8: -7475402639316687361
-      catAnims_9: -6065044836825780471
+      witchAnims_0: 806330528881055505
+      witchAnims_1: -8058353896710377865
+      witchAnims_10: 2930625673537144596
+      witchAnims_11: 106348528229887958
+      witchAnims_12: 1640271633401401610
+      witchAnims_13: 643098901498741455
+      witchAnims_14: -4317340472215006181
+      witchAnims_15: 5826189217792384525
+      witchAnims_16: -34836721292601854
+      witchAnims_17: -4916962405207073165
+      witchAnims_18: -4071196611957723027
+      witchAnims_19: 2782771586282004513
+      witchAnims_2: -7306885197893777458
+      witchAnims_3: 4621066796174499933
+      witchAnims_4: 295773486944233895
+      witchAnims_5: 1905415806392501677
+      witchAnims_6: 3148174159886119615
+      witchAnims_7: -577676682480673985
+      witchAnims_8: 709899991549563104
+      witchAnims_9: -4986047553184219495
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

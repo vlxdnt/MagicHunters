@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 public class PlayerInput : NetworkBehaviour
 {
     [Header("Miscare")]
-    public float vitezaMiscare = 2f;
+    public float vitezaMiscare = 1f;
     public float fortaSarit = 5f;
 
     [Header("Verificare Podea")]

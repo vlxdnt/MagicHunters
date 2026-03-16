@@ -68,8 +68,8 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 0
-  orthographic size: 5
+  orthographic: 1
+  orthographic size: 2.5
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -170,7 +170,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.03479, y: 0.75857, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2732546838691258911}
@@ -368,17 +368,17 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.0018587112, y: 0.059507906}
+  m_Offset: {x: -0.07753357, y: 0.44985574}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.7307693, y: 0}
-    oldSize: {x: 0.26, y: 0.56}
+    oldSize: {x: 0.40625, y: 0.875}
     newSize: {x: 2.765625, y: 3.390625}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 2.8302093, y: 3.3259525}
+  m_Size: {x: 0.5807488, y: 0.95740306}
   m_EdgeRadius: 0
 --- !u!114 &7118268269905250874
 MonoBehaviour:
