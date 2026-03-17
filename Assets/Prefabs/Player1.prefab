@@ -155,6 +155,7 @@ GameObject:
   - component: {fileID: 5508898678486070381}
   - component: {fileID: 7118268269905250874}
   - component: {fileID: 3626957795071789294}
+  - component: {fileID: 6033033274544841326}
   m_Layer: 3
   m_Name: Player1
   m_TagString: Untagged
@@ -228,12 +229,12 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -4068855086596863049, guid: c2b21c6cf01800744a7056c75e019807, type: 3}
+  m_Sprite: {fileID: -4228546371000048862, guid: ba0e0ef12ceaa4d448bfd77f6ec1ea57, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.515625, y: 0.015625}
+  m_Size: {x: 0.22, y: 0.27}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -250,7 +251,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 3137236415
+  GlobalObjectIdHash: 3053837811
   InScenePlacedSourceGlobalObjectIdHash: 3053837811
   DeferredDespawnTick: 0
   Ownership: 1
@@ -325,13 +326,31 @@ MonoBehaviour:
   NetworkAnimatorExpanded: 0
   AuthorityMode: 1
   m_Animator: {fileID: 5044161433516213751}
-  TransitionStateInfoList: []
+  TransitionStateInfoList:
+  - IsCrossFadeExit: 0
+    Layer: 0
+    OriginatingState: 2081823275
+    DestinationState: -1837557112
+    TransitionDuration: 0
+    TriggerNameHash: -1858580252
+    TransitionIndex: 1
+  - IsCrossFadeExit: 0
+    Layer: 0
+    OriginatingState: -526601997
+    DestinationState: -1837557112
+    TransitionDuration: 0
+    TriggerNameHash: -1858580252
+    TransitionIndex: 1
   AnimatorParameterEntries:
     ParameterEntries:
     - name: Viteza
       NameHash: -1173118521
       Synchronize: 1
       ParameterType: 1
+    - name: Sare
+      NameHash: -1858580252
+      Synchronize: 1
+      ParameterType: 9
   AnimatorParametersExpanded: 0
 --- !u!95 &5044161433516213751
 Animator:
@@ -343,7 +362,7 @@ Animator:
   m_GameObject: {fileID: 6501798312373291870}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 23a7ad1b7ae95a94a9277d186fb49533, type: 2}
+  m_Controller: {fileID: 9100000, guid: 3dd152ebdb81f1b448f978a94e432b4e, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -419,9 +438,9 @@ BoxCollider2D:
   m_Offset: {x: -0.0054299757, y: -0.009125203}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.5, y: 0.5}
-    newSize: {x: 1.515625, y: 0.015625}
+    pivot: {x: 0.5909091, y: -0.037037037}
+    oldSize: {x: 0.22, y: 0.27}
+    newSize: {x: 0.22, y: 0.27}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -556,6 +575,18 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &6033033274544841326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6501798312373291870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70f9ccbee0803f948837094e0597aa81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CatAnimator
 --- !u!1 &8975131632674171672
 GameObject:
   m_ObjectHideFlags: 0

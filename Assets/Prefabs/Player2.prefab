@@ -153,6 +153,8 @@ GameObject:
   - component: {fileID: 5508898678486070381}
   - component: {fileID: 7118268269905250874}
   - component: {fileID: 3626957795071789294}
+  - component: {fileID: 2134505140068533281}
+  - component: {fileID: 4661010400953997022}
   m_Layer: 3
   m_Name: Player2
   m_TagString: Untagged
@@ -226,12 +228,12 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 7600853823216831550, guid: d91f0f78a7da721459d2cff60df5eb73, type: 3}
+  m_Sprite: {fileID: 6011862340507828945, guid: c41437ed4f16a5f4785dcf22f964e69f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 2.765625, y: 3.390625}
+  m_Size: {x: 0.32, y: 0.59}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -371,9 +373,9 @@ BoxCollider2D:
   m_Offset: {x: -0.07753357, y: 0.46044156}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.7307693, y: 0}
-    oldSize: {x: 0.40625, y: 0.875}
-    newSize: {x: 2.765625, y: 3.390625}
+    pivot: {x: 0.65625, y: 0}
+    oldSize: {x: 0.32, y: 0.59}
+    newSize: {x: 0.32, y: 0.59}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -508,6 +510,40 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!95 &2134505140068533281
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6501798312373291870}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a3bdb0462992a264b9b4bac9bd880127, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4661010400953997022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6501798312373291870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26664f4ddc7da72458a6a2b347865c72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WitchAnimator
 --- !u!1 &8975131632674171672
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,8 +2,8 @@ using UnityEngine;
 using Unity.Netcode;
 using UnityEngine.InputSystem;
 
-// Gestioneaza inputul si miscarea jucatorului
-// Foloseste NetworkBehaviour pentru sincronizare in retea
+// pentru input/miscare comuna a jucatorilor
+// sau individual prin WitchAnimator.cs/CatAnimator.cs
 public class PlayerInput : NetworkBehaviour
 {
     [Header("Miscare")]
@@ -11,17 +11,21 @@ public class PlayerInput : NetworkBehaviour
     public float fortaSarit = 5f;
 
     [Header("Verificare Podea")]
-    public Transform verificarePodea; // Punctul de unde verificam daca suntem pe podea
+    public Transform verificarePodea;
     public float razaVerificare = 0.2f;
     public LayerMask stratPodea;
 
     private Rigidbody2D rb;
-    private Animator animator;
     private SpriteRenderer spriteRenderer;
     private Vector2 vectorMiscare;
     private bool estePePodea;
 
-    // NetworkVariable pentru flip sincronizat - doar ownerul poate scrie, toti pot citi
+    // parametrii
+    public bool EstePePodea => estePePodea;
+    public Vector2 VectorMiscare => vectorMiscare;
+    public bool AJumped { get; private set; }
+
+    //flip sincronizat
     public NetworkVariable<bool> flipX = new NetworkVariable<bool>(
         false,
         NetworkVariableReadPermission.Everyone,
@@ -31,70 +35,68 @@ public class PlayerInput : NetworkBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    // Se apeleaza cand obiectul e spawnat in retea
+    // obiectul e spawnat in retea
     public override void OnNetworkSpawn()
     {
-        // Dezactivam inputul pentru jucatorii care nu sunt ownerul acestui obiect
         if (!IsOwner)
         {
             var input = GetComponent<UnityEngine.InputSystem.PlayerInput>();
             if (input != null) input.enabled = false;
 
-            // Oprim camera pentru personajul celalalt, ca sa nu ne fure ecranul
+            // oprire camera
             Camera cameraJucator = GetComponentInChildren<Camera>();
             if (cameraJucator != null)
-            {
                 cameraJucator.gameObject.SetActive(false);
-            }
         }
     }
 
-    // Apelata de Input System cand jucatorul misca (WASD / Sageti)
+    // input system activ la miscare
     public void OnMove(InputAction.CallbackContext context)
     {
         if (!IsOwner) return;
         vectorMiscare = context.ReadValue<Vector2>();
     }
 
-    // Apelata de Input System cand jucatorul sare (Space)
+    // input system activ la salt
     public void OnJump(InputAction.CallbackContext context)
     {
         if (!IsOwner) return;
         if (estePePodea && context.started)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, fortaSarit);
+            AJumped = true; // semnalizam ca a sarit
         }
     }
 
     void Update()
     {
-        // Aplicam flip-ul pentru toti jucatorii (si non-owner) ca sa se vada corect
+        //flip pt toti
         spriteRenderer.flipX = flipX.Value;
 
         if (!IsOwner) return;
 
-        // Actualizam animatia de mers
-        if (animator != null)
-            animator.SetFloat("Viteza", Mathf.Abs(vectorMiscare.x));
-
-        // Sincronizam directia sprite-ului prin retea
+        // directia sprite-ului, lasam < 0 (> 0 il roteste invers)
         if (vectorMiscare.x != 0)
-            flipX.Value = vectorMiscare.x < 0; // true = stanga, false = dreapta
+            flipX.Value = vectorMiscare.x < 0;
+    }
+
+    void LateUpdate()
+    {
+        AJumped = false;
     }
 
     void FixedUpdate()
     {
-        // Verificam daca jucatorul e pe podea folosind un cerc la picioare
+        // verificare podea
         if (verificarePodea != null)
             estePePodea = Physics2D.OverlapCircle(verificarePodea.position, razaVerificare, stratPodea);
 
         if (!IsOwner) return;
 
-        // Aplicam miscarea pe axa X pastr�nd viteza verticala
+        // miscarea pe axa X
         rb.linearVelocity = new Vector2(vectorMiscare.x * vitezaMiscare, rb.linearVelocity.y);
     }
 }

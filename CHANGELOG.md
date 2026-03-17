@@ -1,5 +1,13 @@
 # Istoric Modificări (Changelog)
 
+## [v0.0.7] - 18.03.2026
+### Adaugat
+- **Fullscreen Option:** Adaugata optiunea de fullscreen in meniul de setari
+
+### Modificat
+- **Script-uri diferite:** Am creat 2 script-uri diferite pentru animatiile/abilitatile personajelor
+- **Animatiile:** Rezolvat mai multe probleme ce tin de animatiile personajelor
+
 ## [v0.0.6] - 17.03.2026
 
 ### Adaugat

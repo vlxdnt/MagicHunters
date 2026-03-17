@@ -8,6 +8,8 @@ public class SettingsManager : MonoBehaviour
     public GameObject panelMeniu;
 
     public Toggle toggleSunet;
+    public Toggle toggleFullscreen;
+
     public TextMeshProUGUI textVolum;
     public Slider sliderVolum;
     public TMP_Dropdown dropdownRezolutie;
@@ -18,6 +20,9 @@ public class SettingsManager : MonoBehaviour
     {
         PopuleazaRezolutii();
         volumSalvat = PlayerPrefs.GetFloat("Volum", 1f);
+
+        toggleFullscreen.SetIsOnWithoutNotify(PlayerPrefs.GetInt("Fullscreen", 1) == 1);
+        Screen.fullScreen = toggleFullscreen.isOn;
 
         // Setam valorile fara sa declansam eventurile
         sliderVolum.SetValueWithoutNotify(volumSalvat);
@@ -96,5 +101,11 @@ public class SettingsManager : MonoBehaviour
         // Setam rezolutia salvata anterior
         dropdownRezolutie.value = PlayerPrefs.GetInt("Rezolutie", 0);
         dropdownRezolutie.RefreshShownValue();
+    }
+
+    public void SchimbaFullscreen(bool activ)
+    {
+        Screen.fullScreen = activ;
+        PlayerPrefs.SetInt("Fullscreen", activ ? 1 : 0);
     }
 }
