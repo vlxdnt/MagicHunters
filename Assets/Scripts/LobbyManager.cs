@@ -12,6 +12,7 @@ public class LobbySelection : NetworkBehaviour
     public NetworkVariable<int> nrJucatori = new NetworkVariable<int>(0);
     public static int finalHostSelection = 0;
     public static int finalClientSelection = 0;
+    private MeniuManager meniu;
 
     [Header("Butoane selectie personaj")]
     public Button butonWitch;
@@ -28,6 +29,7 @@ public class LobbySelection : NetworkBehaviour
     // Se apeleaza cand obiectul e spawnat in retea
     public override void OnNetworkSpawn()
     {
+        meniu = FindFirstObjectByType<MeniuManager>();
         if (IsServer)
         {
             // Setam numarul initial de jucatori
@@ -120,7 +122,6 @@ public class LobbySelection : NetworkBehaviour
         // Deblocam butonul Start doar daca sunt 2 jucatori si ambii au ales
         if (NetworkManager.Singleton.IsHost)
         {
-            MeniuManager meniu = FindFirstObjectByType<MeniuManager>();
             if (meniu != null && meniu.butonStart != null)
                 meniu.butonStart.interactable = (nrJucatori.Value == 2 && hostSelection.Value != 0 && clientSelection.Value != 0 && hostSelection.Value != clientSelection.Value);
         }

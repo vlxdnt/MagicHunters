@@ -1,5 +1,16 @@
 # Istoric Modificări (Changelog)
 
+## [v0.0.6] - 17.03.2026
+
+### Adaugat
+- **Disconnect handling:** Cand un jucator iese din joc, se intorc amandoi in meniu.
+
+### Modificat
+- **Optimizare:** Mutat crearea unui obiect MenuManager din Update in Start.
+
+###
+- **De reparat:** Cand un jucator iese din joc, nu functioneaza meniul (presimt ca e de la instanta meniului). Posibil fix: distrus instanta originala a meniului si creata o instanta noua cand se intoarce in menu.
+
 ## [v0.0.5] - 16.03.2026
 
 ### Adaugat

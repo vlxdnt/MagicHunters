@@ -30,10 +30,25 @@ public class MeniuManager : MonoBehaviour
     [Header("Loading")]
     public GameObject panelLoading; //pentru loading screen la apasarea "Host"
 
+    public static MeniuManager Instance;
+
+    private void Awake()
+    {
+        // Singleton pattern pentru a putea accesa MeniuManager din alte scripturi
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject); // Facem obiectul persistent intre scene
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
     private async void Start()
     {
         // Facem obiectul persistent intre scene
-        DontDestroyOnLoad(gameObject);
+        if (Instance != this) return; 
 
         // Starea initiala a UI-ului
         panelMeniu.SetActive(true);
@@ -59,6 +74,9 @@ public class MeniuManager : MonoBehaviour
         // Ascundem meniul si aratam loading
         panelMeniu.SetActive(false);
         panelLoading.SetActive(true);
+        if (textEroare != null)
+            textEroare.gameObject.SetActive(false);
+
         try
         {
             // Cream o alocare Relay pentru maxim 1 client (2 jucatori total)
@@ -211,6 +229,16 @@ public class MeniuManager : MonoBehaviour
             butonStart.gameObject.SetActive(NetworkManager.Singleton.IsHost);
             // Blocat initial pana ce ambii jucatori aleg personajul
             butonStart.interactable = false;
+        }
+    }
+
+    // Afiseaza un mesaj de eroare
+    public void AfiseazaEroare(string mesaj)
+    {
+        if (textEroare != null)
+        {
+            textEroare.text = mesaj;
+            textEroare.gameObject.SetActive(true);
         }
     }
 

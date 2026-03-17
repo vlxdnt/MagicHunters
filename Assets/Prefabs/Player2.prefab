@@ -368,7 +368,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.07753357, y: 0.44985574}
+  m_Offset: {x: -0.07753357, y: 0.46044156}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.7307693, y: 0}
@@ -378,7 +378,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.5807488, y: 0.95740306}
+  m_Size: {x: 0.5807488, y: 0.93623143}
   m_EdgeRadius: 0
 --- !u!114 &7118268269905250874
 MonoBehaviour:
@@ -393,7 +393,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInput
   ShowTopMostFoldoutHeaderGroup: 1
-  vitezaMiscare: 5
+  vitezaMiscare: 2
   fortaSarit: 5
   verificarePodea: {fileID: 2732546838691258911}
   razaVerificare: 0.2
@@ -533,7 +533,7 @@ Transform:
   m_GameObject: {fileID: 8975131632674171672}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.6, z: 0}
+  m_LocalPosition: {x: 0, y: 0.03, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

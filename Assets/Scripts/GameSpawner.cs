@@ -45,19 +45,21 @@ public class GameSpawner : MonoBehaviour
         NetworkManager.Singleton.SceneManager.OnLoadComplete -= OnSceneLoaded;
 
         // Cautam selectiile din lobby
-        LobbySelection lobby = FindFirstObjectByType<LobbySelection>();
-        if (lobby == null)
+        int hostChoice = LobbySelection.finalHostSelection;
+        int clientChoice = LobbySelection.finalClientSelection;
+
+        Debug.Log("Host selection: " + hostChoice);
+        Debug.Log("Client selection: " + clientChoice);
+
+        // Verificam daca selectiile sunt valide
+        if (hostChoice == 0 || clientChoice == 0)
         {
-            Debug.LogError("GameSpawner: Nu gasesc LobbySelection!");
-            return;
+            Debug.LogWarning("GameSpawner: Unul dintre jucatori nu are selectia salvata corect!");
         }
 
-        Debug.Log("Host selection: " + lobby.hostSelection.Value);
-        Debug.Log("Client selection: " + lobby.clientSelection.Value);
-
         // Spawnam jucatorii cu prefaburile corecte
-        SpawneazaJucator(0, lobby.hostSelection.Value, spawnHost);
-        SpawneazaJucator(1, lobby.clientSelection.Value, spawnClient);
+        SpawneazaJucator(0, hostChoice, spawnHost);
+        SpawneazaJucator(1, clientChoice, spawnClient);
     }
 
     // Instantiaza si spawneaza prefabul corect pentru un jucator
