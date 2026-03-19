@@ -18,17 +18,16 @@ public class SettingsManager : MonoBehaviour
 
     private void Start()
     {
-        PopuleazaRezolutii();
-        volumSalvat = PlayerPrefs.GetFloat("Volum", 1f);
+        PopuleazaRezolutii(); //setarea pt dropdown
+
+        volumSalvat = PlayerPrefs.GetFloat("Volum", 1f); //ce are salvat deja dupa ce da enable inapoi
 
         toggleFullscreen.SetIsOnWithoutNotify(PlayerPrefs.GetInt("Fullscreen", 1) == 1);
-        Screen.fullScreen = toggleFullscreen.isOn;
+        Screen.fullScreen = toggleFullscreen.isOn; //setarea pt ecran
 
-        // Setam valorile fara sa declansam eventurile
         sliderVolum.SetValueWithoutNotify(volumSalvat);
         toggleSunet.SetIsOnWithoutNotify(PlayerPrefs.GetInt("Sunet", 1) == 1);
 
-        // Aplicam manual o singura data
         bool sunetActiv = toggleSunet.isOn;
         sliderVolum.interactable = sunetActiv;
         AudioListener.volume = sunetActiv ? volumSalvat : 0f;
@@ -57,20 +56,20 @@ public class SettingsManager : MonoBehaviour
         }
         PlayerPrefs.SetFloat("Volum", valoare);
         if (textVolum != null)
-            textVolum.text = Mathf.RoundToInt(valoare * 100) + "%";
+            textVolum.text = Mathf.RoundToInt(valoare * 100) + "%"; //procentul de langa text
     }
 
     public void AplicaSunet(bool activ)
     {
         if (activ)
         {
-            // Restauram volumul salvat
+            // volum salvat
             sliderVolum.value = volumSalvat;
             AudioListener.volume = volumSalvat;
         }
         else
         {
-            // Salvam volumul curent si dam la 0
+            // cazul in care dai disable si ai deja volum, il salvam
             volumSalvat = sliderVolum.value > 0 ? sliderVolum.value : volumSalvat;
             sliderVolum.value = 0f;
             AudioListener.volume = 0f;
@@ -98,7 +97,7 @@ public class SettingsManager : MonoBehaviour
             optiuni.Add(r.width + " x " + r.height);
         dropdownRezolutie.AddOptions(optiuni);
 
-        // Setam rezolutia salvata anterior
+        // rezolutia anterioara
         dropdownRezolutie.value = PlayerPrefs.GetInt("Rezolutie", 0);
         dropdownRezolutie.RefreshShownValue();
     }

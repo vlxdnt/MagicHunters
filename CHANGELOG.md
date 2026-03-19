@@ -1,5 +1,12 @@
 # Istoric Modificări (Changelog)
 
+## [v0.0.8] - 19.03.2026
+### Adaugat
+- **Language Option:** Adaugata optiunea de a alege intre ro/en
+
+### Modificat
+- **Stil pentru text/titlu:** Modificat stilul si adaugat un material nou pentru titlu
+
 ## [v0.0.7] - 18.03.2026
 ### Adaugat
 - **Fullscreen Option:** Adaugata optiunea de fullscreen in meniul de setari

@@ -1,0 +1,62 @@
+{
+  "HostButton": {
+    "ro": "Gazduieste",
+    "en": "Host"
+  },
+  "JoinButton": {
+    "ro": "Alatura-te",
+    "en": "Join"
+  },
+  "SettingsButton": {
+    "ro": "Setari",
+    "en": "Settings"
+  },
+  "QuitButton": {
+    "ro": "Iesire",
+    "en": "Quit"
+  },
+  "BackButton": {
+    "ro": "Inapoi",
+    "en": "Back"
+  },
+  "Placeholder": {
+    "ro": "Introdu codul",
+    "en": "Host code"
+  },
+  "LoadingText": {
+    "ro": "Se creeaza lobby-ul...",
+    "en": "The lobby is being created..."
+  },
+  "SettText": {
+    "ro": "Meniu de setari",
+    "en": "Settings Menu"
+  },
+  "SoundText": {
+    "ro": "Sunete:",
+    "en": "Sounds:"
+  },
+  "VolumeText": {
+    "ro": "Volum:",
+    "en": "Volume:"
+  },
+  "LangText": {
+    "ro": "Limba:",
+    "en": "Language:"
+  },
+  "ResolText": {
+    "ro": "Rezolutie:",
+    "en": "Resolution:"
+  },
+  "ExitLobbyButton": {
+    "ro": "Iesire",
+    "en": "Leave lobby"
+  },
+  "CopyButton": {
+    "ro": "Copiaza",
+    "en": "Copy"
+  },
+  "ChooseText": {
+    "ro": "Alege-ti personajul:",
+    "en": "Choose your character:"
+  }
+}
