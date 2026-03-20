@@ -12,6 +12,10 @@ public class SettingsManager : MonoBehaviour
 
     public TextMeshProUGUI textVolum;
     public Slider sliderVolum;
+
+    public Slider sliderBright;
+    public UnityEngine.UI.Image panelBright;
+
     public TMP_Dropdown dropdownRezolutie;
 
     private float volumSalvat = 1f;
@@ -27,6 +31,9 @@ public class SettingsManager : MonoBehaviour
 
         sliderVolum.SetValueWithoutNotify(volumSalvat);
         toggleSunet.SetIsOnWithoutNotify(PlayerPrefs.GetInt("Sunet", 1) == 1);
+
+        sliderBright.SetValueWithoutNotify(PlayerPrefs.GetFloat("Luminozitate", 1f));
+        AplicaBright(sliderBright.value);
 
         bool sunetActiv = toggleSunet.isOn;
         sliderVolum.interactable = sunetActiv;
@@ -106,5 +113,13 @@ public class SettingsManager : MonoBehaviour
     {
         Screen.fullScreen = activ;
         PlayerPrefs.SetInt("Fullscreen", activ ? 1 : 0);
+    }
+
+    public void AplicaBright(float valoare)
+    {
+        //val 1 maxim, val 0 minim
+        float a = 1f - valoare;
+        panelBright.color = new Color(0,0,0,a);
+        PlayerPrefs.SetFloat("Luminozitate", valoare);
     }
 }

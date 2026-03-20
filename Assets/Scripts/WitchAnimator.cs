@@ -16,9 +16,6 @@ public class WitchAnimator : MonoBehaviour
 
     void Update()
     {
-        // Animatiile se actualizeaza doar pentru owner
-        if (!playerInput.IsOwner) return;
-
         // pentru mers
         animator.SetFloat("Viteza", Mathf.Abs(playerInput.VectorMiscare.x));
 

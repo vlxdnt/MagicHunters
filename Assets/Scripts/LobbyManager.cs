@@ -3,10 +3,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-// Gestioneaza lobby-ul: selectia personajelor, numarul de jucatori conectati si iesirea din lobby
+// lobby menu
 public class LobbySelection : NetworkBehaviour
 {
-    // Selectiile jucatorilor sincronizate prin retea: 0 = Nimic, 1 = Witch, 2 = Cat
+    // selectia jucatorilor, nrjucatori
     public NetworkVariable<int> hostSelection = new NetworkVariable<int>(0);
     public NetworkVariable<int> clientSelection = new NetworkVariable<int>(0);
     public NetworkVariable<int> nrJucatori = new NetworkVariable<int>(0);
@@ -14,6 +14,7 @@ public class LobbySelection : NetworkBehaviour
     public static int finalClientSelection = 0;
     private MeniuManager meniu;
 
+    //
     [Header("Butoane selectie personaj")]
     public Button butonWitch;
     public Button butonCat;
@@ -26,40 +27,52 @@ public class LobbySelection : NetworkBehaviour
     public TextMeshProUGUI textSelectieHost;
     public TextMeshProUGUI textSelectieClient;
 
-    // Se apeleaza cand obiectul e spawnat in retea
+    // spawn in retea
     public override void OnNetworkSpawn()
     {
         meniu = FindFirstObjectByType<MeniuManager>();
         if (IsServer)
         {
-            // Setam numarul initial de jucatori
+            // nr initial de jucatori
             nrJucatori.Value = NetworkManager.Singleton.ConnectedClients.Count;
-            // Ascultam pentru conectari si deconectari
+            // connect/disconnect
             NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
             NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
         }
     }
 
-    // Se apeleaza cand un client nou se conecteaza
+    // la un nou connect
     void OnClientConnected(ulong clientId)
     {
         nrJucatori.Value = NetworkManager.Singleton.ConnectedClients.Count;
     }
 
-    // Se apeleaza cand un client se deconecteaza
+    // la disconn
     void OnClientDisconnected(ulong clientId)
     {
         nrJucatori.Value = NetworkManager.Singleton.ConnectedClients.Count;
-        // Resetam selectia clientului daca el a iesit
+        // reset la selectie in caz de disconn
         if (clientId != 0)
             clientSelection.Value = 0;
     }
 
-    // Functii apelate de butoanele din lobby
+    public void TrimiteeFadeInTuturor()
+    {
+        FadeInRpc();
+    }
+
+    [Rpc(SendTo.Everyone, InvokePermission = RpcInvokePermission.Server)]
+    void FadeInRpc()
+    {
+        if (SceneFade.Instance != null)
+            SceneFade.Instance.StartCoroutine(SceneFade.Instance.FadeIn(0.5f));
+    }
+
+    // apelate in lobby
     public void AlegeWitch() { TrimiteAlegereaRpc(1, NetworkManager.Singleton.LocalClientId); }
     public void AlegeCat() { TrimiteAlegereaRpc(2, NetworkManager.Singleton.LocalClientId); }
 
-    // RPC trimis catre server pentru a salva selectia jucatorului
+    // salvare selectie pe server
     [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     void TrimiteAlegereaRpc(int choice, ulong clientId)
     {
@@ -70,10 +83,10 @@ public class LobbySelection : NetworkBehaviour
             clientSelection.Value = choice;
     }
 
-    // Apelata de butonul Quit - determina ce actiune sa faca in functie de rol
+    // quit, in functie de rol
     public void QuitLobby()
     {
-        // Nu facem nimic daca nu suntem conectati
+        // nu e conectat
         if (!IsSpawned) return;
         if (IsHost)
             QuitHostRpc();
@@ -81,7 +94,7 @@ public class LobbySelection : NetworkBehaviour
             QuitClientRpc();
     }
 
-    // Hostul iese - trimitem toti jucatorii la meniu si oprim reteaua
+    // hostul iese, reset
     [Rpc(SendTo.Everyone, InvokePermission = RpcInvokePermission.Everyone)]
     void QuitHostRpc()
     {
@@ -90,18 +103,18 @@ public class LobbySelection : NetworkBehaviour
         if (meniu != null) meniu.ResetLobby();
     }
 
-    // Clientul iese - resetam selectia lui si il deconectam
+    // clientul iese, reset la selectie si disconn
     [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     void QuitClientRpc()
     {
         clientSelection.Value = 0;
         nrJucatori.Value = NetworkManager.Singleton.ConnectedClients.Count - 1;
         NetworkManager.Singleton.DisconnectClient(1);
-        // Trimitem clientul inapoi la meniu
+        // schimb de meniu
         ReturnClientToMenuRpc();
     }
 
-    // Se trimite doar catre client (nu server) ca sa se intoarca la meniu
+    // schimb de meniu, doar pt client
     [Rpc(SendTo.NotServer, InvokePermission = RpcInvokePermission.Server)]
     void ReturnClientToMenuRpc()
     {
@@ -112,14 +125,14 @@ public class LobbySelection : NetworkBehaviour
 
     void Update()
     {
-        // Nu rulam Update daca nu suntem conectati
+        // 
         if (!IsSpawned) return;
 
-        // Actualizam textul cu numarul de jucatori
+        // nr de jucatori
         if (textJucatori != null)
             textJucatori.text = "Jucatori conectati: " + nrJucatori.Value + "/2";
 
-        // Deblocam butonul Start doar daca sunt 2 jucatori si ambii au ales
+        // deblocare la nr bun de jucatori
         if (NetworkManager.Singleton.IsHost)
         {
             if (meniu != null && meniu.butonStart != null)
@@ -140,7 +153,7 @@ public class LobbySelection : NetworkBehaviour
 
     public override void OnDestroy()
     {
-        // Dezabonam callback-urile cand obiectul e distrus
+        // distrugere obiect la callback
         if (NetworkManager.Singleton != null)
         {
             NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnected;

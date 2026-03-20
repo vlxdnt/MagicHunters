@@ -8,37 +8,41 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Threading.Tasks;
+using System.Collections;
 using System;
 
-// Gestioneaza meniul principal: Host, Join, Lobby si tranzitia catre joc
+// creierul, gestionam meniul si tranzitia catre joc
 public class MeniuManager : MonoBehaviour
 {
+    //panou principal + lobby
     [Header("Panouri")]
-    public GameObject panelMeniu;  // Panoul principal cu butoanele Host/Join
-    public GameObject panelLobby;  // Panoul lobby-ului dupa conectare
+    public GameObject panelMeniu; 
+    public GameObject panelLobby; 
 
+    // things
     [Header("Input & Info")]
-    public TMP_InputField inputFieldCod; // Input field pentru codul de join
-    public Button inputButton;           // Butonul OK pentru a confirma codul
-    public TextMeshProUGUI textCodJoin;  // Textul care afiseaza codul generat de host
-    private string codJoinCurent = ""; // Variabila pentru a stoca codul curent 
+    public TMP_InputField inputFieldCod; // cod join
+    public Button inputButton;           // ok button
+    public TextMeshProUGUI textCodJoin;  //codu de join
+    private string codJoinCurent = ""; // stocare
     public TextMeshProUGUI textEroare;
 
+    // start button pt host
     [Header("Butoane Lobby")]
-    public Button butonStart; // Butonul Start, vizibil doar pentru host
+    public Button butonStart; 
 
+    // loading screen
     [Header("Loading")]
-    public GameObject panelLoading; //pentru loading screen la apasarea "Host"
+    public GameObject panelLoading;
 
     public static MeniuManager Instance;
 
     private void Awake()
     {
-        // Singleton pattern pentru a putea accesa MeniuManager din alte scripturi
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // Facem obiectul persistent intre scene
+            DontDestroyOnLoad(gameObject); // facem obiectul persistent intre scene
         }
         else
         {
@@ -47,10 +51,9 @@ public class MeniuManager : MonoBehaviour
     }
     private async void Start()
     {
-        // Facem obiectul persistent intre scene
         if (Instance != this) return; 
 
-        // Starea initiala a UI-ului
+        // starea initiala
         panelMeniu.SetActive(true);
         panelLobby.SetActive(false);
         inputFieldCod.gameObject.SetActive(false);
@@ -59,19 +62,18 @@ public class MeniuManager : MonoBehaviour
         if (butonStart != null)
             butonStart.gameObject.SetActive(false);
 
-        // Initializam Unity Services (necesar pentru Relay)
+        // pt unity relay
         await UnityServices.InitializeAsync();
 
-        // Autentificare anonima pentru a putea folosi Relay
+        // autentificare pt unity relay
         if (!AuthenticationService.Instance.IsSignedIn)
             await AuthenticationService.Instance.SignInAnonymouslyAsync();
     }
 
-    // Apelata cand jucatorul apasa Host
-    // Creeaza o sesiune Relay si porneste ca host
+    // face o sesiunea de relay ca si host
     public async void ButonHost_Apasat()
     {
-        // Ascundem meniul si aratam loading
+        // schimb de meniu
         panelMeniu.SetActive(false);
         panelLoading.SetActive(true);
         if (textEroare != null)
@@ -79,13 +81,13 @@ public class MeniuManager : MonoBehaviour
 
         try
         {
-            // Cream o alocare Relay pentru maxim 1 client (2 jucatori total)
+            // alocare pt un singur jucator pana la 2
             Allocation allocation = await RelayService.Instance.CreateAllocationAsync(1);
-            // Generam codul de join pe care clientul il va introduce
+            // generare cod
             string codJoin = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
-            codJoinCurent = codJoin; // Salvam codul curent 
+            codJoinCurent = codJoin; // salvare
 
-            // Configuram transportul cu datele Relay
+            // transportul de date al serverului
             var transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
             transport.SetHostRelayData(
                 allocation.RelayServer.IpV4,
@@ -96,16 +98,16 @@ public class MeniuManager : MonoBehaviour
             );
 
             NetworkManager.Singleton.StartHost();
-            // Afisam codul pe ecran ca hostul sa il poata da clientului
+            // codul afisat
             textCodJoin.text = "Cod Join: " + codJoin;
 
-            panelLoading.SetActive(false); // Ascundem loading si mergem la lobby
+            panelLoading.SetActive(false); // schimb meniu
             AfiseazaLobby();
         }
         catch (System.Exception e)
         {
             Debug.LogError("Eroare Host Relay: " + e.Message);
-            // Daca e eroare, ne intoarcem la meniu
+            //intoarcere la meniu
             panelLoading.SetActive(false);
             panelMeniu.SetActive(true);
         }
@@ -120,19 +122,18 @@ public class MeniuManager : MonoBehaviour
         }
     }
 
-    // Apelata cand jucatorul apasa Join
-    // Arata input field-ul pentru introducerea codului
+    // apasare join
     public void ButonDeschideIntroducereIP()
     {
         inputFieldCod.gameObject.SetActive(true);
         inputButton.gameObject.SetActive(true);
     }
 
-    // Apelata cand clientul apasa OK dupa introducerea codului
-    // Se conecteaza la sesiunea Relay a hostului
+    // apasare ok
     public async void ButonFinalizeazaConexiuneClient()
     {
         string cod = inputFieldCod.text.Trim();
+        //caz de cod invalid
         if (string.IsNullOrEmpty(cod))
         {
             textEroare.gameObject.SetActive(true);
@@ -142,10 +143,10 @@ public class MeniuManager : MonoBehaviour
 
         try
         {
-            // Ne alaturem sesiunii Relay cu codul primit de la host
+            // incearca conectarea la relay prin cod
             JoinAllocation joinAllocation = await RelayService.Instance.JoinAllocationAsync(cod);
 
-            // Configuram transportul cu datele Relay ale hostului
+            // datele de relay ale hostului
             var transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
             transport.SetClientRelayData(
                 joinAllocation.RelayServer.IpV4,
@@ -169,17 +170,17 @@ public class MeniuManager : MonoBehaviour
             
             if (textEroare != null)
             {
-                // Verificam daca motivul este ca acel cod nu a fost gasit
+                // cazuri
                 if (e.Reason == Unity.Services.Relay.RelayExceptionReason.JoinCodeNotFound)
                 {
                     textEroare.text = "Acest cod nu exista!";
                 }
-                // Verificam mesajul pentru a vedea daca lobby-ul si-a atins limita maxima de jucatori
+                // max players
                 else if (e.Message.ToLower().Contains("capacity") || e.Message.ToLower().Contains("full"))
                 {
                     textEroare.text = "Acest lobby este plin!";
                 }
-                // Orice alta eroare de la serverele Unity (ex: lipsa internet)
+                // lipsa internet
                 else
                 {
                     textEroare.text = "Eroare de conexiune la server!";
@@ -200,22 +201,30 @@ public class MeniuManager : MonoBehaviour
         }
     }
 
-    // Apelata de butonul Start (doar host)
-    // Incarca scena de joc pentru toti jucatorii
+    // apasare Start si incarca pt ambii jucatori
     public void ButonStartJoc()
     {
         if (NetworkManager.Singleton.IsServer)
         {
             LobbySelection lobby = FindFirstObjectByType<LobbySelection>();
-            if (lobby != null)            {
+            if (lobby != null)
+            {
                 LobbySelection.finalHostSelection = lobby.hostSelection.Value;
                 LobbySelection.finalClientSelection = lobby.clientSelection.Value;
             }
-            NetworkManager.Singleton.SceneManager.LoadScene("GameScene", UnityEngine.SceneManagement.LoadSceneMode.Single);
+            StartCoroutine(StartCuFade());
         }
     }
 
-    // Afiseaza panoul lobby si configureaza butonul Start
+    IEnumerator StartCuFade()
+    {
+        // fade out inainte de a schimba scena
+        yield return StartCoroutine(SceneFade.Instance.FadeOut(0.5f));
+        NetworkManager.Singleton.SceneManager.LoadScene("GameScene",
+            UnityEngine.SceneManagement.LoadSceneMode.Single);
+    }
+
+    //panou lobby
     void AfiseazaLobby()
     {
         panelMeniu.SetActive(false);
@@ -225,14 +234,14 @@ public class MeniuManager : MonoBehaviour
 
         if (butonStart != null)
         {
-            // Butonul Start e vizibil doar pentru host
+            // vizibilitate buton doar pt host
             butonStart.gameObject.SetActive(NetworkManager.Singleton.IsHost);
-            // Blocat initial pana ce ambii jucatori aleg personajul
+            // blocare pt a alege caracterul
             butonStart.interactable = false;
         }
     }
 
-    // Afiseaza un mesaj de eroare
+    //fct pt eroare
     public void AfiseazaEroare(string mesaj)
     {
         if (textEroare != null)
@@ -242,7 +251,7 @@ public class MeniuManager : MonoBehaviour
         }
     }
 
-    // Reseteaza UI-ul la starea initiala (folosit la iesirea din lobby)
+    //iesire din lobby, resetare UI
     public void ResetLobby()
     {
         panelMeniu.SetActive(true);
@@ -260,7 +269,7 @@ public class MeniuManager : MonoBehaviour
             butonStart.interactable = false;
         }
 
-        // Stergem codul de join afisat
+        // stergere cod
         if (textCodJoin != null)
             textCodJoin.text = "";
     }

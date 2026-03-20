@@ -1,84 +1,91 @@
 using Unity.Netcode;
 using UnityEngine;
 
-// Acest script se pune pe UIManager in MainMenu
-// Se ocupa de spawn-ul jucatorilor in GameScene in functie de selectia din lobby
+// se ocupa de spawn ul ambilor jucatori 
 public class GameSpawner : MonoBehaviour
 {
+    //pentru caractere
     [Header("Prefaburi")]
-    public GameObject prefabWitch; // Prefabul pentru Vrajitoare
-    public GameObject prefabCat;   // Prefabul pentru Pisica
+    public GameObject prefabWitch;
+    public GameObject prefabCat;
 
+    //spawnpoints - posibil de eliminat pe viitor in functie de cutscene-ul de inceput
     [Header("Puncte de Spawn (optional)")]
-    public Transform spawnHost;   // Pozitia de spawn pentru Host
-    public Transform spawnClient; // Pozitia de spawn pentru Client
+    public Transform spawnHost;   
+    public Transform spawnClient; 
 
     void OnEnable()
     {
-        // Asteptam ca NetworkManager sa fie gata inainte sa ne abonam la eveniment
+        //wait
         StartCoroutine(AsteaptaNetworkManager());
     }
 
     System.Collections.IEnumerator AsteaptaNetworkManager()
     {
-        // Asteptam sa existe NetworkManager
         while (NetworkManager.Singleton == null)
             yield return null;
 
-        // Asteptam sa existe SceneManager
         while (NetworkManager.Singleton.SceneManager == null)
             yield return null;
 
-        // Ne abonam la evenimentul de incarcare scena
+        // incarcare scena
         NetworkManager.Singleton.SceneManager.OnLoadComplete += OnSceneLoaded;
     }
 
-    // Se apeleaza automat cand o scena se incarca complet
     void OnSceneLoaded(ulong clientId, string sceneName, UnityEngine.SceneManagement.LoadSceneMode loadSceneMode)
     {
-        // Ne intereseaza doar GameScene
         if (sceneName != "GameScene") return;
-        // Doar serverul face spawn
+        //
         if (!NetworkManager.Singleton.IsServer) return;
 
-        // Dezinregistram evenimentul ca sa nu se apeleze de mai multe ori
+        // sa nu faca reapel
         NetworkManager.Singleton.SceneManager.OnLoadComplete -= OnSceneLoaded;
 
-        // Cautam selectiile din lobby
+        // selectia jucatorilor
         int hostChoice = LobbySelection.finalHostSelection;
         int clientChoice = LobbySelection.finalClientSelection;
 
         Debug.Log("Host selection: " + hostChoice);
         Debug.Log("Client selection: " + clientChoice);
 
-        // Verificam daca selectiile sunt valide
+        // verificare
         if (hostChoice == 0 || clientChoice == 0)
         {
             Debug.LogWarning("GameSpawner: Unul dintre jucatori nu are selectia salvata corect!");
         }
 
-        // Spawnam jucatorii cu prefaburile corecte
+        // spawn ul jucatorilor
         SpawneazaJucator(0, hostChoice, spawnHost);
         SpawneazaJucator(1, clientChoice, spawnClient);
+
+        LobbySelection lobby = FindFirstObjectByType<LobbySelection>();
+        if (lobby != null)
+            lobby.TrimiteeFadeInTuturor();
+        else
+            Debug.LogError("Nu gasesc LobbySelection");
+
+        lobby.TrimiteeFadeInTuturor();
     }
 
-    // Instantiaza si spawneaza prefabul corect pentru un jucator
+    // pentru fiecare jucator
     void SpawneazaJucator(ulong clientId, int selectie, Transform punct)
     {
-        // selectie 1 = Witch, selectie 2 = Cat
+        // selectie
         GameObject prefab = (selectie == 1) ? prefabWitch : prefabCat;
 
-        // Folosim punctul de spawn daca exista, altfel pozitii default
+        // daca exista, daca nu, default pos
         Vector3 pozitie = punct != null ? punct.position : (clientId == 0 ? new Vector3(-2, 0, 0) : new Vector3(2, 0, 0));
 
         GameObject obj = Instantiate(prefab, pozitie, Quaternion.identity);
-        // Assignam obiectul ca player object pentru clientul respectiv
+        // player object
         obj.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId);
+
+        StartCoroutine(SceneFade.Instance.FadeIn(0.5f));
     }
 
     void OnDestroy()
     {
-        // Dezabonam evenimentul cand obiectul e distrus ca sa evitam memory leaks
+        // memory leak
         if (NetworkManager.Singleton != null && NetworkManager.Singleton.SceneManager != null)
             NetworkManager.Singleton.SceneManager.OnLoadComplete -= OnSceneLoaded;
     }

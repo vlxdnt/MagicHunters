@@ -58,5 +58,9 @@
   "ChooseText": {
     "ro": "Alege-ti personajul:",
     "en": "Choose your character:"
+  },
+  "BrightText": {
+    "ro": "Luminozitate:",
+    "en": "Brightness:"
   }
 }
