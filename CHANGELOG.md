@@ -1,11 +1,11 @@
 # Istoric Modificări (Changelog)
 
-## [v0.0.9] - 20.03.2026
+## [v0.0.9] - 22.03.2026
 ### Adaugat
 - **Brightness Option:** adaugata optiunea de a modifica luminozitatea jocului
 
 ### De rezolvat:
-- **Bug la animatii pe client:** animatia de sarit pentru Witch nu se aplica la Client
+- **Bug la animatii pe client:** animatia de sarit pentru Witch nu se aplica la Client - **REZOLVAT**
 - **Bug la fade** fade ul se face doar pe host, pe client inca nu se aplica **REZOLVAT**
 - **Bug la brightness** luminozitatea se schimba doar pe meniul de setari, nu overall **REZOLVAT**
 
