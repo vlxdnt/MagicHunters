@@ -50,6 +50,9 @@ public class PlayerInput : NetworkBehaviour
             Camera cameraJucator = GetComponentInChildren<Camera>();
             if (cameraJucator != null)
                 cameraJucator.gameObject.SetActive(false);
+
+            AudioListener otherEars = GetComponentInChildren<AudioListener>();
+            if (otherEars != null) otherEars.enabled = false;
         }
     }
 

@@ -14,7 +14,6 @@ public class LobbySelection : NetworkBehaviour
     public static int finalClientSelection = 0;
     private MeniuManager meniu;
 
-    //
     [Header("Butoane selectie personaj")]
     public Button butonWitch;
     public Button butonCat;
@@ -31,6 +30,12 @@ public class LobbySelection : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         meniu = FindFirstObjectByType<MeniuManager>();
+
+        // abonare la schimbari de variabile (inlocuieste complet Update-ul)
+        nrJucatori.OnValueChanged += OnNrJucatoriChanged;
+        hostSelection.OnValueChanged += OnHostSelectionChanged;
+        clientSelection.OnValueChanged += OnClientSelectionChanged;
+
         if (IsServer)
         {
             // nr initial de jucatori
@@ -39,17 +44,66 @@ public class LobbySelection : NetworkBehaviour
             NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
             NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
         }
+
+        // fortam o actualizare initiala a UI-ului la spawn
+        OnNrJucatoriChanged(0, nrJucatori.Value);
+        OnHostSelectionChanged(0, hostSelection.Value);
+        OnClientSelectionChanged(0, clientSelection.Value);
     }
+
+    // EVENIMENTE PENTRU UI
+
+    private void OnNrJucatoriChanged(int previousValue, int newValue)
+    {
+        if (textJucatori != null)
+            textJucatori.text = $"Jucatori conectati: {newValue}/2";
+        
+        VerificaButonStart();
+    }
+
+    private void OnHostSelectionChanged(int previousValue, int newValue)
+    {
+        if (newValue != 0 && textSelectieHost != null)
+            textSelectieHost.text = $"Host: {(newValue == 1 ? "Witch" : "Cat")}";
+            
+        VerificaButonStart();
+    }
+
+    private void OnClientSelectionChanged(int previousValue, int newValue)
+    {
+        if (newValue != 0 && textSelectieClient != null)
+            textSelectieClient.text = $"Client: {(newValue == 1 ? "Witch" : "Cat")}";
+            
+        VerificaButonStart();
+    }
+
+    private void VerificaButonStart()
+    {
+        // deblocare la nr bun de jucatori si selectii diferite
+        if (NetworkManager.Singleton.IsHost && meniu != null && meniu.butonStart != null)
+        {
+            meniu.butonStart.interactable = (nrJucatori.Value == 2 && 
+                                             hostSelection.Value != 0 && 
+                                             clientSelection.Value != 0 && 
+                                             hostSelection.Value != clientSelection.Value);
+        }
+    }
+
+    // LOGICA DE RETEA SI CONEXIUNI 
 
     // la un nou connect
     void OnClientConnected(ulong clientId)
     {
+        if (this == null || !IsSpawned || NetworkManager.Singleton == null) return;
+        
         nrJucatori.Value = NetworkManager.Singleton.ConnectedClients.Count;
     }
 
     // la disconn
     void OnClientDisconnected(ulong clientId)
     {
+        if (this == null || !IsSpawned || NetworkManager.Singleton == null) return;
+
         nrJucatori.Value = NetworkManager.Singleton.ConnectedClients.Count;
         // reset la selectie in caz de disconn
         if (clientId != 0)
@@ -76,7 +130,7 @@ public class LobbySelection : NetworkBehaviour
     [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     void TrimiteAlegereaRpc(int choice, ulong clientId)
     {
-        Debug.Log("RPC primit! ClientId: " + clientId + " Choice: " + choice);
+        Debug.Log($"RPC primit! ClientId: {clientId} Choice: {choice}");
         if (clientId == 0)
             hostSelection.Value = choice;
         else
@@ -123,36 +177,13 @@ public class LobbySelection : NetworkBehaviour
         if (meniu != null) meniu.ResetLobby();
     }
 
-    void Update()
-    {
-        // 
-        if (!IsSpawned) return;
-
-        // nr de jucatori
-        if (textJucatori != null)
-            textJucatori.text = "Jucatori conectati: " + nrJucatori.Value + "/2";
-
-        // deblocare la nr bun de jucatori
-        if (NetworkManager.Singleton.IsHost)
-        {
-            if (meniu != null && meniu.butonStart != null)
-                meniu.butonStart.interactable = (nrJucatori.Value == 2 && hostSelection.Value != 0 && clientSelection.Value != 0 && hostSelection.Value != clientSelection.Value);
-        }
-
-        if (butonWitch == null || butonCat == null) return;
-
-        if (hostSelection.Value != 0 && textSelectieHost != null)
-        {
-            textSelectieHost.text = "Host: " + (hostSelection.Value == 1 ? "Witch" : "Cat");
-        }
-        if (clientSelection.Value != 0 && textSelectieClient != null)
-        {
-            textSelectieClient.text = "Client: " + (clientSelection.Value == 1 ? "Witch" : "Cat");
-        }
-    }
-
     public override void OnDestroy()
     {
+        // DEZABONARE DE LA TOT pentru a preveni memory leaks
+        nrJucatori.OnValueChanged -= OnNrJucatoriChanged;
+        hostSelection.OnValueChanged -= OnHostSelectionChanged;
+        clientSelection.OnValueChanged -= OnClientSelectionChanged;
+
         // distrugere obiect la callback
         if (NetworkManager.Singleton != null)
         {

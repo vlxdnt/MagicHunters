@@ -16,12 +16,9 @@ public class GameDisconnectHandler : NetworkBehaviour
             NetworkManager.Singleton.Shutdown();
         }   
 
-        SceneManager.LoadScene("MainMenu");
+        MeniuManager.eroareIntreScene = "Un jucator s-a deconectat. S-a revenit la meniu.";
 
-        if (MeniuManager.Instance != null)
-        {
-            MeniuManager.Instance.AfiseazaEroare("Un jucator s-a deconectat! S-a revenit la meniul principal.");
-        }
+        SceneManager.LoadScene("MainMenu");
     }
 
     public override void OnDestroy()

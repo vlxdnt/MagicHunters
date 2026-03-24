@@ -1,92 +1,62 @@
 using Unity.Netcode;
 using UnityEngine;
+using System.Collections.Generic;
 
-// se ocupa de spawn ul ambilor jucatori 
-public class GameSpawner : MonoBehaviour
+public class GameSpawner : NetworkBehaviour
 {
-    //pentru caractere
     [Header("Prefaburi")]
     public GameObject prefabWitch;
     public GameObject prefabCat;
 
-    //spawnpoints - posibil de eliminat pe viitor in functie de cutscene-ul de inceput
     [Header("Puncte de Spawn (optional)")]
     public Transform spawnHost;   
     public Transform spawnClient; 
 
-    void OnEnable()
+    public override void OnNetworkSpawn()
     {
-        //wait
-        StartCoroutine(AsteaptaNetworkManager());
+        if (IsServer)
+        {
+            // Asteptam ca TOTI jucatorii sa termine ecranul de loading
+            NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += OnToataLumeaIncarcata;
+        }
     }
 
-    System.Collections.IEnumerator AsteaptaNetworkManager()
-    {
-        while (NetworkManager.Singleton == null)
-            yield return null;
-
-        while (NetworkManager.Singleton.SceneManager == null)
-            yield return null;
-
-        // incarcare scena
-        NetworkManager.Singleton.SceneManager.OnLoadComplete += OnSceneLoaded;
-    }
-
-    void OnSceneLoaded(ulong clientId, string sceneName, UnityEngine.SceneManagement.LoadSceneMode loadSceneMode)
+    void OnToataLumeaIncarcata(string sceneName, UnityEngine.SceneManagement.LoadSceneMode loadSceneMode, List<ulong> clientsCompleted, List<ulong> clientsTimedOut)
     {
         if (sceneName != "GameScene") return;
-        //
-        if (!NetworkManager.Singleton.IsServer) return;
 
-        // sa nu faca reapel
-        NetworkManager.Singleton.SceneManager.OnLoadComplete -= OnSceneLoaded;
+        // 1. Spawnam Host-ul abia acum
+        SpawneazaJucator(NetworkManager.ServerClientId, LobbySelection.finalHostSelection, spawnHost);
 
-        // selectia jucatorilor
-        int hostChoice = LobbySelection.finalHostSelection;
-        int clientChoice = LobbySelection.finalClientSelection;
-
-        Debug.Log("Host selection: " + hostChoice);
-        Debug.Log("Client selection: " + clientChoice);
-
-        // verificare
-        if (hostChoice == 0 || clientChoice == 0)
+        // 2. Spawnam si Clientii
+        foreach (ulong clientId in clientsCompleted)
         {
-            Debug.LogWarning("GameSpawner: Unul dintre jucatori nu are selectia salvata corect!");
+            if (clientId != NetworkManager.ServerClientId)
+            {
+                SpawneazaJucator(clientId, LobbySelection.finalClientSelection, spawnClient);
+            }
         }
-
-        // spawn ul jucatorilor
-        SpawneazaJucator(0, hostChoice, spawnHost);
-        SpawneazaJucator(1, clientChoice, spawnClient);
-
-        LobbySelection lobby = FindFirstObjectByType<LobbySelection>();
-        if (lobby != null)
-            lobby.TrimiteeFadeInTuturor();
-        else
-            Debug.LogError("Nu gasesc LobbySelection");
-
-        lobby.TrimiteeFadeInTuturor();
     }
 
-    // pentru fiecare jucator
     void SpawneazaJucator(ulong clientId, int selectie, Transform punct)
     {
-        // selectie
         GameObject prefab = (selectie == 1) ? prefabWitch : prefabCat;
+        if (prefab == null) return;
 
-        // daca exista, daca nu, default pos
-        Vector3 pozitie = punct != null ? punct.position : (clientId == 0 ? new Vector3(-2, 0, 0) : new Vector3(2, 0, 0));
+        Vector3 pozitie = punct != null ? punct.position : (clientId == NetworkManager.ServerClientId ? new Vector3(-2, 0, 0) : new Vector3(2, 0, 0));
 
         GameObject obj = Instantiate(prefab, pozitie, Quaternion.identity);
-        // player object
-        obj.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId);
-
-        StartCoroutine(SceneFade.Instance.FadeIn(0.5f));
+        obj.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId, true);
     }
 
-    void OnDestroy()
+    void Start()
     {
-        // memory leak
+        if (SceneFade.Instance != null) StartCoroutine(SceneFade.Instance.FadeIn(0.5f));
+    }
+
+    public override void OnDestroy()
+    {
         if (NetworkManager.Singleton != null && NetworkManager.Singleton.SceneManager != null)
-            NetworkManager.Singleton.SceneManager.OnLoadComplete -= OnSceneLoaded;
+            NetworkManager.Singleton.SceneManager.OnLoadEventCompleted -= OnToataLumeaIncarcata;
     }
 }

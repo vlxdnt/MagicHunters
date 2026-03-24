@@ -26,6 +26,7 @@ public class MeniuManager : MonoBehaviour
     public TextMeshProUGUI textCodJoin;  //codu de join
     private string codJoinCurent = ""; // stocare
     public TextMeshProUGUI textEroare;
+    public static string eroareIntreScene = "";
 
     // start button pt host
     [Header("Butoane Lobby")]
@@ -42,7 +43,6 @@ public class MeniuManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // facem obiectul persistent intre scene
         }
         else
         {
@@ -62,12 +62,24 @@ public class MeniuManager : MonoBehaviour
         if (butonStart != null)
             butonStart.gameObject.SetActive(false);
 
-        // pt unity relay
-        await UnityServices.InitializeAsync();
+        // Afisare eroare dupa deconectare
+        if (!string.IsNullOrEmpty(eroareIntreScene))
+        {
+            AfiseazaEroare(eroareIntreScene);
+            eroareIntreScene = ""; 
+        }
+
+        // verificam daca serviciile sunt deja pornite inainte sa le initiem
+        if (UnityServices.State == Unity.Services.Core.ServicesInitializationState.Uninitialized)
+        {
+            await UnityServices.InitializeAsync();
+        }
 
         // autentificare pt unity relay
         if (!AuthenticationService.Instance.IsSignedIn)
+        {
             await AuthenticationService.Instance.SignInAnonymouslyAsync();
+        }
     }
 
     // face o sesiunea de relay ca si host
@@ -277,5 +289,14 @@ public class MeniuManager : MonoBehaviour
     public void IesiDinJoc()
     {
         Application.Quit();
+    }
+
+    private void OnDestroy()
+    {
+        // curatam instanta cand scena se distruge
+        if (Instance == this)
+        {
+            Instance = null;
+        }
     }
 }

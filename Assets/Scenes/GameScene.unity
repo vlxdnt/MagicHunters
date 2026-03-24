@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 21814176}
   - component: {fileID: 21814174}
   - component: {fileID: 21814175}
+  - component: {fileID: 21814177}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -190,6 +191,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &21814177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 21814173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8461a6cf8037f14fbdadb94ce0e0ea7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameSpawner
+  ShowTopMostFoldoutHeaderGroup: 1
+  prefabWitch: {fileID: 6501798312373291870, guid: 7628ab155c6994a408b1ee39dcc28849, type: 3}
+  prefabCat: {fileID: 6501798312373291870, guid: 4dcfb2c8fdcbdbc4db6e91725bd200e3, type: 3}
+  spawnHost: {fileID: 0}
+  spawnClient: {fileID: 0}
 --- !u!1 &273949675
 GameObject:
   m_ObjectHideFlags: 0
@@ -443,7 +461,7 @@ TilemapRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
-  m_ChunkCullingBounds: {x: 0, y: 0.5, z: 0}
+  m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
   m_SortOrder: 0
@@ -1270,7 +1288,7 @@ CompositeCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_GeometryType: 0
+  m_GeometryType: 1
   m_GenerationType: 0
   m_EdgeRadius: 0
   m_ColliderPaths:
