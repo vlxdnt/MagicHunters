@@ -227,7 +227,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_MaskInteraction: 0
   m_Sprite: {fileID: -4228546371000048862, guid: ba0e0ef12ceaa4d448bfd77f6ec1ea57, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -466,7 +466,7 @@ MonoBehaviour:
   razaVerificare: 1
   stratPodea:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 1024
   flipX:
     m_InternalValue: 0
 --- !u!114 &3626957795071789294

@@ -62,5 +62,9 @@
   "BrightText": {
     "ro": "Luminozitate:",
     "en": "Brightness:"
+  },
+  "TextPlayers": {
+    "ro": "Jucatori conectati:",
+    "en": "Connected players:"
   }
 }

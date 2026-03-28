@@ -64,8 +64,7 @@ public class Language : MonoBehaviour
         if (texte.ContainsKey(cheie) && texte[cheie].ContainsKey(codLimba))
             return texte[cheie][codLimba];
 
-        // returnare in caz de nu
-        Debug.LogWarning("Cheia lipsa din localizare: " + cheie);
+        //
         return cheie;
     }
 

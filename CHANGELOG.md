@@ -1,5 +1,19 @@
 # Istoric Modificări (Changelog)
 
+## [v0.1.0] - 28.03.2026
+### Adaugat
+- **Intro cutscene:**: adaugat animatie de inceput(playerinput off)
+- **Map:**: facuta o mapa de test
+- **Modificari minore**: sprite-uri adaugate, facuta o mapa de test(trb redimensionata camera)
+
+### De rezolvat:
+- **Bug la flip**
+- **Posibil snap la terminarea timeline-ului**
+
+### Next update:
+- **Pause Menu** 
+- **Mapa finala, camera view marit, border pentru mapa** 
+
 ## [v0.0.9] - 22.03.2026
 ### Adaugat
 - **Brightness Option:** adaugata optiunea de a modifica luminozitatea jocului

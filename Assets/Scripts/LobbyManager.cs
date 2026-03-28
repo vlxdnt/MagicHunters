@@ -56,7 +56,7 @@ public class LobbySelection : NetworkBehaviour
     private void OnNrJucatoriChanged(int previousValue, int newValue)
     {
         if (textJucatori != null)
-            textJucatori.text = $"Jucatori conectati: {newValue}/2";
+            textJucatori.text = $"{newValue}/2";
         
         VerificaButonStart();
     }
@@ -179,7 +179,7 @@ public class LobbySelection : NetworkBehaviour
 
     public override void OnDestroy()
     {
-        // DEZABONARE DE LA TOT pentru a preveni memory leaks
+        // memory leaks
         nrJucatori.OnValueChanged -= OnNrJucatoriChanged;
         hostSelection.OnValueChanged -= OnHostSelectionChanged;
         clientSelection.OnValueChanged -= OnClientSelectionChanged;

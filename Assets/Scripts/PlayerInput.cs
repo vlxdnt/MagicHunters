@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using Unity.Netcode;
 using UnityEngine.InputSystem;
 
@@ -35,7 +35,7 @@ public class PlayerInput : NetworkBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
     // obiectul e spawnat in retea
@@ -74,16 +74,20 @@ public class PlayerInput : NetworkBehaviour
         }
     }
 
-    void Update()
+    void Update() //de verificat
     {
-        //flip pt toti
-        spriteRenderer.flipX = flipX.Value;
+        // flip vizual
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.flipX = flipX.Value;
+        }
 
         if (!IsOwner) return;
 
-        // directia sprite-ului, lasam < 0 (> 0 il roteste invers)
-        if (vectorMiscare.x != 0)
-            flipX.Value = vectorMiscare.x < 0;
+        if (Mathf.Abs(vectorMiscare.x) > 0.1f)
+        {
+            flipX.Value = vectorMiscare.x < 0; //true pt stanga
+        }
     }
 
     void LateUpdate()
