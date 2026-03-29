@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using Unity.Netcode;
 using UnityEngine.InputSystem;
+using NUnit.Framework;
 
 // pentru input/miscare comuna a jucatorilor
 // sau individual prin WitchAnimator.cs/CatAnimator.cs
@@ -24,6 +25,7 @@ public class PlayerInput : NetworkBehaviour
     public bool EstePePodea => estePePodea;
     public Vector2 VectorMiscare => vectorMiscare;
     public bool AJumped { get; private set; }
+    public bool IsJumpHeld {get; private set;}
 
     //flip sincronizat
     public NetworkVariable<bool> flipX = new NetworkVariable<bool>(
@@ -67,10 +69,18 @@ public class PlayerInput : NetworkBehaviour
     public void OnJump(InputAction.CallbackContext context)
     {
         if (!IsOwner) return;
-        if (estePePodea && context.started)
+        if (context.started)
         {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, fortaSarit);
-            AJumped = true; // semnalizam ca a sarit
+            if (estePePodea)
+            {
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, fortaSarit);
+                AJumped = true; // semnalizam ca a sarit
+            }
+            IsJumpHeld = true; // semnalizam ca tasta de salt e tinuta
+        }
+        else if (context.canceled)
+        {
+            IsJumpHeld = false; // semnalizam ca tasta de salt nu mai e tinuta
         }
     }
 

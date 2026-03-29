@@ -1,5 +1,24 @@
 # Istoric Modificări (Changelog)
 
+## [v0.1.1] - 29.03.2026
+
+### Adaugat
+- **Night Vision:** pisica acum poate vedea in intuneric pe levelele intunecate si vrajitoare are doar un faint glow
+- **Glide mechanic:** vrajitoarea acum poate da glide daca tine apasat space
+
+### Modificat
+
+- **Organizare:** organizat scripturile in foldere pentru a fi mai usor de gasit
+
+### De rezolvat:
+- **Bug la flip**
+- **Posibil snap la terminarea timeline-ului**
+- **Daca spamezi jump cu pisica uneori da double jump**
+
+### Next update:
+- **Pause Menu** 
+- **Mapa finala, camera view marit, border pentru mapa** 
+
 ## [v0.1.0] - 28.03.2026
 ### Adaugat
 - **Intro cutscene:**: adaugat animatie de inceput(playerinput off)
