@@ -1,5 +1,18 @@
 # Istoric Modificări (Changelog)
 
+## [v0.1.4] - 30.03.2026
+### Adaugat
+- **Double jump:** pisica sare de 2 ori
+- **Dash:** pisica poate da dash
+
+### De rezolvat:
+- **Bug la flip:** cand se termina timeline-ul pisica ramane pe scale -1
+- **Limita personajelor:** camera functioneaza pe limite, personajele inca pot trece de ele
+
+### Next update:
+- **Sunete in intro/overall**
+- **Mai multe sprite-uri de teren, primul level design pt tutorial**
+
 ## [v0.1.3] - 30.03.2026
 ### Adaugat
 - **Replici in intro** adaugata o secventa de cateva replici intre personaje

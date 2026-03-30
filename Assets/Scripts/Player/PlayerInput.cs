@@ -9,10 +9,13 @@ public class PlayerInput : NetworkBehaviour
     [Header("Miscare")]
     public float vitezaMiscare = 1f;
     public float fortaSarit = 5f;
+    public int sarituriMaxime = 1;
+    private int sarituriRamase;
+
 
     [Header("Verificare Podea")]
     public Transform verificarePodea;
-    public float razaVerificare = 0.2f;
+    public Vector2 dimensiuneVerificare = new Vector2(0.5f, 0.1f);
     public LayerMask stratPodea;
 
     private Rigidbody2D rb;
@@ -24,6 +27,8 @@ public class PlayerInput : NetworkBehaviour
     public bool EstePePodea => estePePodea;
     public Vector2 VectorMiscare => vectorMiscare;
     public bool AJumped { get; private set; }
+    public bool ADashed { get; private set; }
+    public bool miscareBlocata = false;
     public bool IsJumpHeld { get; private set; }
     public bool controlActiv = false;
 
@@ -87,16 +92,27 @@ public class PlayerInput : NetworkBehaviour
         if (!IsOwner || !controlActiv) return;
         if (context.started)
         {
-            if (estePePodea)
+            if (sarituriRamase > 0)
             {
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f); 
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, fortaSarit);
                 AJumped = true; // semnalizam ca a sarit
+                IsJumpHeld = true; // semnalizam ca tasta de salt e tinuta
+                sarituriRamase--; // scadem sariturile ramase
             }
-            IsJumpHeld = true; // semnalizam ca tasta de salt e tinuta
         }
         else if (context.canceled)
         {
             IsJumpHeld = false; // semnalizam ca tasta de salt nu mai e tinuta
+        }
+    }
+
+    public void OnDash(InputAction.CallbackContext context)
+    {
+        if (!IsOwner) return;
+        if (context.started)
+        {
+            ADashed = true; // semnalizam ca a dat dash
         }
     }
 
@@ -112,16 +128,45 @@ public class PlayerInput : NetworkBehaviour
     void LateUpdate()
     {
         AJumped = false;
+        ADashed = false;
     }
 
     void FixedUpdate()
     {
         //pt ground
         if (verificarePodea != null)
-            estePePodea = Physics2D.OverlapCircle(verificarePodea.position, razaVerificare, stratPodea);
+        {
+            Collider2D obiectLovit = Physics2D.OverlapBox(verificarePodea.position, dimensiuneVerificare, 0f, stratPodea);
+            estePePodea = obiectLovit != null;
 
+            // NU STERGE IFUL ASTA, SOMEHOW LOGUL ASTA A REPARAT JUMPUL, NU STIU DE CE, DAR DACA IL STERGI PROBABIL SA SE STRICE
+            if (estePePodea)
+            {
+                Debug.Log($"[{gameObject.name}] Cutia a lovit: " + obiectLovit.gameObject.name);
+            }
+
+            if (estePePodea && rb.linearVelocity.y <= 0.1f)
+            {
+                sarituriRamase = sarituriMaxime; // resetam sariturile cand aterizeaza
+            }
+        }
+        
         //axa X
-        if (!IsOwner || !controlActiv) return;
+        if (!IsOwner || miscareBlocata) return;
         rb.linearVelocity = new Vector2(vectorMiscare.x * vitezaMiscare, rb.linearVelocity.y);
+    }
+
+    // DEBUG
+    void OnDrawGizmosSelected()
+    {
+        if (verificarePodea != null)
+        {
+            // seteaza culoarea cutiei
+            Gizmos.color = estePePodea ? Color.green : Color.red;
+
+            // deseneaza cutia exacta pe care o foloseste fizica
+            // folosim dimensiunea setata de tine in Inspector
+            Gizmos.DrawWireCube(verificarePodea.position, dimensiuneVerificare);
+        }
     }
 }

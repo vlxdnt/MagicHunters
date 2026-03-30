@@ -275,7 +275,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 15951158
+  GlobalObjectIdHash: 1623746512
   InScenePlacedSourceGlobalObjectIdHash: 3053837811
   DeferredDespawnTick: 0
   Ownership: 1
@@ -422,11 +422,14 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   vitezaMiscare: 2
   fortaSarit: 5
+  sarituriMaxime: 1
   verificarePodea: {fileID: 2732546838691258911}
-  razaVerificare: 0.2
+  dimensiuneVerificare: {x: 0.5, y: 0.1}
   stratPodea:
     serializedVersion: 2
     m_Bits: 1024
+  miscareBlocata: 0
+  controlActiv: 0
   flipX:
     m_InternalValue: 0
 --- !u!114 &3626957795071789294
@@ -530,6 +533,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: c3394b35-e5dc-4df6-82b0-72fb266b7a87
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 21bd6b03-d2ae-43ec-9cef-f8890c4a126a
+    m_ActionName: 'Player/Dash[/Keyboard/c,/Keyboard/leftShift]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -740,7 +747,7 @@ Transform:
   m_GameObject: {fileID: 8975131632674171672}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.03, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

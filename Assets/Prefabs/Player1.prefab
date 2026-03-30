@@ -178,6 +178,7 @@ GameObject:
   - component: {fileID: 6033033274544841326}
   - component: {fileID: -5412662124746146345}
   - component: {fileID: 6898869363854303315}
+  - component: {fileID: 7762151525310565602}
   m_Layer: 3
   m_Name: Player1
   m_TagString: Player
@@ -484,11 +485,14 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   vitezaMiscare: 2
   fortaSarit: 5
+  sarituriMaxime: 2
   verificarePodea: {fileID: 2732546838691258911}
-  razaVerificare: 1
+  dimensiuneVerificare: {x: 0.5, y: 0.1}
   stratPodea:
     serializedVersion: 2
     m_Bits: 1024
+  miscareBlocata: 0
+  controlActiv: 0
   flipX:
     m_InternalValue: 0
 --- !u!114 &3626957795071789294
@@ -592,6 +596,22 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: c3394b35-e5dc-4df6-82b0-72fb266b7a87
     m_ActionName: UI/TrackedDeviceOrientation
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7118268269905250874}
+        m_TargetAssemblyTypeName: PlayerInput, Assembly-CSharp
+        m_MethodName: OnDash
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 21bd6b03-d2ae-43ec-9cef-f8890c4a126a
+    m_ActionName: 'Player/Dash[/Keyboard/c,/Keyboard/leftShift]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -675,6 +695,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CatNightVision
   ShowTopMostFoldoutHeaderGroup: 1
   luminaOchi: {fileID: -5412662124746146345}
+--- !u!114 &7762151525310565602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6501798312373291870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e529e68b840c8c043921a850ddfd7c7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CatAbilities
+  ShowTopMostFoldoutHeaderGroup: 1
+  fortaDash: 8
+  ridicareDash: 2
+  durataDash: 0.2
+  cooldownDash: 2
 --- !u!1 &8975131632674171672
 GameObject:
   m_ObjectHideFlags: 0
@@ -700,7 +737,7 @@ Transform:
   m_GameObject: {fileID: 8975131632674171672}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.04, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
