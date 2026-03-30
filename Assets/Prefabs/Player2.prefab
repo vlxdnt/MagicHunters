@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2479055763376936243}
   - component: {fileID: 7457983261374111056}
   - component: {fileID: 179565563395515036}
+  - component: {fileID: 9095392750678427079}
   m_Layer: 3
   m_Name: Camera
   m_TagString: MainCamera
@@ -69,7 +70,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 1.5
+  orthographic size: 2
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -137,6 +138,25 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!114 &9095392750678427079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3441699605991248291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 268cfcd295a81474ab656fe8f3b74ca3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraLimits
+  xMin: -7
+  xMax: 25
+  yMin: -5
+  yMax: 10
+  offsetX: 0
+  offsetY: 1.2
+  smoothSpeed: 5
 --- !u!1 &6501798312373291870
 GameObject:
   m_ObjectHideFlags: 0
@@ -159,6 +179,7 @@ GameObject:
   - component: {fileID: 1930475489183350201}
   - component: {fileID: 4504516913535506328}
   - component: {fileID: 1448902799096502202}
+  - component: {fileID: -6906570410613127915}
   m_Layer: 3
   m_Name: Player2
   m_TagString: Player
@@ -673,7 +694,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WitchAbilities
   ShowTopMostFoldoutHeaderGroup: 1
-  vitezaPlanare: -2
+  vitezaCadereLenta: -1
+  multiplicatorVitezaAer: 1.5
+--- !u!114 &-6906570410613127915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6501798312373291870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 268cfcd295a81474ab656fe8f3b74ca3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraLimits
+  xMin: -7
+  xMax: 25
+  yMin: -5
+  yMax: 10
+  offsetX: 0
+  offsetY: 2
+  smoothSpeed: 5
 --- !u!1 &8975131632674171672
 GameObject:
   m_ObjectHideFlags: 0

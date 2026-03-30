@@ -36,7 +36,7 @@ public class SceneFade : MonoBehaviour
     }
 
     //fade out
-    public IEnumerator FadeOut(float durata = 0.5f)
+    public IEnumerator FadeOut(float durata = 1.5f)
     {
         float t = 0;
         panelFade.gameObject.SetActive(true);

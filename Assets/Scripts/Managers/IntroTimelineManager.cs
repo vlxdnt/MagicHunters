@@ -26,34 +26,27 @@ public class IntroTimelineManager : NetworkBehaviour
     void ActiveazaControlClientRpc()
     {
         if (director == null) return;
-
         director.Stop();
 
-        // eliberare obiecte
         foreach (var output in director.playableAsset.outputs)
-        {
             director.ClearGenericBinding(output.sourceObject);
-        }
 
         director.RebuildGraph();
 
-        // pt control, sa nu ramana pe hold in timeline
         PlayerInput[] allPlayers = FindObjectsByType<PlayerInput>(FindObjectsSortMode.None);
         foreach (var player in allPlayers)
         {
-            // la pozitii
-            player.transform.localScale = Vector3.one;
             player.transform.rotation = Quaternion.identity;
+
+            Vector3 scale = player.transform.localScale;
+            scale.x = Mathf.Abs(scale.x); // mereu pozitiv
+            player.transform.localScale = scale;
 
             if (player.TryGetComponent(out Unity.Netcode.Components.NetworkTransform nt))
             {
                 nt.enabled = true;
-
-                //teleportare - posibil glitch la terminarea timeline-ului
                 if (player.IsOwner)
-                {
                     nt.Teleport(player.transform.position, player.transform.rotation, Vector3.one);
-                }
             }
 
             if (player.TryGetComponent(out Rigidbody2D rb))
@@ -61,11 +54,7 @@ public class IntroTimelineManager : NetworkBehaviour
                 rb.simulated = true;
                 rb.bodyType = RigidbodyType2D.Dynamic;
                 rb.linearVelocity = Vector2.zero;
-            }
-
-            if (player.IsOwner)
-            {
-                player.enabled = true;
+                rb.constraints = RigidbodyConstraints2D.FreezeRotation;
             }
         }
 
@@ -87,13 +76,16 @@ public class IntroTimelineManager : NetworkBehaviour
             GameObject witchObj = witchNet.gameObject;
             GameObject catObj = catNet.gameObject;
 
-            // dezactivare control ca sa nu cada prin mapa
-            SetPlayerState(witchObj, false);
-            SetPlayerState(catObj, false);
+            // activare control ca sa nu cada prin mapa
+            SetPlayerState(witchObj, true); 
+            SetPlayerState(catObj, true);
 
             // legare tracks in timeline
             foreach (var output in director.playableAsset.outputs)
             {
+                var binding = director.GetGenericBinding(output.sourceObject);
+                Debug.Log($"Track: '{output.streamName}' → Binding: {binding}");
+
                 if (output.streamName == "WitchRun" || output.streamName == "WitchAnim")
                     director.SetGenericBinding(output.sourceObject, witchObj.GetComponent<Animator>());
 
@@ -107,10 +99,15 @@ public class IntroTimelineManager : NetworkBehaviour
     }
 
     //
-    void SetPlayerState(GameObject obj, bool state)
+    void SetPlayerState(GameObject obj, bool blocat)
     {
-        if (obj.TryGetComponent(out PlayerInput pi)) pi.enabled = state;
-        if (obj.TryGetComponent(out Rigidbody2D rb)) rb.simulated = state;
-        if (obj.TryGetComponent(out Unity.Netcode.Components.NetworkTransform nt)) nt.enabled = state;
+        if (obj.TryGetComponent(out Rigidbody2D rb))
+        {
+            rb.simulated = true;
+            rb.linearVelocity = Vector2.zero;
+            rb.constraints = blocat
+                ? RigidbodyConstraints2D.FreezeAll
+                : RigidbodyConstraints2D.FreezeRotation;
+        }
     }
 }

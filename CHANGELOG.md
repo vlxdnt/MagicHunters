@@ -1,5 +1,25 @@
 # Istoric Modificări (Changelog)
 
+## [v0.1.3] - 30.03.2026
+### Adaugat
+- **Replici in intro** adaugata o secventa de cateva replici intre personaje
+
+### De rezolvat:
+- **Bug la flip:** cand se termina timeline-ul pisica ramane pe scale -1
+- **Limita personajelor:** camera functioneaza pe limite, personajele inca pot trece de ele
+
+### Next update:
+- **Sunete in intro/overall**
+- **Mai multe sprite-uri de teren, primul level design pt tutorial**
+
+## [v0.1.2] - 29.03.2026
+### Adaugat
+- **Limita camerei** facut script special pentru a nu depasi barierele mapei
+- **Bariera** sa nu iasa/cada din mapa
+
+### Modificat
+- **Rezolvat bug-ul de la flip**
+
 ## [v0.1.1] - 29.03.2026
 
 ### Adaugat
