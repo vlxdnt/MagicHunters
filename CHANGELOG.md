@@ -1,5 +1,23 @@
 # Istoric Modificări (Changelog)
 
+## [v0.1.5] - 30.03.2026
+### Adaugat:
+- **Sunete pentru pisica:** adaugate 2 sunete care sunt redate random la replicile pisicii
+- **Sunet pentru litere** (doar pentru vrajitoare)
+
+### Probleme rezolvate:
+- **Bug la flip** REZOLVAT
+- **Limita personajelor** REZOLVAT
+- **Actualizarea marimilor bulelor cu replici** REZOLVAT
+
+### De rezolvat:
+- **Bug la jump (pisica)**
+- **Bug la fade out** inca se vede o bucata din mapa cand se intra in joc pana sa se seteze camera
+
+### Next update:
+- **Sunete in intro/overall**
+- **Mai multe sprite-uri de teren, primul level design pt tutorial**
+
 ## [v0.1.4] - 30.03.2026
 ### Adaugat
 - **Double jump:** pisica sare de 2 ori
