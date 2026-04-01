@@ -57,6 +57,11 @@ public class PlayerInput : NetworkBehaviour
             if (input != null) input.enabled = false;
 
             // oprire camera
+            Camera cameraMea = GetComponentInChildren<Camera>();
+            if (cameraMea != null)
+            {
+                cameraMea.tag = "MainCamera";
+            }
             Camera cameraJucator = GetComponentInChildren<Camera>();
             if (cameraJucator != null)
                 cameraJucator.gameObject.SetActive(false);

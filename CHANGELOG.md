@@ -1,6 +1,11 @@
 # Istoric Modificări (Changelog)
 
-## [v0.1.5] - 30.03.2026
+## [v0.1.6] - 02.04.2026
+### Adaugat:
+- **Sprites:** pentru background si teren
+- **Efect parallax(background miscator)**
+
+## [v0.1.5] - 01.04.2026
 ### Adaugat:
 - **Sunete pentru pisica:** adaugate 2 sunete care sunt redate random la replicile pisicii
 - **Sunet pentru litere** (doar pentru vrajitoare)
