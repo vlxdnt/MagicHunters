@@ -43,6 +43,10 @@
     "ro": "Limba:",
     "en": "Language:"
   },
+  "MusicText": {
+    "ro": "Muzica:",
+    "en": "Music:"
+  },
   "ResolText": {
     "ro": "Rezolutie:",
     "en": "Resolution:"

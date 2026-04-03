@@ -11,6 +11,7 @@ public class SettingsManager : MonoBehaviour
 
     public Toggle toggleSunet;
     public Toggle toggleFullscreen;
+    public Toggle toggleMuzica;
 
     public TextMeshProUGUI textVolum;
     public Slider sliderVolum;
@@ -48,6 +49,11 @@ public class SettingsManager : MonoBehaviour
         float bright = PlayerPrefs.GetFloat("Luminozitate", 1f);
         sliderBright.value = bright;
         AplicaBright(bright);
+
+        bool muzicaActiva = PlayerPrefs.GetInt("MuzicaActiva", 1) == 1;
+        toggleMuzica.SetIsOnWithoutNotify(muzicaActiva);
+        if (BackgroundMusic.instance != null)
+            BackgroundMusic.instance.SeteazaMuteMuzica(muzicaActiva);
     }
 
     public void DeschideSettings()
@@ -95,6 +101,15 @@ public class SettingsManager : MonoBehaviour
 
         if (textVolum != null)
             textVolum.text = Mathf.RoundToInt(sliderVolum.value * 100) + "%";
+    }
+
+    public void AplicaMuzica(bool activ)
+    {
+        if (BackgroundMusic.instance != null)
+        {
+            BackgroundMusic.instance.SeteazaMuteMuzica(activ);
+        }
+        PlayerPrefs.SetInt("MuzicaActiva", activ ? 1 : 0);
     }
 
     void PopuleazaRezolutii()

@@ -1,5 +1,10 @@
 # Istoric Modificări (Changelog)
 
+## [v0.1.7] - 02.04.2026
+### Adaugat:
+- **Sunete**: a fost adaugat background music pentru meniu si pentru joc
+- **Adaugate niste sprite-uri pentru background**
+
 ## [v0.1.6] - 02.04.2026
 ### Adaugat:
 - **Sprites:** pentru background si teren
