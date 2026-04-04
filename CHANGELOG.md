@@ -1,5 +1,9 @@
 # Istoric Modificări (Changelog)
 
+## [v0.1.7.1] - 04.04.2026
+### Reparat
+- **Jump:** jucatorii nu mai cad prin pamant ocazional (podeaua avea coliziunea pe outline in loc de polygons si noi faceam inputul in OnJump in loc de fixed update)
+
 ## [v0.1.7] - 02.04.2026
 ### Adaugat:
 - **Sunete**: a fost adaugat background music pentru meniu si pentru joc

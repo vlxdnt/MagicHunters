@@ -12,7 +12,6 @@ public class PlayerInput : NetworkBehaviour
     public int sarituriMaxime = 1;
     private int sarituriRamase;
 
-
     [Header("Verificare Podea")]
     public Transform verificarePodea;
     public Vector2 dimensiuneVerificare = new Vector2(0.5f, 0.1f);
@@ -22,6 +21,9 @@ public class PlayerInput : NetworkBehaviour
     private SpriteRenderer spriteRenderer;
     private Vector2 vectorMiscare;
     private bool estePePodea;
+    
+    // retinem intentia de a sari preluata din Input, pentru a o executa in FixedUpdate
+    private bool dorintaSarit = false; 
 
     // parametrii
     public bool EstePePodea => estePePodea;
@@ -95,16 +97,11 @@ public class PlayerInput : NetworkBehaviour
     public void OnJump(InputAction.CallbackContext context)
     {
         if (!IsOwner || !controlActiv) return;
+        
         if (context.started)
         {
-            if (sarituriRamase > 0)
-            {
-                rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f); 
-                rb.linearVelocity = new Vector2(rb.linearVelocity.x, fortaSarit);
-                AJumped = true; // semnalizam ca a sarit
-                IsJumpHeld = true; // semnalizam ca tasta de salt e tinuta
-                sarituriRamase--; // scadem sariturile ramase
-            }
+            dorintaSarit = true; // doar semnalizam dorinta de a sari, aplicam forta in FixedUpdate
+            IsJumpHeld = true; // semnalizam ca tasta de salt e tinuta
         }
         else if (context.canceled)
         {
@@ -138,27 +135,41 @@ public class PlayerInput : NetworkBehaviour
 
     void FixedUpdate()
     {
+        if (!IsOwner) return; // extra protectie pentru executia fizicii
+
         //pt ground
         if (verificarePodea != null)
         {
             Collider2D obiectLovit = Physics2D.OverlapBox(verificarePodea.position, dimensiuneVerificare, 0f, stratPodea);
             estePePodea = obiectLovit != null;
 
-            // NU STERGE IFUL ASTA, SOMEHOW LOGUL ASTA A REPARAT JUMPUL, NU STIU DE CE, DAR DACA IL STERGI PROBABIL SA SE STRICE
-            if (estePePodea)
-            {
-                Debug.Log($"[{gameObject.name}] Cutia a lovit: " + obiectLovit.gameObject.name);
-            }
-
-            if (estePePodea && rb.linearVelocity.y <= 0.1f)
+            // verificam la un prag mai mic pentru precizie (0.01f în loc de 0.1f)
+            if (estePePodea && rb.linearVelocity.y <= 0.01f)
             {
                 sarituriRamase = sarituriMaxime; // resetam sariturile cand aterizeaza
             }
         }
-        
+
+        // executare salt
+        if (dorintaSarit)
+        {
+            if (sarituriRamase > 0)
+            {
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f); 
+                rb.AddForce(Vector2.up * fortaSarit, ForceMode2D.Impulse); // aplicam impulsul fizic corect, nu modificam linearVelocity brutal
+                
+                AJumped = true; // semnalizam ca a sarit
+                sarituriRamase--; // scadem sariturile ramase
+            }
+            // resetam intentia, indiferent daca a sarit sau nu (ca sa nu sara singur mai tarziu)
+            dorintaSarit = false; 
+        }
+
         //axa X
-        if (!IsOwner || miscareBlocata) return;
-        rb.linearVelocity = new Vector2(vectorMiscare.x * vitezaMiscare, rb.linearVelocity.y);
+        if (!miscareBlocata) 
+        {
+            rb.linearVelocity = new Vector2(vectorMiscare.x * vitezaMiscare, rb.linearVelocity.y);
+        }
     }
 
     // DEBUG
