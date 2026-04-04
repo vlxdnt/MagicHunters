@@ -1,5 +1,9 @@
 # Istoric Modificări (Changelog)
 
+## [v0.1.8] - 04.04.2026
+### Adaugat
+- **Pause Menu:** adaugata posibilitatea de a pune jocul pe pauza, cu optiunea de a te intoarce in meniu sau de a iesi din joc, sau de a schimba unele setari de volum/muzica
+
 ## [v0.1.7.1] - 04.04.2026
 ### Reparat
 - **Jump:** jucatorii nu mai cad prin pamant ocazional (podeaua avea coliziunea pe outline in loc de polygons si noi faceam inputul in OnJump in loc de fixed update)

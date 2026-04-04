@@ -5,8 +5,9 @@ using UnityEngine.InputSystem;
 
 public partial class PauseMenu : MonoBehaviour
 {
-    public GameObject pauseMenuUI;    // Panel-ul principal (PauseMenu din imaginea ta)
-    public GameObject settingsPanel;  // Trage aici panelul de setari din SettingsManager
+    public GameObject pauseMenuCanvas;  
+    public GameObject pauseMenuUI;
+    public GameObject settingsPanel; 
     private bool isPaused = false;
 
     void Update()
@@ -21,7 +22,8 @@ public partial class PauseMenu : MonoBehaviour
     public void Pauza()
     {
         isPaused = true;
-        pauseMenuUI.SetActive(true);
+        pauseMenuCanvas.SetActive(true);  // pt panel in sine
+        pauseMenuUI.SetActive(true);       // optiuni
         Time.timeScale = 0f;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -30,22 +32,23 @@ public partial class PauseMenu : MonoBehaviour
     public void Revino()
     {
         isPaused = false;
+        pauseMenuCanvas.SetActive(false); // dezactivează tot
         pauseMenuUI.SetActive(false);
-        if (settingsPanel != null) settingsPanel.SetActive(false); // Închidem și setările dacă erau deschise
-
         Time.timeScale = 1f;
-
-        // Blocăm mouse-ul înapoi în joc
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
 
     public void DeschideSetari()
     {
-        // Dezactivăm butoanele de pauză și activăm setările
-        // Poți folosi direct referințele din SettingsManager-ul tău
-        pauseMenuUI.transform.Find("PanelOptiuni").gameObject.SetActive(false);
-        settingsPanel.SetActive(true);
+        pauseMenuUI.SetActive(false);
+        if (settingsPanel != null)
+        {
+            settingsPanel.SetActive(true);
+            // incarcare
+            SettingsManager sm = GetComponent<SettingsManager>();
+            if (sm != null) sm.IncarcaSetari();
+        }
     }
 
     public void IesiDinJoc()
@@ -54,7 +57,14 @@ public partial class PauseMenu : MonoBehaviour
         if (NetworkManager.Singleton != null)
         {
             NetworkManager.Singleton.Shutdown();
+            Destroy(NetworkManager.Singleton.gameObject);
         }
         SceneManager.LoadScene("MainMenu");
+    }
+
+    public void InchideSetari()
+    {
+        if (settingsPanel != null) settingsPanel.SetActive(false);
+        pauseMenuUI.SetActive(true); // revenie
     }
 }

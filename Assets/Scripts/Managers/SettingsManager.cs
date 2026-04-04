@@ -25,35 +25,51 @@ public class SettingsManager : MonoBehaviour
 
     void Start()
     {
-        PopuleazaRezolutii();
+        if (dropdownRezolutie != null)
+            PopuleazaRezolutii();
+
         IncarcaSetari();
     }
 
-    void IncarcaSetari()
+    public void IncarcaSetari()
     {
         // volum
         volumSalvat = PlayerPrefs.GetFloat("Volum", 1f);
         bool sunetActiv = PlayerPrefs.GetInt("Sunet", 1) == 1;
-        toggleSunet.SetIsOnWithoutNotify(sunetActiv);
-        sliderVolum.value = sunetActiv ? volumSalvat : 0f;
-        sliderVolum.interactable = sunetActiv;
+
+        if (sliderVolum != null)
+        {
+            sliderVolum.value = sunetActiv ? volumSalvat : 0f;
+            sliderVolum.interactable = sunetActiv;
+        }
+        if (toggleSunet != null)
+            toggleSunet.SetIsOnWithoutNotify(sunetActiv);
+
         AudioListener.volume = sunetActiv ? volumSalvat : 0f;
-        UpdateTextVolum(sliderVolum.value);
+        UpdateTextVolum(sunetActiv ? volumSalvat : 0f);
 
-        // fullscreen
-        bool isFS = PlayerPrefs.GetInt("Fullscreen", 1) == 1;
-        toggleFullscreen.SetIsOnWithoutNotify(isFS);
-        SchimbaFullscreen(isFS);
-
-        // luminozitate
-        float bright = PlayerPrefs.GetFloat("Luminozitate", 1f);
-        sliderBright.value = bright;
-        AplicaBright(bright);
-
+        // muzica
         bool muzicaActiva = PlayerPrefs.GetInt("MuzicaActiva", 1) == 1;
-        toggleMuzica.SetIsOnWithoutNotify(muzicaActiva);
+        if (toggleMuzica != null)
+            toggleMuzica.SetIsOnWithoutNotify(muzicaActiva);
         if (BackgroundMusic.instance != null)
             BackgroundMusic.instance.SeteazaMuteMuzica(muzicaActiva);
+
+        // doar in MainMenu
+        if (toggleFullscreen != null)
+        {
+            bool isFS = PlayerPrefs.GetInt("Fullscreen", 1) == 1;
+            toggleFullscreen.SetIsOnWithoutNotify(isFS);
+            SchimbaFullscreen(isFS);
+        }
+        if (sliderBright != null && panelBright != null)
+        {
+            float bright = PlayerPrefs.GetFloat("Luminozitate", 1f);
+            sliderBright.value = bright;
+            AplicaBright(bright);
+        }
+        if (dropdownRezolutie != null)
+            PopuleazaRezolutii();
     }
 
     public void DeschideSettings()
@@ -70,14 +86,14 @@ public class SettingsManager : MonoBehaviour
 
     public void AplicaVolum(float valoare)
     {
-        if (toggleSunet.isOn)
+        if (toggleSunet == null || toggleSunet.isOn)
         {
             AudioListener.volume = valoare;
-            volumSalvat = valoare; // salvam mereu ultima valoare trasa
+            volumSalvat = valoare;
         }
         PlayerPrefs.SetFloat("Volum", valoare);
         if (textVolum != null)
-            textVolum.text = Mathf.RoundToInt(valoare * 100) + "%"; //procentul de langa text
+            textVolum.text = Mathf.RoundToInt(valoare * 100) + "%";
     }
 
     public void AplicaSunet(bool activ)
