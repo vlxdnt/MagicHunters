@@ -126,6 +126,8 @@ GameObject:
   - component: {fileID: 6655964338949162377}
   - component: {fileID: 1288824854202771008}
   - component: {fileID: 8495483620541157807}
+  - component: {fileID: 8805570426797717709}
+  - component: {fileID: 7866715694871781315}
   m_Layer: 11
   m_Name: Red_Wizard_Enemy
   m_TagString: Untagged
@@ -233,6 +235,33 @@ CapsuleCollider2D:
   m_Offset: {x: -0.049999997, y: 0.255}
   m_Size: {x: 0.38, y: 0.51}
   m_Direction: 0
+--- !u!114 &8805570426797717709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8668021381800064888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cea7068a54684342a88c4c3520b30c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Health
+  maxHealth: 15
+  immunityDuration: 0.5
+--- !u!114 &7866715694871781315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8668021381800064888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d3450905ba06304b8b7055b2d9fd555, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DamageOnContact
+  contactDamage: 10
 --- !u!1 &8682043304261905341
 GameObject:
   m_ObjectHideFlags: 0

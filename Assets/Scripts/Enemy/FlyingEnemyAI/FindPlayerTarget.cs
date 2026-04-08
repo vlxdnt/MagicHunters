@@ -1,38 +1,61 @@
 ﻿using UnityEngine;
-using Pathfinding; // FOARTE IMPORTANT: Trebuie să incluzi asta pentru a accesa AIDestinationSetter
+using Pathfinding;
 
 public class FindPlayerTarget : MonoBehaviour
 {
     private AIDestinationSetter destinationSetter;
+    private AIPath aiPath;
+
+    [Header("Aggro Settings")]
+    public float aggroRadius = 5f;
+    public LayerMask playerLayer; // Set this to your "Player" layer
 
     void Start()
     {
-        // Preluăm componenta AIDestinationSetter de pe inamic
         destinationSetter = GetComponent<AIDestinationSetter>();
+        aiPath = GetComponent<AIPath>();
 
-        // Căutăm player-ul abia când inamicul se spawnează / începe scena
-        FindAndSetTarget();
+        // Start disabled so the bat doesn't move immediately
+        if (aiPath != null) aiPath.canMove = false;
     }
 
     void Update()
     {
-        // Dacă din greșeală target-ul se pierde (ex: player-ul moare și e distrus),
-        // inamicul va încerca să îl caute din nou în fiecare cadru până îl găsește.
-        if (destinationSetter.target == null)
-        {
-            FindAndSetTarget();
-        }
+        FindClosestPlayer();
     }
 
-    private void FindAndSetTarget()
+    private void FindClosestPlayer()
     {
-        // Caută obiectul cu tag-ul "Player" în scena activă
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        // Find all objects on the Player layer within radius
+        Collider2D[] playersInRange = Physics2D.OverlapCircleAll(transform.position, aggroRadius, playerLayer);
 
-        if (player != null)
+        if (playersInRange.Length > 0)
         {
-            // Dacă l-a găsit, îi atribuie Transform-ul în AI Destination Setter
-            destinationSetter.target = player.transform;
+            float closestDistance = Mathf.Infinity;
+            Transform targetPlayer = null;
+
+            foreach (Collider2D p in playersInRange)
+            {
+                float dist = Vector2.Distance(transform.position, p.transform.position);
+                if (dist < closestDistance)
+                {
+                    closestDistance = dist;
+                    targetPlayer = p.transform;
+                }
+            }
+
+            // Target found: set destination and enable movement
+            if (targetPlayer != null)
+            {
+                destinationSetter.target = targetPlayer;
+                aiPath.canMove = true;
+            }
+        }
+        else
+        {
+            // No players in range: stop moving
+            destinationSetter.target = null;
+            aiPath.canMove = false;
         }
     }
 }
