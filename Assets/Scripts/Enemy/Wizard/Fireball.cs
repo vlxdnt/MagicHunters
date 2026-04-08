@@ -2,23 +2,26 @@
 
 public class Fireball : MonoBehaviour
 {
+    [Header("Damage Settings")]
     public int damage = 1;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Verificăm dacă am lovit jucătorul
-        // (Asigură-te că prefab-ul Wizard are Tag-ul "Player")
+        // Check for player hit
         if (collision.CompareTag("Player"))
         {
-            // Aici apelezi metoda de luat viață a jucătorului
-            // Exemplu: collision.GetComponent<PlayerHealth>().TakeDamage(damage);
+            Health playerHealth = collision.GetComponent<Health>();
 
-            Debug.Log("Player hit");
+            if (playerHealth != null)
+            {
+                playerHealth.TakeDamage(damage);
+                Debug.Log(collision.gameObject.name + " hit for " + damage + " HP!");
+            }
 
-            // Distrugem fireball-ul la impact
             Destroy(gameObject);
         }
 
+        // Destroy on wall/ground hit
         if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
             Destroy(gameObject);

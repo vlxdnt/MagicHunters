@@ -180,6 +180,7 @@ GameObject:
   - component: {fileID: 4504516913535506328}
   - component: {fileID: 1448902799096502202}
   - component: {fileID: -6906570410613127915}
+  - component: {fileID: -5446507386822005832}
   m_Layer: 3
   m_Name: Player2
   m_TagString: Player
@@ -275,7 +276,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 15951158
+  GlobalObjectIdHash: 1623746512
   InScenePlacedSourceGlobalObjectIdHash: 3053837811
   DeferredDespawnTick: 0
   Ownership: 1
@@ -722,6 +723,20 @@ MonoBehaviour:
   offsetX: 0
   offsetY: 2
   smoothSpeed: 5
+--- !u!114 &-5446507386822005832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6501798312373291870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cea7068a54684342a88c4c3520b30c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Health
+  maxHealth: 100
+  immunityDuration: 0.5
 --- !u!1 &8975131632674171672
 GameObject:
   m_ObjectHideFlags: 0

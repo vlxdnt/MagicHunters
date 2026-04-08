@@ -179,6 +179,7 @@ GameObject:
   - component: {fileID: -5412662124746146345}
   - component: {fileID: 6898869363854303315}
   - component: {fileID: 7762151525310565602}
+  - component: {fileID: -5701428905184914144}
   m_Layer: 3
   m_Name: Player1
   m_TagString: Player
@@ -712,6 +713,20 @@ MonoBehaviour:
   ridicareDash: 2
   durataDash: 0.2
   cooldownDash: 2
+--- !u!114 &-5701428905184914144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6501798312373291870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cea7068a54684342a88c4c3520b30c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Health
+  maxHealth: 100
+  immunityDuration: 0.5
 --- !u!1 &8975131632674171672
 GameObject:
   m_ObjectHideFlags: 0
