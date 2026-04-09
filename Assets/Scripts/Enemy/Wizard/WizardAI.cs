@@ -65,10 +65,10 @@ public class WizardAI : MonoBehaviour
     {
         animator.SetTrigger("Attack");
 
-        // 0.3 second wait time
+        // 0.3 wait time
         yield return new WaitForSeconds(0.3f);
 
-        // Verificăm dacă mai avem țintă (să nu tragă dacă jucătorul a fugit între timp)
+        // daca mai avem tinta
         if (currentTarget != null)
         {
             Shoot();

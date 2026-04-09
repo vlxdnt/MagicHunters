@@ -5045,6 +5045,7 @@ GameObject:
   - component: {fileID: 948215707}
   - component: {fileID: 948215708}
   - component: {fileID: 948215709}
+  - component: {fileID: 948215710}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: Untagged
@@ -5191,6 +5192,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Language
   limbaActuala: 0
   dropdownLimba: {fileID: 778797900}
+--- !u!114 &948215710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 948215702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f03d05bfcd3cac4397cc8353fb70c0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIButtonSound
+  sunetButon: {fileID: 8300000, guid: 35745caf2190e8c489e76842399927a5, type: 3}
 --- !u!1 &1010812897
 GameObject:
   m_ObjectHideFlags: 0

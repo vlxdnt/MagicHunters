@@ -1,5 +1,19 @@
 # Istoric Modificări (Changelog)
 
+## [v0.1.9] - 09.04.2026
+### Adaugat
+- **Inceput in hierarchhy pentru interiorul castelului**: usa care se deschide la intrarea in castel, atunci cand sunt ambii jucatori
+- **Sunete de UI** adaugate sunete pentru butoane in meniu si sunete pentru jump/double jump, sunet la alergat - **BUG**
+
+### De rezolvat
+- **Problema cu inamicii**
+
+### De adaugat
+- **Inamicii**: inamicii care se misca pe o platforma
+- **Interior pentru castel**
+- **Sunet pentru glide/dash**
+- **Posibil mic tutorial la inceput pana la castel**
+
 ## [v0.1.8] - 04.04.2026
 ### Adaugat
 - **Pause Menu:** adaugata posibilitatea de a pune jocul pe pauza, cu optiunea de a te intoarce in meniu sau de a iesi din joc, sau de a schimba unele setari de volum/muzica
