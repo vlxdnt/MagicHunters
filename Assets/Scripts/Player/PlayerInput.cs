@@ -124,7 +124,14 @@ public class PlayerInput : NetworkBehaviour
 
         // doar owner-ul schimba directia 
         if (Mathf.Abs(vectorMiscare.x) > 0.1f)
-            flipX.Value = vectorMiscare.x < 0; //true pt stanga
+        {
+            bool trebuieSaFieStanga = vectorMiscare.x < 0;
+            
+            if (flipX.Value != trebuieSaFieStanga)
+            {
+                flipX.Value = trebuieSaFieStanga; 
+            }
+     }
     }
 
     void LateUpdate()
