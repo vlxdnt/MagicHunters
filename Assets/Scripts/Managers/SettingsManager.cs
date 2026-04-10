@@ -2,23 +2,24 @@
 using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
-using System.Linq; //filtrare
 
 public class SettingsManager : MonoBehaviour
 {
     public GameObject panelSettings;
     public GameObject panelMeniu;
 
+    [Header("UI Toggles")]
     public Toggle toggleSunet;
     public Toggle toggleFullscreen;
     public Toggle toggleMuzica;
 
+    [Header("UI Sliders & Text")]
     public TextMeshProUGUI textVolum;
     public Slider sliderVolum;
-
     public Slider sliderBright;
     public UnityEngine.UI.Image panelBright;
 
+    [Header("UI Dropdown")]
     public TMP_Dropdown dropdownRezolutie;
 
     private float volumSalvat = 1f;
@@ -33,13 +34,12 @@ public class SettingsManager : MonoBehaviour
 
     public void IncarcaSetari()
     {
-        // volum
         volumSalvat = PlayerPrefs.GetFloat("Volum", 1f);
         bool sunetActiv = PlayerPrefs.GetInt("Sunet", 1) == 1;
 
         if (sliderVolum != null)
         {
-            sliderVolum.value = sunetActiv ? volumSalvat : 0f;
+            sliderVolum.SetValueWithoutNotify(sunetActiv ? volumSalvat : 0f);
             sliderVolum.interactable = sunetActiv;
         }
         if (toggleSunet != null)
@@ -48,28 +48,33 @@ public class SettingsManager : MonoBehaviour
         AudioListener.volume = sunetActiv ? volumSalvat : 0f;
         UpdateTextVolum(sunetActiv ? volumSalvat : 0f);
 
-        // muzica
         bool muzicaActiva = PlayerPrefs.GetInt("MuzicaActiva", 1) == 1;
         if (toggleMuzica != null)
             toggleMuzica.SetIsOnWithoutNotify(muzicaActiva);
+        
         if (BackgroundMusic.instance != null)
             BackgroundMusic.instance.SeteazaMuteMuzica(muzicaActiva);
 
-        // doar in MainMenu
-        if (toggleFullscreen != null)
-        {
-            bool isFS = PlayerPrefs.GetInt("Fullscreen", 1) == 1;
-            toggleFullscreen.SetIsOnWithoutNotify(isFS);
-            SchimbaFullscreen(isFS);
-        }
         if (sliderBright != null && panelBright != null)
         {
             float bright = PlayerPrefs.GetFloat("Luminozitate", 1f);
-            sliderBright.value = bright;
+            sliderBright.SetValueWithoutNotify(bright);
             AplicaBright(bright);
         }
+
+        bool isFS = PlayerPrefs.GetInt("Fullscreen", 1) == 1;
+        int indexRezolutie = PlayerPrefs.GetInt("Rezolutie", 0);
+
+        if (toggleFullscreen != null)
+            toggleFullscreen.SetIsOnWithoutNotify(isFS);
+
         if (dropdownRezolutie != null)
-            PopuleazaRezolutii();
+        {
+            if (indexRezolutie >= dropdownRezolutie.options.Count) indexRezolutie = 0;
+            dropdownRezolutie.SetValueWithoutNotify(indexRezolutie);
+        }
+
+        AplicaSetariVideo(indexRezolutie, isFS);
     }
 
     public void DeschideSettings()
@@ -92,21 +97,18 @@ public class SettingsManager : MonoBehaviour
             volumSalvat = valoare;
         }
         PlayerPrefs.SetFloat("Volum", valoare);
-        if (textVolum != null)
-            textVolum.text = Mathf.RoundToInt(valoare * 100) + "%";
+        UpdateTextVolum(valoare);
     }
 
     public void AplicaSunet(bool activ)
     {
         if (activ)
         {
-            // volum salvat
             sliderVolum.value = volumSalvat;
             AudioListener.volume = volumSalvat;
         }
         else
         {
-            // cazul in care dai disable si ai deja volum, il salvam
             volumSalvat = sliderVolum.value > 0 ? sliderVolum.value : volumSalvat;
             sliderVolum.value = 0f;
             AudioListener.volume = 0f;
@@ -114,9 +116,7 @@ public class SettingsManager : MonoBehaviour
 
         sliderVolum.interactable = activ;
         PlayerPrefs.SetInt("Sunet", activ ? 1 : 0);
-
-        if (textVolum != null)
-            textVolum.text = Mathf.RoundToInt(sliderVolum.value * 100) + "%";
+        UpdateTextVolum(sliderVolum.value);
     }
 
     public void AplicaMuzica(bool activ)
@@ -132,7 +132,6 @@ public class SettingsManager : MonoBehaviour
     {
         dropdownRezolutie.ClearOptions();
 
-        // 4 rez uzuale
         List<string> optiuni = new List<string>
         {
             "1920 x 1080",
@@ -142,53 +141,54 @@ public class SettingsManager : MonoBehaviour
         };
 
         dropdownRezolutie.AddOptions(optiuni);
-
-        // ce am salvat(implicit 1920x1080)
-        int indexSalvat = PlayerPrefs.GetInt("Rezolutie", 0);
-
-        // out of bounds
-        if (indexSalvat >= optiuni.Count) indexSalvat = 0;
-
-        dropdownRezolutie.value = indexSalvat;
         dropdownRezolutie.RefreshShownValue();
     }
 
     public void SchimbaRezolutie(int index)
     {
-        // extragem ce am ales
-        string[] dimensiuni = dropdownRezolutie.options[index].text.Split('x');
-        int w = int.Parse(dimensiuni[0].Trim());
-        int h = int.Parse(dimensiuni[1].Trim());
-
-        //aplicam
-        Screen.SetResolution(w, h, Screen.fullScreen);
-
         PlayerPrefs.SetInt("Rezolutie", index);
+        bool isFS = PlayerPrefs.GetInt("Fullscreen", 1) == 1;
+        
+        AplicaSetariVideo(index, isFS);
     }
 
     public void SchimbaFullscreen(bool activ)
     {
-        // bug de culori
-        Screen.fullScreenMode = activ ? FullScreenMode.FullScreenWindow : FullScreenMode.Windowed;
-        Screen.fullScreen = activ;
-
-        //
-        int index = PlayerPrefs.GetInt("Rezolutie", 0);
-        SchimbaRezolutie(index);
-
         PlayerPrefs.SetInt("Fullscreen", activ ? 1 : 0);
+        int index = PlayerPrefs.GetInt("Rezolutie", 0);
+
+        AplicaSetariVideo(index, activ);
+    }
+
+    private void AplicaSetariVideo(int indexRezolutie, bool isFullscreen)
+    {
+        if (dropdownRezolutie == null || dropdownRezolutie.options.Count <= indexRezolutie) return;
+
+        string[] dimensiuni = dropdownRezolutie.options[indexRezolutie].text.Split('x');
+        
+        if (dimensiuni.Length == 2 &&
+            int.TryParse(dimensiuni[0].Trim(), out int w) &&
+            int.TryParse(dimensiuni[1].Trim(), out int h))
+        {
+            FullScreenMode mode = isFullscreen ? FullScreenMode.ExclusiveFullScreen : FullScreenMode.Windowed;
+            
+            Screen.SetResolution(w, h, mode);
+        }
     }
 
     public void AplicaBright(float valoare)
     {
-        //val 1 maxim, val 0 minim
         float a = 1f - valoare;
-        panelBright.color = new Color(0, 0, 0, a * 0.8f); // 0.8 limitare să nu fie beznă totală
+        if (panelBright != null)
+        {
+            panelBright.color = new Color(0, 0, 0, a * 0.8f); 
+        }
         PlayerPrefs.SetFloat("Luminozitate", valoare);
     }
 
     void UpdateTextVolum(float v)
     {
-        if (textVolum != null) textVolum.text = Mathf.RoundToInt(v * 100) + "%";
+        if (textVolum != null) 
+            textVolum.text = Mathf.RoundToInt(v * 100) + "%";
     }
 }
