@@ -13,6 +13,10 @@ public class BatEnemy : MonoBehaviour
     private int jucatoriInCamera = 0;
     private float nextKnockbackTime = 0f;
 
+    // Adaugam un timer pentru a nu scana de 150 ori pe secunda (FPS Fix)
+    private float intervalCautare = 0.5f;
+    private float timerCautare = 0f;
+
     void Awake()
     {
         destinationSetter = GetComponent<AIDestinationSetter>();
@@ -31,40 +35,65 @@ public class BatEnemy : MonoBehaviour
     public void JucatorIesit()
     {
         jucatoriInCamera = Mathf.Max(0, jucatoriInCamera - 1);
-        ActualizeazaTarget();
-
+        
         if (jucatoriInCamera == 0)
         {
             aiPath.canMove = false;
             destinationSetter.target = null;
         }
+        else
+        {
+            ActualizeazaTarget();
+        }
     }
 
     void ActualizeazaTarget()
     {
-        // cel mai apropiat
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         float distantaMinima = Mathf.Infinity;
         Transform targetNou = null;
 
-        foreach (GameObject player in players)
+        // OPTIMIZARE + VERIFICARE INVIZIBILITATE (Folosim lista statica creata anterior)
+        foreach (WitchAbilities p in WitchAbilities.jucatoriInScena)
         {
-            float dist = Vector2.Distance(transform.position, player.transform.position);
+            // Daca nu exista sau e invizibil, liliacul il ignora
+            if (p == null || p.esteInvizibil.Value == true) 
+            {
+                continue;
+            }
+
+            float dist = Vector2.Distance(transform.position, p.transform.position);
             if (dist < distantaMinima)
             {
                 distantaMinima = dist;
-                targetNou = player.transform;
+                targetNou = p.transform;
             }
         }
 
         destinationSetter.target = targetNou;
+
+        // Daca nu am gasit pe nimeni vizibil, punem frana brusc
+        if (targetNou == null)
+        {
+            aiPath.isStopped = true;
+        }
+        else
+        {
+            aiPath.isStopped = false;
+        }
     }
 
     void Update()
     {
-        // actualizare pt cel mai apropiat
+        // Actualizam target-ul DOAR daca sunt jucatori in camera si DOAR o data la 0.5s
         if (jucatoriInCamera > 0)
-            ActualizeazaTarget();
+        {
+            timerCautare -= Time.deltaTime;
+            if (timerCautare <= 0f)
+            {
+                ActualizeazaTarget();
+                timerCautare = intervalCautare;
+            }
+        }
     }
 
     void OnCollisionEnter2D(Collision2D collision)

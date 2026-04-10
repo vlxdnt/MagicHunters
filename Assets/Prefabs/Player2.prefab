@@ -277,7 +277,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 1623746512
+  GlobalObjectIdHash: 15951158
   InScenePlacedSourceGlobalObjectIdHash: 3053837811
   DeferredDespawnTick: 0
   Ownership: 1
@@ -539,6 +539,22 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 21bd6b03-d2ae-43ec-9cef-f8890c4a126a
     m_ActionName: 'Player/Dash[/Keyboard/c,/Keyboard/leftShift]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1448902799096502202}
+        m_TargetAssemblyTypeName: WitchAbilities, Assembly-CSharp
+        m_MethodName: OnInvizibilitate
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 88caa7c4-4488-4cd9-b07a-563ccf67ebbd
+    m_ActionName: 'Player/Invisibility[/Keyboard/q]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -711,6 +727,10 @@ MonoBehaviour:
   multiplicatorVitezaAer: 1.5
   sunetGlide: {fileID: 8300000, guid: 06573c3c22b5c944db3c20e51d35a707, type: 3}
   audioOneShot: {fileID: 4612901859312233802}
+  durataInvizibilitate: 5
+  cooldownInvizibilitate: 8
+  esteInvizibil:
+    m_InternalValue: 0
 --- !u!114 &-6906570410613127915
 MonoBehaviour:
   m_ObjectHideFlags: 0
