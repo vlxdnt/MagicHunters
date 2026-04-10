@@ -4,21 +4,18 @@ public class WitchAnimator : MonoBehaviour
 {
     private Animator animator;
     private PlayerInput playerInput;
-    private AudioSource audioSource;
+    [Header("Audio Sources")]
+    public AudioSource audioFootsteps;
+    public AudioSource audioOneShot;
 
     [Header("Sunete")]
     public AudioClip sunetSarit;
     public AudioClip sunetAlearga;
 
-    [Header("Footstep Settings")]
-    public float footstepInterval = 0.3f;
-    private float footstepTimer = 0f;
-
     void Awake()
     {
         animator = GetComponent<Animator>();
         playerInput = GetComponent<PlayerInput>();
-        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -29,32 +26,26 @@ public class WitchAnimator : MonoBehaviour
         animator.SetFloat("Viteza", viteza);
         animator.SetBool("EstePePodea", playerInput.EstePePodea);
 
-        // jump
-        if (playerInput.AJumped)
-        {
-            animator.SetTrigger("Sare");
-            PlaySound(sunetSarit);
-        }
-
-        // pasi
         if (viteza > 0.1f && playerInput.EstePePodea)
         {
-            footstepTimer -= Time.deltaTime;
-            if (footstepTimer <= 0f)
+            if (!audioFootsteps.isPlaying)
             {
-                PlaySound(sunetAlearga);
-                footstepTimer = footstepInterval;
+                audioFootsteps.clip = sunetAlearga;
+                audioFootsteps.loop = true;
+                audioFootsteps.Play();
             }
         }
         else
         {
-            footstepTimer = footstepInterval;
+            audioFootsteps.Stop();
         }
-    }
 
-    void PlaySound(AudioClip clip)
-    {
-        if (clip != null && audioSource != null)
-            audioSource.PlayOneShot(clip);
+
+        if (playerInput.AJumped)
+        {
+            animator.SetTrigger("Sare");
+            audioFootsteps.Stop();
+            audioOneShot.PlayOneShot(sunetSarit);
+        }
     }
 }

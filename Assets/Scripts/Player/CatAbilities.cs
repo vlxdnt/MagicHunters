@@ -16,10 +16,16 @@ public class CatAbilities : NetworkBehaviour
     private bool isDashing = false;
     private bool canDash = true;
 
+    private AudioSource audioSource;
+    [Header("Sunete")]
+    public AudioClip sunetDash;
+    public AudioSource audioOneShot;
+
     void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
         rb = GetComponent<Rigidbody2D>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -36,8 +42,11 @@ public class CatAbilities : NetworkBehaviour
     {
         isDashing = true;
         canDash = false;
-        
+
         // blocam miscarea normala
+        if (sunetDash != null && audioOneShot != null)
+            audioOneShot.PlayOneShot(sunetDash);
+
         playerInput.miscareBlocata = true;
 
         // oprim gravitatia ca sa facem un dash curat (liniar)

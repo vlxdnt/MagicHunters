@@ -4,23 +4,21 @@ public class CatAnimator : MonoBehaviour
 {
     private Animator animator;
     private PlayerInput playerInput;
-    private AudioSource audioSource;
+    [Header("Audio Sources")]
+    public AudioSource audioFootsteps;  
+    public AudioSource audioOneShot;
 
     [Header("Sunete")]
     public AudioClip sunetSarit;
     public AudioClip sunetDoubleJump;
     public AudioClip sunetAlearga;
 
-    [Header("Footstep Settings")]
-    public float footstepInterval = 0.3f;
-    private float footstepTimer = 0f;
     private bool eraInAer = false;
 
     void Awake()
     {
         animator = GetComponent<Animator>();
         playerInput = GetComponent<PlayerInput>();
-        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -30,38 +28,33 @@ public class CatAnimator : MonoBehaviour
         float viteza = Mathf.Abs(playerInput.VectorMiscare.x);
         animator.SetFloat("Viteza", viteza);
 
-        // Jump / Double Jump
-        if (playerInput.AJumped)
-        {
-            animator.SetTrigger("Sare");
-            if (eraInAer)
-                PlaySound(sunetDoubleJump); // al doilea salt
-            else
-                PlaySound(sunetSarit); // primul salt
-        }
-
-        // retinem daca era in aer inainte
-        eraInAer = !playerInput.EstePePodea;
-
-        // footsteps
+        
+        // alergat
         if (viteza > 0.1f && playerInput.EstePePodea)
         {
-            footstepTimer -= Time.deltaTime;
-            if (footstepTimer <= 0f)
+            if (!audioFootsteps.isPlaying)
             {
-                PlaySound(sunetAlearga);
-                footstepTimer = footstepInterval;
+                audioFootsteps.clip = sunetAlearga;
+                audioFootsteps.loop = true;
+                audioFootsteps.Play();
             }
         }
         else
         {
-            footstepTimer = footstepInterval;
+            audioFootsteps.Stop();
         }
-    }
 
-    void PlaySound(AudioClip clip)
-    {
-        if (clip != null && audioSource != null)
-            audioSource.PlayOneShot(clip);
+        if (playerInput.AJumped)
+        {
+            animator.SetTrigger("Sare");
+            audioFootsteps.Stop();
+
+            if (eraInAer)
+                audioOneShot.PlayOneShot(sunetDoubleJump);
+            else
+                audioOneShot.PlayOneShot(sunetSarit);
+        }
+
+        eraInAer = !playerInput.EstePePodea;
     }
 }

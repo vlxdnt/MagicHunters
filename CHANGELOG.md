@@ -1,5 +1,14 @@
 # Istoric Modificări (Changelog)
 
+## [v0.2.0] - 10.04.2026
+## Adaugat
+- **Structuri in castel:** adaugate niste structuri in interiorul castelului, sunt structuri doar cu collider simplu si structuri care sunt onewayup
+- **Adaugat un inamic Bat pentru test** de verificat knockback
+
+### Rezolvat
+- **Sunete:** rezolvat problema cu sunetele pentru jump/double jump si alergat care nu se auzeau
+- **Animatie witch:** rezolvat problema cu animatia de jump
+
 ## [v0.1.9] - 09.04.2026
 ### Adaugat
 - **Inceput in hierarchhy pentru interiorul castelului**: usa care se deschide la intrarea in castel, atunci cand sunt ambii jucatori
@@ -7,11 +16,12 @@
 
 ### De rezolvat
 - **Problema cu inamicii**
+- **Problema cu sunetele** sunetele pentru jump/double jump si alergat nu se aud
+- **Problema animatie witch???**
 
 ### De adaugat
 - **Inamicii**: inamicii care se misca pe o platforma
-- **Interior pentru castel**
-- **Sunet pentru glide/dash**
+- **Tabela de obiective**: o tabela care sa arate obiectivele pentru fiecare task
 - **Posibil mic tutorial la inceput pana la castel**
 
 ## [v0.1.8] - 04.04.2026

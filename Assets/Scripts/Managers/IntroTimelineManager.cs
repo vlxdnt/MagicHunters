@@ -94,6 +94,10 @@ public class IntroTimelineManager : NetworkBehaviour
             }
 
             director.Play();
+
+            if (SceneFade.Instance != null)
+                StartCoroutine(SceneFade.Instance.FadeIn(2f)); //time pentru incarcare
+
             if (IsServer) timelineStarted = true;
         }
     }

@@ -180,6 +180,7 @@ GameObject:
   - component: {fileID: 6898869363854303315}
   - component: {fileID: 7762151525310565602}
   - component: {fileID: 1505461392141622312}
+  - component: {fileID: 2677487344692239344}
   m_Layer: 3
   m_Name: Player1
   m_TagString: Player
@@ -275,7 +276,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 3137236415
+  GlobalObjectIdHash: 3053837811
   InScenePlacedSourceGlobalObjectIdHash: 3053837811
   DeferredDespawnTick: 0
   Ownership: 1
@@ -630,10 +631,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70f9ccbee0803f948837094e0597aa81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CatAnimator
+  audioFootsteps: {fileID: 1505461392141622312}
+  audioOneShot: {fileID: 2677487344692239344}
   sunetSarit: {fileID: 8300000, guid: ca911492702444b448f2323b0e7a5820, type: 3}
   sunetDoubleJump: {fileID: 8300000, guid: b463c49d5476268428bf66fdaf87bf5e, type: 3}
   sunetAlearga: {fileID: 8300000, guid: ee54b0d449205cb46b739400af17a0af, type: 3}
-  footstepInterval: 0.3
 --- !u!114 &-5412662124746146345
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -713,11 +715,110 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CatAbilities
   ShowTopMostFoldoutHeaderGroup: 1
-  fortaDash: 8
+  fortaDash: 6
   ridicareDash: 2
   durataDash: 0.2
   cooldownDash: 2
+  sunetDash: {fileID: 8300000, guid: aa02b77c43f498f42bd769e5e197ab6c, type: 3}
+  audioOneShot: {fileID: 2677487344692239344}
 --- !u!82 &1505461392141622312
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6501798312373291870}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!82 &2677487344692239344
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

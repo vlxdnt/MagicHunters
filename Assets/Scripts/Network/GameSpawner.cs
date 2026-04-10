@@ -77,11 +77,6 @@ public class GameSpawner : NetworkBehaviour
         return obj;
     }
 
-    void Start()
-    {
-        if (SceneFade.Instance != null) StartCoroutine(SceneFade.Instance.FadeIn(0.5f));
-    }
-
     public override void OnDestroy()
     {
         if (NetworkManager.Singleton != null && NetworkManager.Singleton.SceneManager != null)
