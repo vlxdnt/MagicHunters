@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using TMPro;
@@ -35,10 +35,28 @@ public class Language : MonoBehaviour
 
     void Awake()
     {
-        if (Instance == null) Instance = this;
-        else { Destroy(gameObject); return; }
+        if (Instance == null)
+        {
+            Instance = this;
+            IncarcaJSON(); //incarcare
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
 
-        // limba salvata
+        Instance = this;
+
+        //
+        if (transform.parent != null)
+        {
+            transform.SetParent(null);
+        }
+
+        DontDestroyOnLoad(gameObject);
+
         limbaActuala = (Limba)PlayerPrefs.GetInt("Limba", 0);
         IncarcaJSON();
     }

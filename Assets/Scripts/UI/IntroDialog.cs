@@ -24,11 +24,11 @@ public class IntroDialog : NetworkBehaviour
     private string[] personaje = { "witch", "cat", "witch", "cat", "witch" };
     private string[] replici =
     {
-        "I can't believe my sister turned out this way...",
-        "Meow...",
-        "We have to stay together!",
-        "Meow!",
-        "Let's go!"
+        "intro_witch_1",
+        "intro_cat_1",
+        "intro_witch_2",
+        "intro_cat_2",
+        "intro_witch_3"
     };
 
     //apelat prin semnal
@@ -59,15 +59,19 @@ public class IntroDialog : NetworkBehaviour
     }
 
     [ClientRpc]
-    void ArataBulaClientRpc(bool eWitch, string mesaj)
+    void ArataBulaClientRpc(bool eWitch, string cheieMesaj)
     {
+        //traducere cheie
+        string mesajTradus = Language.Instance.Get(cheieMesaj);
+
         if (!eWitch && sunetePisica.Length > 0 && sursaAudioDialog != null)
         {
             int index = Random.Range(0, sunetePisica.Length);
             sursaAudioDialog.PlayOneShot(sunetePisica[index]);
         }
-        // pornesc textu
-        StartCoroutine(Typewriter(eWitch, mesaj));
+
+        // trimit textu
+        StartCoroutine(Typewriter(eWitch, mesajTradus));
     }
 
     [ClientRpc]

@@ -32,8 +32,16 @@ public partial class PauseMenu : MonoBehaviour
     public void Revino()
     {
         isPaused = false;
-        pauseMenuCanvas.SetActive(false); // dezactivează tot
+
+        pauseMenuCanvas.SetActive(false);
+
         pauseMenuUI.SetActive(false);
+
+        if (settingsPanel != null)
+        {
+            settingsPanel.SetActive(false);
+        }
+
         Time.timeScale = 1f;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;

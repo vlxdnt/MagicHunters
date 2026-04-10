@@ -1,5 +1,9 @@
 # Istoric Modificări (Changelog)
 
+## [v0.2.1] - 11.04.2026
+### Adaugat
+- **Tabela de obiective:** adaugata o tabela care sa arate obiectivele pentru fiecare task, se actualizeaza in functie de progresul jucatorilor
+
 ## [v0.2.0] - 10.04.2026
 ## Adaugat
 - **Structuri in castel:** adaugate niste structuri in interiorul castelului, sunt structuri doar cu collider simplu si structuri care sunt onewayup

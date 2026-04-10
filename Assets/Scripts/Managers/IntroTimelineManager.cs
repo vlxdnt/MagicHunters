@@ -8,6 +8,8 @@ public class IntroTimelineManager : NetworkBehaviour
     public PlayableDirector director;
     private bool timelineStarted = false;
 
+    public GameObject gameUI;
+
     void Update()
     {
         if (IsServer && timelineStarted)
@@ -59,6 +61,21 @@ public class IntroTimelineManager : NetworkBehaviour
         }
 
         director.enabled = false;
+
+        Debug.Log("ActiveazaControl apelat pe: " + (IsServer ? "Server" : "Client"));
+        Debug.Log("gameUI este: " + (gameUI != null ? gameUI.name : "NULL"));
+
+        if (gameUI != null)
+        {
+            gameUI.SetActive(true);
+            Debug.Log("GameUI activat!");
+
+            PlayerUI ui = gameUI.GetComponentInChildren<PlayerUI>(true); // true = cauta si in dezactivate
+            Debug.Log("PlayerUI gasit: " + (ui != null));
+
+            if (ui != null && ObjectiveManager.Instance != null)
+                ui.SetObiectiv(ObjectiveManager.Instance.GetObiectivCurent());
+        }
     }
 
     public void LeagaPersonaje(GameObject witch, GameObject cat)

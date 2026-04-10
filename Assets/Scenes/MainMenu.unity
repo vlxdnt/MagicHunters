@@ -4062,7 +4062,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 948215709}
+      - m_Target: {fileID: 1663222839}
         m_TargetAssemblyTypeName: Language, Assembly-CSharp
         m_MethodName: SchimbaLimba
         m_Mode: 0
@@ -5044,7 +5044,6 @@ GameObject:
   - component: {fileID: 948215706}
   - component: {fileID: 948215707}
   - component: {fileID: 948215708}
-  - component: {fileID: 948215709}
   - component: {fileID: 948215710}
   m_Layer: 0
   m_Name: UIManager
@@ -5178,20 +5177,6 @@ MonoBehaviour:
   sliderBright: {fileID: 562619870}
   panelBright: {fileID: 1045162613}
   dropdownRezolutie: {fileID: 1208455526}
---- !u!114 &948215709
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 948215702}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 431d9b83b63a15b468a3cd006ae488ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Language
-  limbaActuala: 0
-  dropdownLimba: {fileID: 778797900}
 --- !u!114 &948215710
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9129,6 +9114,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1644568372}
   m_CullTransparentMesh: 1
+--- !u!1 &1663222838
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1663222840}
+  - component: {fileID: 1663222839}
+  m_Layer: 0
+  m_Name: LanguageManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1663222839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1663222838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 431d9b83b63a15b468a3cd006ae488ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Language
+  limbaActuala: 0
+  dropdownLimba: {fileID: 778797900}
+--- !u!4 &1663222840
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1663222838}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -12.84953, y: 16.71139, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1728960586
 GameObject:
   m_ObjectHideFlags: 0
@@ -11744,3 +11775,4 @@ SceneRoots:
   - {fileID: 519420032}
   - {fileID: 515286204}
   - {fileID: 501227294}
+  - {fileID: 1663222840}

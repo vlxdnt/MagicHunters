@@ -151,9 +151,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraLimits
   xMin: -7
-  xMax: 40
+  xMax: 150
   yMin: -5
-  yMax: 10
+  yMax: 40
   offsetX: 0
   offsetY: 1.4
   smoothSpeed: 5
@@ -182,6 +182,7 @@ GameObject:
   - component: {fileID: -6906570410613127915}
   - component: {fileID: 2570380200086796273}
   - component: {fileID: 4612901859312233802}
+  - component: {fileID: -4006522012604396610}
   m_Layer: 3
   m_Name: Player2
   m_TagString: Player
@@ -944,6 +945,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-4006522012604396610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6501798312373291870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6efad498a6bc33c4f97e1d0806c0ddd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerUIConnector
+  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!1 &8975131632674171672
 GameObject:
   m_ObjectHideFlags: 0

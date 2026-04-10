@@ -70,5 +70,25 @@
   "TextPlayers": {
     "ro": "Jucatori conectati:",
     "en": "Connected players:"
+  },
+  "intro_witch_1": {
+    "ro": "Nu-mi vine sa cred ca sora mea a ajuns asa...",
+    "en": "I can't believe my sister turned out this way..."
+  },
+  "intro_cat_2": {
+    "ro": "Miau!",
+    "en": "Meow!"
+  },
+  "intro_witch_3": {
+    "ro": "Sa mergem!",
+    "en": "Let's go!"
+  },
+  "intro_cat_1": {
+    "ro": "Miau...",
+    "en": "Meow..."
+  },
+  "intro_witch_2": {
+    "ro": "Trebuie sa ramanem impreuna!",
+    "en": "We have to stay together!"
   }
 }

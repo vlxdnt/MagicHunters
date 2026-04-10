@@ -105,8 +105,13 @@ public class BatEnemy : MonoBehaviour
             Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
             if (rb != null)
             {
-                // knockback
-                Vector2 directie = (collision.transform.position - transform.position).normalized;
+                //aflu directia juc
+                float directieX = Mathf.Sign(collision.transform.position.x - transform.position.x);
+
+                //cat de tare e impins
+                Vector2 directie = new Vector2(directieX, 0.3f).normalized;
+
+                // forta aplicata
                 rb.linearVelocity = Vector2.zero;
                 rb.AddForce(directie * forțaKnockback, ForceMode2D.Impulse);
 
