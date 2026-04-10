@@ -277,7 +277,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 15951158
+  GlobalObjectIdHash: 1623746512
   InScenePlacedSourceGlobalObjectIdHash: 3053837811
   DeferredDespawnTick: 0
   Ownership: 1
@@ -423,7 +423,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInput
   ShowTopMostFoldoutHeaderGroup: 1
   vitezaMiscare: 2
-  fortaSarit: 5
+  fortaSarit: 6
   sarituriMaxime: 1
   verificarePodea: {fileID: 2732546838691258911}
   dimensiuneVerificare: {x: 0.5, y: 0.1}
