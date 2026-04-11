@@ -151,9 +151,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraLimits
   xMin: -7
-  xMax: 150
+  xMax: 250
   yMin: -5
-  yMax: 40
+  yMax: 200
   offsetX: 0
   offsetY: 1.4
   smoothSpeed: 5
