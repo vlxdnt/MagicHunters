@@ -62,6 +62,9 @@ public class PlayerCombat : NetworkBehaviour
             Health hp = inamic.GetComponent<Health>();
             if (hp != null) hp.TakeDamage(damageAtac);
 
+            TargetDoor target = inamic.GetComponent<TargetDoor>();
+            if (target != null) target.LovesteTarget();
+
             //inamici
             EnemyHealth ehp = inamic.GetComponent<EnemyHealth>();
             if (ehp != null) ehp.TakeDamage(damageAtac);

@@ -461,7 +461,7 @@ MonoBehaviour:
   fortaSarit: 6
   sarituriMaxime: 1
   verificarePodea: {fileID: 2732546838691258911}
-  dimensiuneVerificare: {x: 0.5, y: 0.1}
+  dimensiuneVerificare: {x: 0.2, y: 0.1}
   stratPodea:
     serializedVersion: 2
     m_Bits: 1024

@@ -412,6 +412,10 @@ MonoBehaviour:
       NameHash: -1858580252
       Synchronize: 1
       ParameterType: 9
+    - name: Attack
+      NameHash: 1080829965
+      Synchronize: 1
+      ParameterType: 9
   AnimatorParametersExpanded: 0
 --- !u!95 &5044161433516213751
 Animator:
@@ -525,7 +529,7 @@ MonoBehaviour:
   fortaSarit: 5
   sarituriMaxime: 2
   verificarePodea: {fileID: 2732546838691258911}
-  dimensiuneVerificare: {x: 0.5, y: 0.1}
+  dimensiuneVerificare: {x: 0.2, y: 0.1}
   stratPodea:
     serializedVersion: 2
     m_Bits: 1024
@@ -674,6 +678,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 1b1af586-c1a8-4577-826a-458a3698ffbf
     m_ActionName: 'Player/Attack[/Mouse/leftButton]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 55adfabf-62b6-4fd5-abf4-0481d2cd5f24
+    m_ActionName: 'Player/Fireball[/Keyboard/e]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -1002,7 +1010,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerRespawn
   ShowTopMostFoldoutHeaderGroup: 1
   spawnInitial: {fileID: 0}
-  pozitieRespawn: {x: 0, y: -3, z: 0}
+  pozitieRespawn: {x: 0, y: -3}
   prioritateCheckpoint: 0
 --- !u!114 &1571242468226788728
 MonoBehaviour:
@@ -1016,7 +1024,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62de2bfcdd4f0c7498e1df92128070a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Health
+  ShowTopMostFoldoutHeaderGroup: 1
   maxHealth: 5
+  currentHealth:
+    m_InternalValue: 100
   immunityDuration: 1
 --- !u!114 &7950909554220475829
 MonoBehaviour:
