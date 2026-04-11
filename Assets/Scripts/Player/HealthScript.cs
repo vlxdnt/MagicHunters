@@ -4,7 +4,7 @@ using System.Collections; // Necesar pentru Corutine
 public class Health : MonoBehaviour
 {
     [Header("Life settings")]
-    public int maxHealth = 5;
+    public int maxHealth = 100;
     private int currentHealth;
 
     [Header("Immunity Settings")]
@@ -61,6 +61,18 @@ public class Health : MonoBehaviour
         }
 
         isImmune = false;
+    }
+
+    public void Heal(int healAmount)
+    {
+        currentHealth += healAmount;
+        
+        if (currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+
+        Debug.Log(gameObject.name + " a primit heal. HP curent: " + currentHealth);
     }
 
     void Die()

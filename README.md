@@ -19,6 +19,12 @@ Jocul utilizează sistemul Unity Netcode for GameObjects și funcționează în 
 
 ## Controale
 
+### General
+
+| Tastă | Acțiune |
+| :--- | :--- |
+| ESC | Meniu de pauză |
+
 ### Pisica 
 | Tastă | Acțiune |
 | :--- | :--- |
@@ -32,6 +38,7 @@ Jocul utilizează sistemul Unity Netcode for GameObjects și funcționează în 
 | WASD | Mișcare |
 | Space | Săritură (Menține apăsat pentru Glide / Planare) |
 | Q | Invizibilitate (Durează 5 secunde, inamicii pierd ținta) |
+| H | Heal la ambii jucători (Cooldown 15 secunde, adaugă 50% din viața maximă la viața curentă) |
 
 ## Cerințe de Sistem
 

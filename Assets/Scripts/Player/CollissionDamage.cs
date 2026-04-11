@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class DamageOnContact : MonoBehaviour
 {
-    public int contactDamage = 1;
+    public int contactDamage = 20;
 
     //No Trigger
     private void OnCollisionEnter2D(Collision2D collision)

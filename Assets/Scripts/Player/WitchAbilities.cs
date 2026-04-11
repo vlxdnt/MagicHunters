@@ -24,6 +24,11 @@ public class WitchAbilities : NetworkBehaviour
     private bool abilitateInCooldown = false;
     public static System.Collections.Generic.List<WitchAbilities> jucatoriInScena = new System.Collections.Generic.List<WitchAbilities>();
 
+    [Header("Setari Heal")]
+    public int cantitateHeal = 50;
+    public float cooldownHeal = 10f;
+    private bool healInCooldown = false;
+
     private float vitezaMiscareOriginala;
     private bool planeazaAcum = false;
 
@@ -88,6 +93,52 @@ public class WitchAbilities : NetworkBehaviour
 
         yield return new WaitForSeconds(cooldownInvizibilitate - durataInvizibilitate);
         abilitateInCooldown = false;
+    }
+
+    // Metoda apelata din Input System
+    public void OnHeal(InputAction.CallbackContext context)
+    {
+        if (!IsOwner) return;
+
+        if (context.started && !healInCooldown)
+        {
+            StartCoroutine(RutinaHealCooldown());
+            
+            // Trimitem comanda la server
+            DeclanseazaHealServerRpc();
+        }
+    }
+
+    private IEnumerator RutinaHealCooldown()
+    {
+        healInCooldown = true;
+        yield return new WaitForSeconds(cooldownHeal);
+        healInCooldown = false;
+    }
+
+    [ServerRpc]
+    private void DeclanseazaHealServerRpc()
+    {
+        // Serverul aproba si trimite comanda pe ecranele tuturor (ClientRpc)
+        AplicaHealClientRpc();
+    }
+
+    [ClientRpc]
+    private void AplicaHealClientRpc()
+    {
+        // GASIM DOAR JUCATORII: Cautam in scena doar obiectele cu PlayerInput.
+        // Inamicii nu au PlayerInput, deci nu vor fi bagati in seama.
+        PlayerInput[] totiJucatorii = Object.FindObjectsByType<PlayerInput>(FindObjectsSortMode.None);
+        
+        foreach (PlayerInput player in totiJucatorii)
+        {
+            // Luam componenta Health de pe jucatorul gasit si aplicam heal-ul
+            Health hp = player.GetComponent<Health>();
+            if (hp != null)
+            {
+                hp.Heal(cantitateHeal);
+            }
+        }
     }
 
     void FixedUpdate()
