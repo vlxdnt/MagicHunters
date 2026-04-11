@@ -15,6 +15,10 @@ public class PlayerCombat : NetworkBehaviour
     public float fortaKnockbackX = 10f;
     public float fortaKnockbackY = 3f;
 
+    [Header("Audio")]
+    public AudioSource audioOneShot;
+    public AudioClip sunetAtacMelee;
+
     private float timpulUrmatoruluiAtac = 0f;
 
     private Animator animator;
@@ -41,6 +45,12 @@ public class PlayerCombat : NetworkBehaviour
     private void EfectueazaAtacMelee()
     {
         if (animator != null) animator.SetTrigger("Attack");
+
+        if (audioOneShot != null && sunetAtacMelee != null)
+        {
+            // PlayOneShot permite suprapunerea sunetelor la spam
+            audioOneShot.PlayOneShot(sunetAtacMelee);
+        }
 
         float directie = playerInput.flipX.Value ? -1f : 1f;
         punctAtac.localPosition = new Vector3(Mathf.Abs(punctAtac.localPosition.x) * directie, punctAtac.localPosition.y, punctAtac.localPosition.z);

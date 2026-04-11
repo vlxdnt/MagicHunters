@@ -37,6 +37,9 @@ public class WitchAbilities : NetworkBehaviour
     public float cooldownFireball = 1.5f;
     private float timpUrmatorFireball = 0f;
 
+    [Header("Audio Fireball")]
+    public AudioClip sunetLansareFireball;
+
     private float vitezaMiscareOriginala;
     private bool planeazaAcum = false;
 
@@ -166,7 +169,8 @@ public class WitchAbilities : NetworkBehaviour
     {
         GameObject fireball = Instantiate(fireballPrefab, punctSpawnFireball.position, Quaternion.identity);
 
-        Debug.Log("Fireball spawnat!");
+        if (audioOneShot != null && sunetLansareFireball != null)
+            audioOneShot.PlayOneShot(sunetLansareFireball);
 
         // directia ca la wizard
         float directieX = privesteStanga ? -1f : 1f;

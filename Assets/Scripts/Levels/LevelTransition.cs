@@ -13,6 +13,10 @@ public class LevelTransition : NetworkBehaviour
 
     public float fadeDuration = 0.5f;
 
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip sunetTranzitie;
+
     private int jucatoriInZona = 0;
     private bool triggered = false;
 
@@ -26,6 +30,11 @@ public class LevelTransition : NetworkBehaviour
         if (jucatoriInZona >= 2)
         {
             triggered = true;
+
+            // Rsunet
+            if (audioSource != null && sunetTranzitie != null)
+                audioSource.PlayOneShot(sunetTranzitie);
+
             StartCoroutine(TeleportareNivel());
         }
     }
@@ -60,11 +69,6 @@ public class LevelTransition : NetworkBehaviour
             if (player.IsOwner)
             {
                 player.transform.position = pozitieNoua;
-
-                // next checkp
-                PlayerRespawn respawn = player.GetComponent<PlayerRespawn>();
-                if (respawn != null)
-                    respawn.pozitieRespawn = pozitieNoua;
             }
         }
     }

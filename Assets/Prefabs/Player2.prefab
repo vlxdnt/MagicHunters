@@ -835,6 +835,7 @@ MonoBehaviour:
   vitezaFireball: 7
   timpViataFireball: 3
   cooldownFireball: 1.5
+  sunetLansareFireball: {fileID: 8300000, guid: 9f91fc01fa0053e4e93206685a0aa28a, type: 3}
   esteInvizibil:
     m_InternalValue: 0
 --- !u!82 &2570380200086796273
@@ -1099,6 +1100,8 @@ MonoBehaviour:
     m_Bits: 2048
   fortaKnockbackX: 10
   fortaKnockbackY: 3
+  audioOneShot: {fileID: 2570380200086796273}
+  sunetAtacMelee: {fileID: 8300000, guid: 6b3d5e5559a0d754f833497705415adc, type: 3}
 --- !u!1 &8975131632674171672
 GameObject:
   m_ObjectHideFlags: 0

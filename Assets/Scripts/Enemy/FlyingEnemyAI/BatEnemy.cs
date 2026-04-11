@@ -16,6 +16,10 @@ public class BatEnemy : MonoBehaviour
     [Header("Damage")]
     public int damageLaAtac = 10;
 
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip sunetAtacLiliac;
+
     // timer pt fps fix
     private float intervalCautare = 0.5f;
     private float timerCautare = 0f;
@@ -88,6 +92,9 @@ public class BatEnemy : MonoBehaviour
     {
         if (Time.time < nextKnockbackTime) return;
         if (!other.CompareTag("Player")) return;
+
+        if (audioSource != null && sunetAtacLiliac != null)
+            audioSource.PlayOneShot(sunetAtacLiliac);
 
         Rigidbody2D rb = other.GetComponent<Rigidbody2D>();
         if (rb != null)

@@ -13,6 +13,10 @@ public class ButtonDoor : MonoBehaviour
     private SpriteRenderer srButon;
     private bool esteApasat = false;
 
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip sunetButon;
+
     void Awake()
     {
         srButon = GetComponent<SpriteRenderer>();
@@ -24,6 +28,12 @@ public class ButtonDoor : MonoBehaviour
         if (esteApasat) return;
 
         esteApasat = true;
+
+        // sunet
+        if (audioSource != null)
+        {
+            if (sunetButon != null) audioSource.PlayOneShot(sunetButon);
+        }
 
         // sprite buton
         if (srButon != null && spriteButonApasat != null)

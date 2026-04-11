@@ -24,6 +24,10 @@ public class CastleEntrance : MonoBehaviour
     [Header("Margins")]
     public GameObject margins;
 
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip sunetDeschidereUsa;
+
     private int jucatoriInZona = 0;
     private bool triggered = false;
 
@@ -37,6 +41,11 @@ public class CastleEntrance : MonoBehaviour
             if (jucatoriInZona >= 2)
             {
                 triggered = true;
+
+                // sunet
+                if (audioSource != null && sunetDeschidereUsa != null)
+                    audioSource.PlayOneShot(sunetDeschidereUsa);
+
                 StartCoroutine(IntrareInCastel());
             }
         }
@@ -80,10 +89,7 @@ public class CastleEntrance : MonoBehaviour
         CameraLimits[] camere = FindObjectsByType<CameraLimits>(FindObjectsSortMode.None);
         foreach (CameraLimits cam in camere)
         {
-            cam.xMin = xMinInterior;
-            cam.xMax = xMaxInterior;
-            cam.yMin = yMinInterior;
-            cam.yMax = yMaxInterior;
+            cam.SetLimits(xMinInterior, xMaxInterior, yMinInterior, yMaxInterior);
         }
     }
 }

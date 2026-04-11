@@ -7,6 +7,10 @@ public class Checkpoint : MonoBehaviour
     public Sprite spriteInactiv; // verde
     public Sprite spriteActiv; // rosu
 
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip sunetCheckpoint;
+
     private SpriteRenderer sr;
     private bool esteActiv = false;
 
@@ -35,6 +39,11 @@ public class Checkpoint : MonoBehaviour
     {
         if (esteActiv) return;
         esteActiv = true;
+
+        // sunet
+        if (audioSource != null && sunetCheckpoint != null)
+            audioSource.PlayOneShot(sunetCheckpoint);
+
         if (sr != null && spriteActiv != null)
             sr.sprite = spriteActiv;
     }
