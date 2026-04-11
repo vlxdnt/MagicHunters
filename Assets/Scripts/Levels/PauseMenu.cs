@@ -22,29 +22,28 @@ public partial class PauseMenu : MonoBehaviour
     public void Pauza()
     {
         isPaused = true;
-        pauseMenuCanvas.SetActive(true);  // pt panel in sine
-        pauseMenuUI.SetActive(true);       // optiuni
+        pauseMenuCanvas.SetActive(true); //panel in sine
+        pauseMenuUI.SetActive(true); // optiuni
         Time.timeScale = 0f;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+
+        // opreste audio
+        AudioListener.pause = true;
     }
 
     public void Revino()
     {
         isPaused = false;
-
         pauseMenuCanvas.SetActive(false);
-
         pauseMenuUI.SetActive(false);
-
-        if (settingsPanel != null)
-        {
-            settingsPanel.SetActive(false);
-        }
-
+        if (settingsPanel != null) settingsPanel.SetActive(false);
         Time.timeScale = 1f;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        // audio on
+        AudioListener.pause = false;
     }
 
     public void DeschideSetari()

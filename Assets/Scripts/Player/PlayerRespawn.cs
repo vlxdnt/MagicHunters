@@ -3,16 +3,14 @@ using Unity.Netcode;
 
 public class PlayerRespawn : NetworkBehaviour
 {
-    public Transform spawnInicial; //
+    public Transform spawnInitial; //
     public Vector3 pozitieRespawn;
     public int prioritateCheckpoint = -1;
 
     public override void OnNetworkSpawn()
     {
-        if (spawnInicial != null)
-            pozitieRespawn = spawnInicial.position;
-        else
-            pozitieRespawn = transform.position;
+        if (IsOwner)
+            pozitieRespawn = transform.position; //
     }
 
     public void SetCheckpoint(Vector3 pozitie, int prioritate)

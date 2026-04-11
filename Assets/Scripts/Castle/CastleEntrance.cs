@@ -21,6 +21,9 @@ public class CastleEntrance : MonoBehaviour
     public float yMinInterior = -5f;
     public float yMaxInterior = 10f;
 
+    [Header("Margins")]
+    public GameObject margins;
+
     private int jucatoriInZona = 0;
     private bool triggered = false;
 
@@ -71,6 +74,7 @@ public class CastleEntrance : MonoBehaviour
         // activ int
         castleInt.SetActive(true);
         ziduriInvizibile.SetActive(true);
+        if (margins != null) margins.SetActive(false);
 
         // limitele camerelor
         CameraLimits[] camere = FindObjectsByType<CameraLimits>(FindObjectsSortMode.None);

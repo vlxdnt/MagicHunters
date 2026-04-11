@@ -10,19 +10,20 @@ public class IntroTimelineManager : NetworkBehaviour
 
     public GameObject gameUI;
 
-    void Update()
-    {
-        if (IsServer && timelineStarted)
-        {
-            // daca s-a term timeline
-            if (director.time >= director.duration)
-            {
-                timelineStarted = false;
-                ActiveazaControlClientRpc();
-                this.enabled = false; // dezactivare
-            }
-        }
-    }
+    //void Update()
+    //{
+    //    if (IsServer && timelineStarted)
+    //    {
+    //        Debug.Log($"Timeline time: {director.time} / {director.duration}");
+
+    //        if (director.time >= director.duration)
+    //        {
+    //            timelineStarted = false;
+    //            ActiveazaControlClientRpc();
+    //            this.enabled = false;
+    //        }
+    //    }
+    //}
 
     [ClientRpc]
     void ActiveazaControlClientRpc()
@@ -96,6 +97,9 @@ public class IntroTimelineManager : NetworkBehaviour
             // activare control ca sa nu cada prin mapa
             SetPlayerState(witchObj, true); 
             SetPlayerState(catObj, true);
+
+            if (IsServer) timelineStarted = true;
+            Debug.Log("timelineStarted setat: " + timelineStarted + " IsServer: " + IsServer);
 
             // legare tracks in timeline
             foreach (var output in director.playableAsset.outputs)

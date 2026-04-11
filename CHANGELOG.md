@@ -3,6 +3,20 @@
 ## [v0.2.1] - 11.04.2026
 ### Adaugat
 - **Tabela de obiective:** adaugata o tabela care sa arate obiectivele pentru fiecare task, se actualizeaza in functie de progresul jucatorilor
+- **Mecanica de teleport la alt nivel** doar facuta
+- **Facut sistem de checkpoint** pentru a salva progresul jucatorilor, daca unul din jucatori moare, amandoi se teleporteaza la ultimul checkpoint atins
+
+### De adaugat
+- **Inamicii**
+- **Text pentru obiective + indicatii** pentru fiecare task
+- **Urmatorul nivel** pentru a testa teleportul
+
+### De rezolvat
+- **Problema cu numele jucatorilor din tabela** nu se actualizeaza
+- **Posibila problema la grid** se pot bloca jucatorii si trebuie sa sara, ceva la collider ori la materialul folosit
+
+### Rezolvat
+- **Problema la pauza** cand se pune pe pauza, se opreste timpul pentru amandoi jucatorii, dar daca unul din jucatori se misca, timpul continua pentru celalalt jucator, acum am rezolvat problema si timpul se opreste complet
 
 ## [v0.2.0] - 10.04.2026
 ## Adaugat

@@ -48,11 +48,11 @@ public class IntroDialog : NetworkBehaviour
 
             //wait pt typewriter si timp afisare
             float timpTypewriter = replici[i].Length * vitezaTypewriter;
-            yield return new WaitForSeconds(timpTypewriter + timpAfisare);
+            yield return new WaitForSecondsRealtime(timpTypewriter + timpAfisare);
 
             //hide la bula
             AscundeBulaClientRpc(eWitch);
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSecondsRealtime(0.3f);
         }
 
         ActiveazaControlClientRpc();
@@ -126,10 +126,9 @@ public class IntroDialog : NetworkBehaviour
 
             bula.transform.localScale = new Vector3(nouaScalaX, nouaScalaY, 1f);
 
-            yield return new WaitForSeconds(vitezaTypewriter);
+            yield return new WaitForSecondsRealtime(vitezaTypewriter);
         }
         // reset la pitch daca alegem sa-l punem
-        //if (sursaAudioDialog != null) sursaAudioDialog.pitch = 1f;
         if (eWitch && sursaAudioDialog != null)
         {
             sursaAudioDialog.Stop();
@@ -157,6 +156,32 @@ public class IntroDialog : NetworkBehaviour
             if (player.IsOwner)
             {
                 player.controlActiv = true;
+            }
+        }
+
+        IntroTimelineManager tm = FindFirstObjectByType<IntroTimelineManager>();
+        if (tm != null) tm.enabled = false;
+
+        if (tm != null && tm.gameUI != null)
+        {
+            tm.gameUI.SetActive(true);
+            PlayerUI ui = tm.gameUI.GetComponentInChildren<PlayerUI>(true);
+
+            if (ui != null)
+            {
+                // seteaza pers
+                foreach (var player in FindObjectsByType<PlayerInput>(FindObjectsSortMode.None))
+                {
+                    if (player.IsOwner)
+                    {
+                        bool isWitch = player.GetComponent<WitchAnimator>() != null;
+                        ui.SetPersonaj(isWitch, NetworkManager.Singleton.LocalClientId);
+                        break;
+                    }
+                }
+
+                if (ObjectiveManager.Instance != null)
+                    ui.SetObiectiv(ObjectiveManager.Instance.GetObiectivCurent());
             }
         }
 

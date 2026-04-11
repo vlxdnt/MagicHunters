@@ -183,6 +183,7 @@ GameObject:
   - component: {fileID: 2570380200086796273}
   - component: {fileID: 4612901859312233802}
   - component: {fileID: -4006522012604396610}
+  - component: {fileID: 4263034582627635963}
   m_Layer: 3
   m_Name: Player2
   m_TagString: Player
@@ -958,6 +959,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerUIConnector
   ShowTopMostFoldoutHeaderGroup: 1
+--- !u!114 &4263034582627635963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6501798312373291870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a0d3cf7e7955a447b42b2edded42b5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerRespawn
+  ShowTopMostFoldoutHeaderGroup: 1
+  spawnInitial: {fileID: 0}
+  pozitieRespawn: {x: 0, y: -3, z: 0}
+  prioritateCheckpoint: 0
 --- !u!1 &8975131632674171672
 GameObject:
   m_ObjectHideFlags: 0
