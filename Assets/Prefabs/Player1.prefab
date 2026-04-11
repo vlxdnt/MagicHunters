@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &21073354298010843
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7741602545056678085}
+  m_Layer: 3
+  m_Name: Attack
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7741602545056678085
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 21073354298010843}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.1, y: 0.1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4758846572073464448}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5257672731217054783
 GameObject:
   m_ObjectHideFlags: 0
@@ -184,6 +215,7 @@ GameObject:
   - component: {fileID: -5769787728269819834}
   - component: {fileID: 3226196222303224167}
   - component: {fileID: 1571242468226788728}
+  - component: {fileID: 7950909554220475829}
   m_Layer: 3
   m_Name: Player1
   m_TagString: Player
@@ -206,6 +238,7 @@ Transform:
   m_Children:
   - {fileID: 2732546838691258911}
   - {fileID: 7724642707696879265}
+  - {fileID: 7741602545056678085}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8000596163578151191
@@ -621,6 +654,26 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 88caa7c4-4488-4cd9-b07a-563ccf67ebbd
     m_ActionName: 'Player/Invisibility[/Keyboard/q]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0a30f1a7-4cec-4b17-94ff-08513772f053
+    m_ActionName: 'Player/Heal[/Keyboard/h]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7950909554220475829}
+        m_TargetAssemblyTypeName: PlayerCombat, Assembly-CSharp
+        m_MethodName: OnAttack
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 1b1af586-c1a8-4577-826a-458a3698ffbf
+    m_ActionName: 'Player/Attack[/Mouse/leftButton]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -965,6 +1018,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Health
   maxHealth: 5
   immunityDuration: 1
+--- !u!114 &7950909554220475829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6501798312373291870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbbf9274bad03ff40911c072d44b910b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerCombat
+  ShowTopMostFoldoutHeaderGroup: 1
+  punctAtac: {fileID: 7741602545056678085}
+  razaAtac: 0.6
+  damageAtac: 20
+  cooldownAtac: 0.5
+  stratInamici:
+    serializedVersion: 2
+    m_Bits: 2048
+  fortaKnockbackX: 10
+  fortaKnockbackY: 3
 --- !u!1 &8975131632674171672
 GameObject:
   m_ObjectHideFlags: 0

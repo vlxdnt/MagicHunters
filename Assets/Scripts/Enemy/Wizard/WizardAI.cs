@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Unity.Netcode;
 
-public class WizardAI : MonoBehaviour
+public class WizardAI : NetworkBehaviour
 {
     [Header("Detection Settings")]
     public float aggroRadius = 5f;
@@ -79,14 +80,31 @@ public class WizardAI : MonoBehaviour
     {
         if (fireballPrefab != null && firePoint != null)
         {
+            // 1. Cream obiectul pe Server
             GameObject fireball = Instantiate(fireballPrefab, firePoint.position, Quaternion.identity);
+            
+            // 2. Calculam directia
             Vector2 direction = (currentTarget.position - firePoint.position).normalized;
-
             fireball.GetComponent<Rigidbody2D>().linearVelocity = direction * 7f;
-
             fireball.transform.right = direction;
 
-            Destroy(fireball, 3f);
+            // 3. IMPORTANT: Il spawnăm în rețea
+            // Aceasta linie trimite obiectul pe ecranele tuturor clienților
+            fireball.GetComponent<NetworkObject>().Spawn();
+
+            // 4. Nu folosim Destroy(fireball, 3f). 
+            // Facem o mică rutină care să dea Despawn după 3 secunde pe server.
+            StartCoroutine(DespawnDupaTimp(fireball, 3f));
+        }
+    }
+
+    private IEnumerator DespawnDupaTimp(GameObject obj, float timp)
+    {
+        yield return new WaitForSeconds(timp);
+        if (obj != null)
+        {
+            var netObj = obj.GetComponent<NetworkObject>();
+            if (netObj != null && netObj.IsSpawned) netObj.Despawn();
         }
     }
 

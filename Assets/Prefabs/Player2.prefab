@@ -157,6 +157,37 @@ MonoBehaviour:
   offsetX: 0
   offsetY: 1.4
   smoothSpeed: 5
+--- !u!1 &3840393608773506035
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7596580477688276974}
+  m_Layer: 3
+  m_Name: Attack
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7596580477688276974
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3840393608773506035}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.2, y: 0.2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4758846572073464448}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6501798312373291870
 GameObject:
   m_ObjectHideFlags: 0
@@ -185,6 +216,7 @@ GameObject:
   - component: {fileID: -4006522012604396610}
   - component: {fileID: 4263034582627635963}
   - component: {fileID: 2212935649579815759}
+  - component: {fileID: 3906320731818203720}
   m_Layer: 3
   m_Name: Player2
   m_TagString: Player
@@ -207,6 +239,7 @@ Transform:
   m_Children:
   - {fileID: 2732546838691258911}
   - {fileID: 3768169439911834201}
+  - {fileID: 7596580477688276974}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8000596163578151191
@@ -280,7 +313,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 15951158
+  GlobalObjectIdHash: 1623746512
   InScenePlacedSourceGlobalObjectIdHash: 3053837811
   DeferredDespawnTick: 0
   Ownership: 1
@@ -574,6 +607,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 0a30f1a7-4cec-4b17-94ff-08513772f053
     m_ActionName: 'Player/Heal[/Keyboard/h]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3906320731818203720}
+        m_TargetAssemblyTypeName: PlayerCombat, Assembly-CSharp
+        m_MethodName: OnAttack
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 1b1af586-c1a8-4577-826a-458a3698ffbf
+    m_ActionName: 'Player/Attack[/Mouse/leftButton]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -750,6 +799,11 @@ MonoBehaviour:
   cooldownInvizibilitate: 8
   cantitateHeal: 1
   cooldownHeal: 10
+  fireballPrefab: {fileID: 0}
+  punctSpawnFireball: {fileID: 0}
+  vitezaFireball: 7
+  timpViataFireball: 3
+  cooldownFireball: 1.5
   esteInvizibil:
     m_InternalValue: 0
 --- !u!114 &-6906570410613127915
@@ -1008,6 +1062,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Health
   maxHealth: 5
   immunityDuration: 1
+--- !u!114 &3906320731818203720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6501798312373291870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbbf9274bad03ff40911c072d44b910b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerCombat
+  ShowTopMostFoldoutHeaderGroup: 1
+  punctAtac: {fileID: 7596580477688276974}
+  razaAtac: 0.6
+  damageAtac: 20
+  cooldownAtac: 0.5
+  stratInamici:
+    serializedVersion: 2
+    m_Bits: 2048
+  fortaKnockbackX: 10
+  fortaKnockbackY: 3
 --- !u!1 &8975131632674171672
 GameObject:
   m_ObjectHideFlags: 0

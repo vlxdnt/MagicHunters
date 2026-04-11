@@ -1,27 +1,32 @@
 ﻿using UnityEngine;
+using Unity.Netcode;
 
-public class Fireball : MonoBehaviour
+public class Fireball : NetworkBehaviour
 {
-    public int damage = 1;
+    public int damage = 20;
+    public float viteza = 7f;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Verificăm dacă am lovit jucătorul
-        // (Asigură-te că prefab-ul Wizard are Tag-ul "Player")
+        // REGULA DE AUR: Doar serverul calculează logica de damage și distrugere
+        if (!IsServer) return;
+
         if (collision.CompareTag("Player"))
         {
-            // Aici apelezi metoda de luat viață a jucătorului
-            // Exemplu: collision.GetComponent<PlayerHealth>().TakeDamage(damage);
+            Health h = collision.GetComponent<Health>();
+            if (h != null)
+            {
+                h.TakeDamage(damage);
+            }
 
-            Debug.Log("Player hit");
-
-            // Distrugem fireball-ul la impact
-            Destroy(gameObject);
+            Debug.Log("Jucator lovit de fireball-ul inamicului!");
+            
+            // Folosim Despawn în loc de Destroy
+            GetComponent<NetworkObject>().Despawn();
         }
-
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        else if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
-            Destroy(gameObject);
+            GetComponent<NetworkObject>().Despawn();
         }
     }
 }

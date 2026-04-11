@@ -29,6 +29,14 @@ public class WitchAbilities : NetworkBehaviour
     public float cooldownHeal = 10f;
     private bool healInCooldown = false;
 
+    [Header("Setari Fireball")]
+    public GameObject fireballPrefab;
+    public Transform punctSpawnFireball;
+    public float vitezaFireball = 7f; 
+    public float timpViataFireball = 3f;
+    public float cooldownFireball = 1.5f;
+    private float timpUrmatorFireball = 0f;
+
     private float vitezaMiscareOriginala;
     private bool planeazaAcum = false;
 
@@ -138,6 +146,57 @@ public class WitchAbilities : NetworkBehaviour
             {
                 hp.Heal(cantitateHeal);
             }
+        }
+    }
+
+    // Metoda legata in Player Input (ex: Right Click)
+    public void OnFireball(InputAction.CallbackContext context)
+    {
+        if (!IsOwner) return;
+
+        if (context.started && Time.time >= timpUrmatorFireball)
+        {
+            // Preluam directia din PlayerInput
+            bool privesteStanga = playerInput.flipX.Value;
+            
+            // Trimitem comanda serverului
+            SpawnFireballServerRpc(privesteStanga);
+            
+            timpUrmatorFireball = Time.time + cooldownFireball;
+        }
+    }
+
+    [ServerRpc]
+    private void SpawnFireballServerRpc(bool privesteStanga)
+    {
+        // 1. Instantiem mingea de foc 
+        GameObject fireball = Instantiate(fireballPrefab, punctSpawnFireball.position, Quaternion.identity);
+
+        // 2. Setam directia si viteza inspirat din WizardAI
+        float directieX = privesteStanga ? -1f : 1f;
+        Vector2 direction = new Vector2(directieX, 0f);
+        fireball.GetComponent<Rigidbody2D>().linearVelocity = direction * vitezaFireball;
+        
+        // Optional: Rotim fireball-ul sa arate in directia corecta
+        fireball.transform.right = direction;
+
+        // 3. O spawnam in retea
+        fireball.GetComponent<NetworkObject>().Spawn();
+
+        // 4. Setam sa dispara dupa un anumit timp (sa nu aglomereze serverul)
+        // Nu putem folosi Destroy direct pe retea, asa ca invocam despawn-ul
+        StartCoroutine(DespawnFireballRoutine(fireball.GetComponent<NetworkObject>()));
+    }
+
+    private System.Collections.IEnumerator DespawnFireballRoutine(NetworkObject netObj)
+    {
+        // Asteptam exact 3 secunde, cum e in scriptul WizardAI
+        yield return new WaitForSeconds(timpViataFireball);
+        
+        // Daca inca exista (nu a lovit nimic), il scoatem din joc
+        if (netObj != null && netObj.IsSpawned)
+        {
+            netObj.Despawn();
         }
     }
 
