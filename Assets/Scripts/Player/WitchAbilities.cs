@@ -1,7 +1,7 @@
-using UnityEngine;
+﻿using UnityEngine;
 using Unity.Netcode;
 using UnityEngine.InputSystem;
-using System.Collections; // Necesar pentru IEnumerator (Coroutine)
+using System.Collections;
 
 public class WitchAbilities : NetworkBehaviour
 {
@@ -54,10 +54,11 @@ public class WitchAbilities : NetworkBehaviour
 
         esteInvizibil.OnValueChanged += OnInvizibilitateSchimbata;
 
-        if (!IsOwner)
+        if (IsOwner)
         {
-            this.enabled = false;
-            return;
+            vitezaMiscareOriginala = playerInput.vitezaMiscare;
+            if (!jucatoriInScena.Contains(this))
+                jucatoriInScena.Add(this);
         }
 
         vitezaMiscareOriginala = playerInput.vitezaMiscare;
@@ -103,17 +104,17 @@ public class WitchAbilities : NetworkBehaviour
         abilitateInCooldown = false;
     }
 
-    // Metoda apelata din Input System
     public void OnHeal(InputAction.CallbackContext context)
     {
         if (!IsOwner) return;
 
-        if (context.started && !healInCooldown)
+        if (context.started)
         {
-            StartCoroutine(RutinaHealCooldown());
-            
-            // Trimitem comanda la server
-            DeclanseazaHealServerRpc();
+            if (!healInCooldown)
+            {
+                StartCoroutine(RutinaHealCooldown());
+                DeclanseazaHealServerRpc();
+            }
         }
     }
 
@@ -127,20 +128,16 @@ public class WitchAbilities : NetworkBehaviour
     [ServerRpc]
     private void DeclanseazaHealServerRpc()
     {
-        // Serverul aproba si trimite comanda pe ecranele tuturor (ClientRpc)
         AplicaHealClientRpc();
     }
 
     [ClientRpc]
     private void AplicaHealClientRpc()
     {
-        // GASIM DOAR JUCATORII: Cautam in scena doar obiectele cu PlayerInput.
-        // Inamicii nu au PlayerInput, deci nu vor fi bagati in seama.
         PlayerInput[] totiJucatorii = Object.FindObjectsByType<PlayerInput>(FindObjectsSortMode.None);
-        
+
         foreach (PlayerInput player in totiJucatorii)
         {
-            // Luam componenta Health de pe jucatorul gasit si aplicam heal-ul
             Health hp = player.GetComponent<Health>();
             if (hp != null)
             {
@@ -149,19 +146,17 @@ public class WitchAbilities : NetworkBehaviour
         }
     }
 
-    // Metoda legata in Player Input (ex: Right Click)
     public void OnFireball(InputAction.CallbackContext context)
     {
         if (!IsOwner) return;
 
         if (context.started && Time.time >= timpUrmatorFireball)
         {
-            // Preluam directia din PlayerInput
+            Animator anim = GetComponentInChildren<Animator>();
+            if (anim != null) anim.SetTrigger("Attack");
+
             bool privesteStanga = playerInput.flipX.Value;
-            
-            // Trimitem comanda serverului
             SpawnFireballServerRpc(privesteStanga);
-            
             timpUrmatorFireball = Time.time + cooldownFireball;
         }
     }
@@ -169,31 +164,28 @@ public class WitchAbilities : NetworkBehaviour
     [ServerRpc]
     private void SpawnFireballServerRpc(bool privesteStanga)
     {
-        // 1. Instantiem mingea de foc 
         GameObject fireball = Instantiate(fireballPrefab, punctSpawnFireball.position, Quaternion.identity);
 
-        // 2. Setam directia si viteza inspirat din WizardAI
+        Debug.Log("Fireball spawnat!");
+
+        // directia ca la wizard
         float directieX = privesteStanga ? -1f : 1f;
         Vector2 direction = new Vector2(directieX, 0f);
         fireball.GetComponent<Rigidbody2D>().linearVelocity = direction * vitezaFireball;
         
-        // Optional: Rotim fireball-ul sa arate in directia corecta
         fireball.transform.right = direction;
 
-        // 3. O spawnam in retea
         fireball.GetComponent<NetworkObject>().Spawn();
 
-        // 4. Setam sa dispara dupa un anumit timp (sa nu aglomereze serverul)
-        // Nu putem folosi Destroy direct pe retea, asa ca invocam despawn-ul
         StartCoroutine(DespawnFireballRoutine(fireball.GetComponent<NetworkObject>()));
     }
 
     private System.Collections.IEnumerator DespawnFireballRoutine(NetworkObject netObj)
     {
-        // Asteptam exact 3 secunde, cum e in scriptul WizardAI
+        //3 sec
         yield return new WaitForSeconds(timpViataFireball);
         
-        // Daca inca exista (nu a lovit nimic), il scoatem din joc
+        // il scoatem din joc
         if (netObj != null && netObj.IsSpawned)
         {
             netObj.Despawn();

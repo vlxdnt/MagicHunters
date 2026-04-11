@@ -1,5 +1,11 @@
 # Istoric Modificări (Changelog)
 
+## [v0.2.2] - 11.04.2026
+### Adaugat
+- **Prefab pentru fireball**
+- **Rezolvat mai multe probleme legate de HP si Bat Enemy** acum inamicul da damage si are un cooldown pentru a nu da damage continuu, iar jucatorii au HP care se scade cand sunt loviti de inamic, daca HP-ul ajunge la 0, jucatorii se teleporteaza la ultimul checkpoint atins
+- **Realizat atacu melee pentru personaje**
+
 ## [v0.2.1] - 11.04.2026
 ### Adaugat
 - **Tabela de obiective:** adaugata o tabela care sa arate obiectivele pentru fiecare task, se actualizeaza in functie de progresul jucatorilor

@@ -9,7 +9,7 @@ public class PlayerCombat : NetworkBehaviour
     public float razaAtac = 0.6f;
     public int damageAtac = 20;
     public float cooldownAtac = 0.5f;
-    public LayerMask stratInamici; // Seteaza in Inspector pe layer-ul "Enemy"
+    public LayerMask stratInamici;
 
     [Header("Setari Knockback")]
     public float fortaKnockbackX = 10f;
@@ -23,10 +23,10 @@ public class PlayerCombat : NetworkBehaviour
     void Awake()
     {
         animator = GetComponentInChildren<Animator>();
-        playerInput = GetComponent<PlayerInput>(); // O preluam
+        playerInput = GetComponent<PlayerInput>(); 
     }
 
-    // Leaga asta la actiunea de Left Click in Player Input
+    // left click
     public void OnAttack(InputAction.CallbackContext context)
     {
         if (!IsOwner) return;
@@ -53,21 +53,25 @@ public class PlayerCombat : NetworkBehaviour
     {
         AplicaAnimatieClientRpc();
 
-        // Serverul detecteaza inamicii
+        // detect inamici
         Collider2D[] inamiciLoviti = Physics2D.OverlapCircleAll(punctAtac.position, razaAtac, stratInamici);
 
         foreach (Collider2D inamic in inamiciLoviti)
         {
-            // Aplicam damage folosind scriptul tau de Health
+            //friendly fire))
             Health hp = inamic.GetComponent<Health>();
             if (hp != null) hp.TakeDamage(damageAtac);
 
-            // Aplicam knockback
+            //inamici
+            EnemyHealth ehp = inamic.GetComponent<EnemyHealth>();
+            if (ehp != null) ehp.TakeDamage(damageAtac);
+
+            // knockback
             Rigidbody2D rbInamic = inamic.GetComponent<Rigidbody2D>();
             if (rbInamic != null)
             {
                 float directieX = Mathf.Sign(inamic.transform.position.x - transform.position.x);
-                rbInamic.linearVelocity = Vector2.zero; // Resetam viteza curenta pentru consistenta
+                rbInamic.linearVelocity = Vector2.zero;
                 rbInamic.AddForce(new Vector2(directieX * fortaKnockbackX, fortaKnockbackY), ForceMode2D.Impulse);
             }
         }
@@ -76,7 +80,6 @@ public class PlayerCombat : NetworkBehaviour
     [ClientRpc]
     private void AplicaAnimatieClientRpc()
     {
-        // Ignoram owner-ul ca sa nu ii ruleze animatia de doua ori
         if (IsOwner) return;
         if (animator != null) animator.SetTrigger("Attack");
     }

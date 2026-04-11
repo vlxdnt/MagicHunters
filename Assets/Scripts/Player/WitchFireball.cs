@@ -7,19 +7,21 @@ public class PlayerFireball : NetworkBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // In multiplayer, doar serverul aplica damage si distruge obiecte
         if (!IsServer) return;
 
-        // Loveste inamici (Ai nevoie de un Layer numit "Enemy")
+        Debug.Log("Fireball a lovit: " + collision.gameObject.name + " Layer: " + collision.gameObject.layer);
+
         if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
             Health hp = collision.GetComponent<Health>();
             if (hp != null) hp.TakeDamage(damage);
 
-            // In Netcode, despawnam obiectele in loc de Destroy()
+            EnemyHealth ehp = collision.GetComponent<EnemyHealth>();
+            if (ehp != null) ehp.TakeDamage(damage);
+
             GetComponent<NetworkObject>().Despawn();
         }
-        // Distruge fireball-ul cand atinge pamantul, cum e in scriptul vechi
+        // distruge fb
         else if (collision.gameObject.layer == LayerMask.NameToLayer("Ground")) 
         {
             GetComponent<NetworkObject>().Despawn();

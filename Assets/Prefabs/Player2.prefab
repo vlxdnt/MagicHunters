@@ -210,7 +210,6 @@ GameObject:
   - component: {fileID: 1930475489183350201}
   - component: {fileID: 4504516913535506328}
   - component: {fileID: 1448902799096502202}
-  - component: {fileID: -6906570410613127915}
   - component: {fileID: 2570380200086796273}
   - component: {fileID: 4612901859312233802}
   - component: {fileID: -4006522012604396610}
@@ -487,7 +486,19 @@ MonoBehaviour:
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_DeviceRegainedEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -623,6 +634,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 1b1af586-c1a8-4577-826a-458a3698ffbf
     m_ActionName: 'Player/Attack[/Mouse/leftButton]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1448902799096502202}
+        m_TargetAssemblyTypeName: WitchAbilities, Assembly-CSharp
+        m_MethodName: OnFireball
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 55adfabf-62b6-4fd5-abf4-0481d2cd5f24
+    m_ActionName: 'Player/Fireball[/Keyboard/e]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -711,6 +738,10 @@ MonoBehaviour:
       NameHash: -1443236660
       Synchronize: 1
       ParameterType: 4
+    - name: Attack
+      NameHash: 1080829965
+      Synchronize: 1
+      ParameterType: 9
   AnimatorParametersExpanded: 0
 --- !u!114 &1930475489183350201
 MonoBehaviour:
@@ -799,32 +830,13 @@ MonoBehaviour:
   cooldownInvizibilitate: 8
   cantitateHeal: 1
   cooldownHeal: 10
-  fireballPrefab: {fileID: 0}
-  punctSpawnFireball: {fileID: 0}
+  fireballPrefab: {fileID: 163239802042481224, guid: ffd077c8a7d2c544f8f11a6423742950, type: 3}
+  punctSpawnFireball: {fileID: 7596580477688276974}
   vitezaFireball: 7
   timpViataFireball: 3
   cooldownFireball: 1.5
   esteInvizibil:
     m_InternalValue: 0
---- !u!114 &-6906570410613127915
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6501798312373291870}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 268cfcd295a81474ab656fe8f3b74ca3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CameraLimits
-  xMin: -7
-  xMax: 25
-  yMin: -5
-  yMax: 10
-  offsetX: 0
-  offsetY: 2
-  smoothSpeed: 5
 --- !u!82 &2570380200086796273
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1046,7 +1058,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerRespawn
   ShowTopMostFoldoutHeaderGroup: 1
   spawnInitial: {fileID: 0}
-  pozitieRespawn: {x: 0, y: -3, z: 0}
+  pozitieRespawn: {x: 0, y: -3}
   prioritateCheckpoint: 0
 --- !u!114 &2212935649579815759
 MonoBehaviour:
@@ -1060,7 +1072,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62de2bfcdd4f0c7498e1df92128070a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Health
+  ShowTopMostFoldoutHeaderGroup: 1
   maxHealth: 5
+  currentHealth:
+    m_InternalValue: 100
   immunityDuration: 1
 --- !u!114 &3906320731818203720
 MonoBehaviour:

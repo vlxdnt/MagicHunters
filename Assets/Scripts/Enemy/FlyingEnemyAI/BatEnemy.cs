@@ -13,7 +13,10 @@ public class BatEnemy : MonoBehaviour
     private int jucatoriInCamera = 0;
     private float nextKnockbackTime = 0f;
 
-    // Adaugam un timer pentru a nu scana de 150 ori pe secunda (FPS Fix)
+    [Header("Damage")]
+    public int damageLaAtac = 10;
+
+    // timer pt fps fix
     private float intervalCautare = 0.5f;
     private float timerCautare = 0f;
 
@@ -49,42 +52,27 @@ public class BatEnemy : MonoBehaviour
 
     void ActualizeazaTarget()
     {
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         float distantaMinima = Mathf.Infinity;
         Transform targetNou = null;
 
-        // OPTIMIZARE + VERIFICARE INVIZIBILITATE (Folosim lista statica creata anterior)
-        foreach (WitchAbilities p in WitchAbilities.jucatoriInScena)
+        foreach (GameObject player in players)
         {
-            // Daca nu exista sau e invizibil, liliacul il ignora
-            if (p == null || p.esteInvizibil.Value == true) 
-            {
-                continue;
-            }
-
-            float dist = Vector2.Distance(transform.position, p.transform.position);
+            float dist = Vector2.Distance(transform.position, player.transform.position);
             if (dist < distantaMinima)
             {
                 distantaMinima = dist;
-                targetNou = p.transform;
+                targetNou = player.transform;
             }
         }
 
         destinationSetter.target = targetNou;
-
-        // Daca nu am gasit pe nimeni vizibil, punem frana brusc
-        if (targetNou == null)
-        {
-            aiPath.isStopped = true;
-        }
-        else
-        {
-            aiPath.isStopped = false;
-        }
+        aiPath.isStopped = (targetNou == null);
     }
 
     void Update()
     {
-        // Actualizam target-ul DOAR daca sunt jucatori in camera si DOAR o data la 0.5s
+        // actualizare target
         if (jucatoriInCamera > 0)
         {
             timerCautare -= Time.deltaTime;
@@ -96,27 +84,25 @@ public class BatEnemy : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    void OnTriggerEnter2D(Collider2D other)
     {
         if (Time.time < nextKnockbackTime) return;
+        if (!other.CompareTag("Player")) return;
 
-        if (collision.gameObject.CompareTag("Player"))
+        Rigidbody2D rb = other.GetComponent<Rigidbody2D>();
+        if (rb != null)
         {
-            Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
-            if (rb != null)
-            {
-                //aflu directia juc
-                float directieX = Mathf.Sign(collision.transform.position.x - transform.position.x);
-
-                //cat de tare e impins
-                Vector2 directie = new Vector2(directieX, 0.3f).normalized;
-
-                // forta aplicata
-                rb.linearVelocity = Vector2.zero;
-                rb.AddForce(directie * forțaKnockback, ForceMode2D.Impulse);
-
-                nextKnockbackTime = Time.time + cooldownKnockback;
-            }
+            float directieX = Mathf.Sign(other.transform.position.x - transform.position.x);
+            Vector2 directie = new Vector2(directieX, 0.3f).normalized;
+            rb.linearVelocity = Vector2.zero;
+            rb.AddForce(directie * forțaKnockback, ForceMode2D.Impulse);
         }
+
+        // da damage
+        Health health = other.GetComponent<Health>();
+        if (health != null)
+            health.TakeDamage(damageLaAtac);
+
+        nextKnockbackTime = Time.time + cooldownKnockback;
     }
 }

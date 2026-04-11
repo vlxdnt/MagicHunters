@@ -31,23 +31,19 @@ public partial class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(true);
 
         PlayerInput[] players = FindObjectsByType<PlayerInput>(FindObjectsSortMode.None);
-        rbJucatori = new Rigidbody2D[players.Length];
-        vitezeSalvate = new Vector2[players.Length];
-        gravitySalvata = new float[players.Length];
-
-        for (int i = 0; i < players.Length; i++)
+        foreach (var player in players)
         {
-            rbJucatori[i] = players[i].GetComponent<Rigidbody2D>();
-            if (rbJucatori[i] != null)
-            {
-                vitezeSalvate[i] = rbJucatori[i].linearVelocity;
-                gravitySalvata[i] = rbJucatori[i].gravityScale;
-                rbJucatori[i].linearVelocity = Vector2.zero;
-                rbJucatori[i].gravityScale = 0f;
-            }
+            if (!player.IsOwner) continue; // doar owner-ul
+
+            player.miscareBlocata = true;
+            var input = player.GetComponent<UnityEngine.InputSystem.PlayerInput>();
+            if (input != null) input.DeactivateInput();
+
+            Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
+            if (rb != null)
+                rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
         }
 
-        Time.timeScale = 0f;
         AudioListener.pause = true;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -60,19 +56,16 @@ public partial class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(false);
         if (settingsPanel != null) settingsPanel.SetActive(false);
 
-        if (rbJucatori != null)
+        PlayerInput[] players = FindObjectsByType<PlayerInput>(FindObjectsSortMode.None);
+        foreach (var player in players)
         {
-            for (int i = 0; i < rbJucatori.Length; i++)
-            {
-                if (rbJucatori[i] != null)
-                {
-                    rbJucatori[i].gravityScale = gravitySalvata[i];
-                    rbJucatori[i].linearVelocity = vitezeSalvate[i];
-                }
-            }
+            if (!player.IsOwner) continue; // doar owner-ul
+
+            player.miscareBlocata = false;
+            var input = player.GetComponent<UnityEngine.InputSystem.PlayerInput>();
+            if (input != null) input.ActivateInput();
         }
 
-        Time.timeScale = 1f;
         AudioListener.pause = false;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;

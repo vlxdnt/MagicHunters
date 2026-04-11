@@ -1,83 +1,105 @@
-using UnityEngine;
-using System.Collections; // Necesar pentru Corutine
+﻿using UnityEngine;
+using System.Collections;
+using Unity.Netcode;
 
-public class Health : MonoBehaviour
+public class Health : NetworkBehaviour
 {
     [Header("Life settings")]
     public int maxHealth = 100;
-    private int currentHealth;
+    public NetworkVariable<int> currentHealth = new NetworkVariable<int>(100, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
     [Header("Immunity Settings")]
     public float immunityDuration = 1f;
     private bool isImmune = false;
 
+    private PlayerUI playerUI;
     private SpriteRenderer spriteRenderer;
 
-    void Start()
+    public override void OnNetworkSpawn()
     {
-        currentHealth = maxHealth;
+        if (IsOwner)
+        {
+            currentHealth.Value = maxHealth;
+            currentHealth.OnValueChanged += UpdateUI;
+
+            StartCoroutine(GasesteUIDelay());
+        }
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+    }
+
+    private IEnumerator GasesteUIDelay()
+    {
+        // astept UI ul
+        while (playerUI == null)
+        {
+            playerUI = FindFirstObjectByType<PlayerUI>();
+            yield return new WaitForSeconds(0.2f);
+        }
+
+        // updatee
+        playerUI.ActualizeazaHP(currentHealth.Value, maxHealth);
+    }
+
+    // update la UI pt heal
+    private void UpdateUI(int oldValue, int newValue)
+    {
+        if (playerUI != null) playerUI.ActualizeazaHP(newValue, maxHealth);
     }
 
     public void TakeDamage(int damageAmount)
     {
-        //If immune, ignore dmg
-        if (isImmune) return;
+        if (!IsOwner || isImmune) return;
 
-        currentHealth -= damageAmount;
-        Debug.Log(gameObject.name + " took damage. HP: " + currentHealth);
+        currentHealth.Value -= damageAmount;
 
-        if (currentHealth <= 0)
-        {
-            Die();
-        }
-        else
-        {
-            //If not dead, start immunity timer
-            StartCoroutine(ImmunityRoutine());
-        }
+        if (currentHealth.Value <= 0) Die();
+        else StartCoroutine(ImmunityRoutine());
     }
 
-    //Waiting time
     private IEnumerator ImmunityRoutine()
     {
         isImmune = true;
-
-        //Visual feedback
         if (spriteRenderer != null)
         {
             Color originalColor = spriteRenderer.color;
             spriteRenderer.color = new Color(originalColor.r, originalColor.g, originalColor.b, 0.5f);
-
-            //wait the immunity
             yield return new WaitForSeconds(immunityDuration);
-
-            //return to normal color
             spriteRenderer.color = originalColor;
         }
-        else
-        {
-            yield return new WaitForSeconds(immunityDuration);
-        }
-
+        else yield return new WaitForSeconds(immunityDuration);
         isImmune = false;
     }
 
     public void Heal(int healAmount)
     {
-        currentHealth += healAmount;
-        
-        if (currentHealth > maxHealth)
-        {
-            currentHealth = maxHealth;
-        }
-
-        Debug.Log(gameObject.name + " a primit heal. HP curent: " + currentHealth);
+        if (!IsOwner) return;
+        currentHealth.Value = Mathf.Min(currentHealth.Value + healAmount, maxHealth);
     }
 
     void Die()
     {
-        Debug.Log(gameObject.name + " died!");
-        Destroy(gameObject);
+        Debug.Log(gameObject.name + " a muritt");
+        StartCoroutine(RespawnCuFade());
+    }
+
+    public override void OnNetworkDespawn()
+    {
+        if (IsOwner) currentHealth.OnValueChanged -= UpdateUI;
+    }
+
+    private IEnumerator RespawnCuFade()
+    {
+        if (SceneFade.Instance != null)
+            yield return StartCoroutine(SceneFade.Instance.FadeOut(0.3f));
+
+        PlayerRespawn respawn = GetComponent<PlayerRespawn>();
+        if (respawn != null) respawn.Respawn();
+
+        currentHealth.Value = maxHealth;
+
+        if (SceneFade.Instance != null)
+            yield return StartCoroutine(SceneFade.Instance.FadeIn(0.3f));
+
+        StartCoroutine(ImmunityRoutine());
     }
 }
