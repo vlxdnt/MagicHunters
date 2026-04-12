@@ -112,7 +112,6 @@ public class BatEnemy : MonoBehaviour
             rb.AddForce(directie * forțaKnockback, ForceMode2D.Impulse);
         }
 
-        // da damage
         Health health = other.GetComponent<Health>();
         if (health != null)
             health.TakeDamage(damageLaAtac);

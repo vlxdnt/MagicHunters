@@ -12,12 +12,7 @@ public class EnemyHealth : NetworkBehaviour
 
     public void TakeDamage(int amount)
     {
-        if (!IsServer) return;
-
-        if (isShielded)
-        {
-            return; 
-        }
+        if (isShielded) return;
 
         currentHealth -= amount;
         if (currentHealth <= 0) Die();
@@ -25,7 +20,9 @@ public class EnemyHealth : NetworkBehaviour
 
     void Die()
     {
-        if (IsServer)
+        if (NetworkManager.Singleton != null && NetworkManager.Singleton.IsServer)
             GetComponent<NetworkObject>().Despawn();
+        else
+            gameObject.SetActive(false);
     }
 }

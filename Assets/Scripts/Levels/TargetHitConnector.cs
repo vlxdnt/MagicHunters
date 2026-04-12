@@ -1,9 +1,9 @@
-using UnityEngine;
+﻿using UnityEngine;
 using Unity.Netcode;
 
 public class TargetHitConnector : NetworkBehaviour
 {
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)] 
     public void LovesteTargetServerRpc(string numeTarget)
     {
         LovesteTargetClientRpc(numeTarget);
@@ -12,8 +12,6 @@ public class TargetHitConnector : NetworkBehaviour
     [ClientRpc]
     void LovesteTargetClientRpc(string numeTarget)
     {
-        if (IsOwner) return;
-
         GameObject target = GameObject.Find(numeTarget);
         if (target != null)
         {

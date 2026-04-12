@@ -3,7 +3,7 @@ using Unity.Netcode;
 
 public class ButtonPressConnector : NetworkBehaviour
 {
-    [ServerRpc]
+    [ServerRpc(RequireOwnership = false)]
     public void ApasaButonServerRpc(string numeButon)
     {
         ApasaButonClientRpc(numeButon);
