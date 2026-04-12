@@ -13,6 +13,7 @@ public class WizardAI : NetworkBehaviour
     public Transform firePoint;
     public float fireRate = 2f;
     private float nextFireTime;
+    private float feetOffset = 0.3f;
 
     private Transform currentTarget;
     private Animator animator;
@@ -83,9 +84,11 @@ public class WizardAI : NetworkBehaviour
         {
             // 1. Cream obiectul pe Server
             GameObject fireball = Instantiate(fireballPrefab, firePoint.position, Quaternion.identity);
+
+            Vector3 pozitieTinta = currentTarget.position + new Vector3(0f, feetOffset, 0f);
             
             // 2. Calculam directia
-            Vector2 direction = (currentTarget.position - firePoint.position).normalized;
+            Vector2 direction = (pozitieTinta - firePoint.position).normalized;
             fireball.GetComponent<Rigidbody2D>().linearVelocity = direction * 7f;
             fireball.transform.right = direction;
 

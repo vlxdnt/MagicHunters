@@ -86,7 +86,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_MaskInteraction: 0
   m_Sprite: {fileID: 9098625745239887563, guid: 6400639bd25fbfb4c884790c8714b128, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -132,7 +132,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 2074277471
+  GlobalObjectIdHash: 2468903572
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -171,7 +171,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!70 &7970985743336512223
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -226,8 +226,8 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 8
-  fireballPrefab: {fileID: 163239802042481224, guid: ffd077c8a7d2c544f8f11a6423742950, type: 3}
-  firePoint: {fileID: 3551419712834209528}
+  fireballPrefab: {fileID: 163239802042481224, guid: 23f856bce8214b341bc72ea48382a504, type: 3}
+  firePoint: {fileID: 7650416907833104059}
   fireRate: 2
 --- !u!114 &7398457086505740269
 MonoBehaviour:
@@ -268,7 +268,7 @@ Transform:
   m_GameObject: {fileID: 9035423018537380087}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.2, y: 0.2, z: 0}
+  m_LocalPosition: {x: -0.2, y: 0.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
