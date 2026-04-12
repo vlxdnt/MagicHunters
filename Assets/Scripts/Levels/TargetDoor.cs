@@ -1,7 +1,6 @@
 using UnityEngine;
-using Unity.Netcode;
 
-public class TargetDoor : NetworkBehaviour
+public class TargetDoor : MonoBehaviour
 {
     [Header("Usa asociata")]
     public GameObject usa;
@@ -21,15 +20,15 @@ public class TargetDoor : NetworkBehaviour
     public void LovesteTarget()
     {
         if (esteLovit) return;
+        DeschideUsa();
 
-        if (!IsServer) return;
-
-        DeschideUsaClientRpc();
+        TargetHitConnector connector = FindFirstObjectByType<TargetHitConnector>();
+        if (connector != null) connector.LovesteTargetServerRpc(gameObject.name);
     }
 
-    [ClientRpc]
-    private void DeschideUsaClientRpc()
+    public void DeschideUsa()
     {
+        if (esteLovit) return;
         esteLovit = true;
 
         if (srTarget != null && spriteTargetLovit != null)
