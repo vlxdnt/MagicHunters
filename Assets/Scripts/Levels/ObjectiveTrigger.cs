@@ -1,6 +1,7 @@
 using UnityEngine;
+using Unity.Netcode;
 
-public class ObjectiveTrigger : MonoBehaviour
+public class ObjectiveTrigger : NetworkBehaviour
 {
     private bool triggered = false;
 
@@ -9,13 +10,12 @@ public class ObjectiveTrigger : MonoBehaviour
         if (triggered) return;
         if (!other.CompareTag("Player")) return;
 
-        Unity.Netcode.NetworkObject netObj = other.GetComponent<Unity.Netcode.NetworkObject>();
+        NetworkObject netObj = other.GetComponent<NetworkObject>();
         if (netObj == null || !netObj.IsOwner) return;
 
         triggered = true;
-        gameObject.SetActive(false);
 
         ObjectivePressConnector connector = other.GetComponent<ObjectivePressConnector>();
-        if (connector != null) connector.AvaseazaObiectivServerRpc();
+        if (connector != null) connector.AvaseazaObiectivServerRpc(NetworkObjectId);
     }
 }

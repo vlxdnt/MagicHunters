@@ -56,7 +56,7 @@ public class WizardAI : NetworkBehaviour
             WitchAbilities witch = p.GetComponent<WitchAbilities>();
             if (witch != null && witch.esteInvizibil.Value == true)
             {
-                continue; // Trece la următorul jucător, ignorându-l pe acesta
+                continue; // next jucator
             }
 
             float dist = Vector2.Distance(transform.position, p.transform.position);
@@ -87,22 +87,18 @@ public class WizardAI : NetworkBehaviour
     {
         if (fireballPrefab != null && firePoint != null)
         {
-            // 1. Cream obiectul pe Server
             GameObject fireball = Instantiate(fireballPrefab, firePoint.position, Quaternion.identity);
 
             Vector3 pozitieTinta = currentTarget.position + new Vector3(0f, feetOffset, 0f);
             
-            // 2. Calculam directia
             Vector2 direction = (pozitieTinta - firePoint.position).normalized;
             fireball.GetComponent<Rigidbody2D>().linearVelocity = direction * 7f;
             fireball.transform.right = direction;
 
-            // 3. IMPORTANT: Il spawnăm în rețea
-            // Aceasta linie trimite obiectul pe ecranele tuturor clienților
+            //spawn pe retea
             fireball.GetComponent<NetworkObject>().Spawn();
 
-            // 4. Nu folosim Destroy(fireball, 3f). 
-            // Facem o mică rutină care să dea Despawn după 3 secunde pe server.
+            //despawn dupa un timp
             StartCoroutine(DespawnDupaTimp(fireball, 3f));
         }
     }

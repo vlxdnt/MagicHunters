@@ -51,7 +51,7 @@ public class PlayerCombat : NetworkBehaviour
 
         if (audioOneShot != null && sunetAtacMelee != null)
         {
-            // PlayOneShot permite suprapunerea sunetelor la spam
+            // pt suprapunere
             audioOneShot.PlayOneShot(sunetAtacMelee);
         }
 

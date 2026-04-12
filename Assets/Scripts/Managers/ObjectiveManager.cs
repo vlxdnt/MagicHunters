@@ -1,20 +1,15 @@
 ﻿using UnityEngine;
 using Unity.Netcode;
-using TMPro;
 
 public class ObjectiveManager : NetworkBehaviour
 {
-
-    [Header("Chei obiective (din JSON)")]
-    public string[] cheiObiective = {
-    "obiectiv_1",
-    "obiectiv_2",
-    "obiectiv_3",
-    "obiectiv_4",
-    "obiectiv_5",
-    "obiectiv_6"
-    };
     public static ObjectiveManager Instance;
+
+    [Header("Cheite din json")]
+    public string[] cheiObiective = {
+        "obiectiv_0", "obiectiv_1", "obiectiv_2",
+        "obiectiv_3", "obiectiv_4", "obiectiv_5", "obiectiv_6"
+    };
 
     private NetworkVariable<int> indexObiectiv = new NetworkVariable<int>(
         0,
@@ -30,36 +25,26 @@ public class ObjectiveManager : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         indexObiectiv.OnValueChanged += OnObiectivSchimbat;
-        ActualizeazaUILocal(GetObiectivCurent()); // cheile
     }
-
 
     void OnObiectivSchimbat(int vechi, int nou)
     {
-        ActualizeazaUILocal(GetObiectivCurent());
+        ActualizeazaUI();
     }
 
-    void ActualizeazaUILocal(string text)
+    void ActualizeazaUI()
     {
-        // Aceasta ruleaza pe fiecare client care primeste schimbarea
+        string text = GetObiectivCurent();
         PlayerUI ui = FindFirstObjectByType<PlayerUI>(FindObjectsInactive.Include);
-        if (ui != null)
-            ui.SetObiectiv(text);
-        else
-            Debug.Log("PlayerUI nu a fost gasit! E activ?");
+        if (ui != null) ui.SetObiectiv(text);
     }
 
-    // apelare
     public void AvaseazaObiectiv()
     {
         if (!IsServer) return;
-        Debug.Log("AvaseazaObiectiv apelat! Index curent: " + indexObiectiv.Value);
         int urmator = indexObiectiv.Value + 1;
         if (urmator < cheiObiective.Length)
-        {
             indexObiectiv.Value = urmator;
-            Debug.Log("Index nou: " + indexObiectiv.Value);
-        }
     }
 
     public string GetObiectivCurent()
@@ -67,11 +52,17 @@ public class ObjectiveManager : NetworkBehaviour
         if (indexObiectiv.Value < cheiObiective.Length)
         {
             string cheie = cheiObiective[indexObiectiv.Value];
-            // traducere
             if (Language.Instance != null)
                 return Language.Instance.Get(cheie);
             return cheie;
         }
         return "";
+    }
+
+    public int GetIndexCurent() => indexObiectiv.Value;
+
+    public override void OnNetworkDespawn()
+    {
+        indexObiectiv.OnValueChanged -= OnObiectivSchimbat;
     }
 }

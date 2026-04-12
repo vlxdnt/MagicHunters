@@ -93,7 +93,7 @@ public class WitchAbilities : NetworkBehaviour
         if (!IsOwner) return;
         if (!playerInput.controlActiv) return; 
         
-        // DACA NU E DEBLOCATA, OPRIM EXECUTIA AICI
+        // oprimm
         if (!areInvizibilitateDeblocata) return; 
 
         if (context.started && !abilitateInCooldown)
@@ -119,7 +119,7 @@ public class WitchAbilities : NetworkBehaviour
     {
         if (!IsOwner) return;
 
-        // DACA NU E DEBLOCAT, OPRIM EXECUTIA AICI
+        // 
         if (!areHealDeblocat) return;
 
         if (context.started)
