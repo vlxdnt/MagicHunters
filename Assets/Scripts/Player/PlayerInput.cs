@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using Unity.Netcode;
 using UnityEngine.InputSystem;
+using System.Collections; // ---> ADAUGAT pentru Corutine
 
 // pentru input/miscare comuna a jucatorilor
 // sau individual prin WitchAnimator.cs/CatAnimator.cs
@@ -22,10 +23,8 @@ public class PlayerInput : NetworkBehaviour
     private Vector2 vectorMiscare;
     private bool estePePodea;
     
-    // retinem intentia de a sari preluata din Input, pentru a o executa in FixedUpdate
     private bool dorintaSarit = false; 
 
-    // parametrii
     public bool EstePePodea => estePePodea;
     public Vector2 VectorMiscare => vectorMiscare;
     public bool AJumped { get; private set; }
@@ -34,7 +33,12 @@ public class PlayerInput : NetworkBehaviour
     public bool IsJumpHeld { get; private set; }
     public bool controlActiv = false;
 
-    //flip sincronizat
+    // ---> ADAUGAT PENTRU PLATFORME <---
+    private Collider2D playerCollider; 
+    private GameObject platformaCurenta; 
+    private bool trecePrinPlatforma = false;
+    // ----------------------------------
+
     public NetworkVariable<bool> flipX = new NetworkVariable<bool>(
         false,
         NetworkVariableReadPermission.Everyone,
@@ -45,12 +49,11 @@ public class PlayerInput : NetworkBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        playerCollider = GetComponent<Collider2D>(); // ---> ADAUGAT
     }
 
-    // obiectul e spawnat in retea
     public override void OnNetworkSpawn()
     {
-        // si pt host/client
         flipX.OnValueChanged += OnFlipXChanged;
 
         if (!IsOwner)
@@ -58,22 +61,17 @@ public class PlayerInput : NetworkBehaviour
             var input = GetComponent<UnityEngine.InputSystem.PlayerInput>();
             if (input != null) input.enabled = false;
 
-            // oprire camera
             Camera cameraMea = GetComponentInChildren<Camera>();
-            if (cameraMea != null)
-            {
-                cameraMea.tag = "MainCamera";
-            }
+            if (cameraMea != null) cameraMea.tag = "MainCamera";
+            
             Camera cameraJucator = GetComponentInChildren<Camera>();
-            if (cameraJucator != null)
-                cameraJucator.gameObject.SetActive(false);
+            if (cameraJucator != null) cameraJucator.gameObject.SetActive(false);
 
             AudioListener otherEars = GetComponentInChildren<AudioListener>();
             if (otherEars != null) otherEars.enabled = false;
         }
     }
 
-    // se apeleaza automat cand flipX se schimba in retea
     void OnFlipXChanged(bool oldValue, bool newValue)
     {
         if (spriteRenderer != null)
@@ -82,36 +80,33 @@ public class PlayerInput : NetworkBehaviour
 
     public override void OnDestroy()
     {
-        // dezabonare la destroy ca sa nu avem memory leaks
         flipX.OnValueChanged -= OnFlipXChanged;
     }
 
-    // input system activ la miscare
     public void OnMove(InputAction.CallbackContext context)
     {
         if (!IsOwner || !controlActiv) return;
         vectorMiscare = context.ReadValue<Vector2>();
     }
 
-    // input system activ la salt
     public void OnJump(InputAction.CallbackContext context)
     {
         if (!IsOwner || !controlActiv) return;
         
         if (context.started)
         {
-            dorintaSarit = true; // doar semnalizam dorinta de a sari, aplicam forta in FixedUpdate
-            IsJumpHeld = true; // semnalizam ca tasta de salt e tinuta
+            dorintaSarit = true; 
+            IsJumpHeld = true; 
         }
         else if (context.canceled)
         {
-            IsJumpHeld = false; // semnalizam ca tasta de salt nu mai e tinuta
+            IsJumpHeld = false; 
         }
     }
 
     public void OnDash(InputAction.CallbackContext context)
     {
-        if (!IsOwner || !controlActiv) return; // pt cutscene
+        if (!IsOwner || !controlActiv) return; 
         if (context.started) ADashed = true;
     }
 
@@ -119,7 +114,6 @@ public class PlayerInput : NetworkBehaviour
     {
         if (!IsOwner) return;
 
-        // doar owner-ul schimba directia 
         if (Mathf.Abs(vectorMiscare.x) > 0.1f)
         {
             bool trebuieSaFieStanga = vectorMiscare.x < 0;
@@ -128,8 +122,37 @@ public class PlayerInput : NetworkBehaviour
             {
                 flipX.Value = trebuieSaFieStanga; 
             }
-     }
+        }
+
+        // ---> ADAUGAT: Logica de a cadea prin platforma <---
+        // Daca jucatorul tine apasat in jos (S), se afla pe o platforma si nu a activat deja caderea
+        if (vectorMiscare.y <= -0.5f && estePePodea && platformaCurenta != null && !trecePrinPlatforma)
+        {
+            // Ne asiguram ca e o platforma de tip "One Way" (ca sa nu cazi prin podeaua principala)
+            if (platformaCurenta.GetComponent<PlatformEffector2D>() != null)
+            {
+                StartCoroutine(RutinaTrecerePlatforma(platformaCurenta.GetComponent<Collider2D>()));
+            }
+        }
+        // ---------------------------------------------------
     }
+
+    // ---> ADAUGAT: Corutina care opreste coliziunea 0.5 secunde <---
+    private IEnumerator RutinaTrecerePlatforma(Collider2D colliderPlatforma)
+    {
+        trecePrinPlatforma = true;
+
+        // Ignoram coliziunea intre jucatorul nostru si platforma (celalalt jucator va putea sta pe ea in continuare)
+        Physics2D.IgnoreCollision(playerCollider, colliderPlatforma, true);
+
+        // Asteptam suficient cat sa cada prin ea
+        yield return new WaitForSeconds(0.4f);
+
+        // Reactivam coliziunea
+        Physics2D.IgnoreCollision(playerCollider, colliderPlatforma, false);
+        trecePrinPlatforma = false;
+    }
+    // ---------------------------------------------------------------
 
     void LateUpdate()
     {
@@ -139,53 +162,46 @@ public class PlayerInput : NetworkBehaviour
 
     void FixedUpdate()
     {
-        if (!IsOwner) return; // extra protectie pentru executia fizicii
+        if (!IsOwner) return; 
 
-        //pt ground
         if (verificarePodea != null)
         {
             Collider2D obiectLovit = Physics2D.OverlapBox(verificarePodea.position, dimensiuneVerificare, 0f, stratPodea);
             estePePodea = obiectLovit != null;
 
-            // verificam la un prag mai mic pentru precizie (0.01f în loc de 0.1f)
+            // ---> ADAUGAT: Retinem pe ce obiect stam <---
+            platformaCurenta = obiectLovit != null ? obiectLovit.gameObject : null;
+
             if (estePePodea && rb.linearVelocity.y <= 0.01f)
             {
-                sarituriRamase = sarituriMaxime; // resetam sariturile cand aterizeaza
+                sarituriRamase = sarituriMaxime; 
             }
         }
 
-        // executare salt
         if (dorintaSarit)
         {
             if (sarituriRamase > 0)
             {
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f); 
-                rb.AddForce(Vector2.up * fortaSarit, ForceMode2D.Impulse); // aplicam impulsul fizic corect, nu modificam linearVelocity brutal
+                rb.AddForce(Vector2.up * fortaSarit, ForceMode2D.Impulse); 
                 
-                AJumped = true; // semnalizam ca a sarit
-                sarituriRamase--; // scadem sariturile ramase
+                AJumped = true; 
+                sarituriRamase--; 
             }
-            // resetam intentia, indiferent daca a sarit sau nu (ca sa nu sara singur mai tarziu)
             dorintaSarit = false; 
         }
 
-        //axa X
         if (!miscareBlocata) 
         {
             rb.linearVelocity = new Vector2(vectorMiscare.x * vitezaMiscare, rb.linearVelocity.y);
         }
     }
 
-    // DEBUG
     void OnDrawGizmosSelected()
     {
         if (verificarePodea != null)
         {
-            // seteaza culoarea cutiei
             Gizmos.color = estePePodea ? Color.green : Color.red;
-
-            // deseneaza cutia exacta pe care o foloseste fizica
-            // folosim dimensiunea setata de tine in Inspector
             Gizmos.DrawWireCube(verificarePodea.position, dimensiuneVerificare);
         }
     }
