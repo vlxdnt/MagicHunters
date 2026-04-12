@@ -38,7 +38,9 @@ Jocul utilizează sistemul Unity Netcode for GameObjects și funcționează în 
 | WASD | Mișcare |
 | Space | Săritură (Menține apăsat pentru Glide / Planare) |
 | Q | Invizibilitate (Durează 5 secunde, inamicii pierd ținta) |
-| H | Heal la ambii jucători (Cooldown 15 secunde, adaugă 50% din viața maximă la viața curentă) |
+| H | Heal la ambii jucători (Cooldown 10 secunde, adaugă 50% din viața maximă la viața curentă) |
+| E | Lansează o minge de foc |
+
 
 ## Cerințe de Sistem
 
