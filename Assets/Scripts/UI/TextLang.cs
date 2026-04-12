@@ -1,7 +1,7 @@
 using UnityEngine;
 using TMPro;
 
-// de pus pe fiecare panel -> pe viitor de implementat pt GameScene
+// de pus pe fiecare panel, pe viitor de implementat pt GameScene
 public class LocalizedPanel : MonoBehaviour
 {
     void OnEnable()

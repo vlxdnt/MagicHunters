@@ -65,7 +65,6 @@ public class PlayerUI : NetworkBehaviour
 
     public void SetPersonaj(bool isWitch, ulong clientId)
     {
-        Debug.Log($"SetPersonaj apelat: isWitch={isWitch}, clientId={clientId}");
 
         if (imgPersonaj != null)
             imgPersonaj.sprite = isWitch ? spriteWitch : spriteCat;
@@ -73,7 +72,7 @@ public class PlayerUI : NetworkBehaviour
         if (textJucator != null)
             textJucator.text = clientId == 0 ? "Player 1" : "Player 2";
         else
-            Debug.Log("textJucator e NULL!");
+            Debug.Log("textJucator NULL");
     }
 
     void OnEnable()

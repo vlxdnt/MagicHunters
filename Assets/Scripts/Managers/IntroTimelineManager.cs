@@ -63,16 +63,13 @@ public class IntroTimelineManager : NetworkBehaviour
 
         director.enabled = false;
 
-        Debug.Log("ActiveazaControl apelat pe: " + (IsServer ? "Server" : "Client"));
-        Debug.Log("gameUI este: " + (gameUI != null ? gameUI.name : "NULL"));
 
         if (gameUI != null)
         {
             gameUI.SetActive(true);
-            Debug.Log("GameUI activat!");
+            Debug.Log("GameUI activat");
 
             PlayerUI ui = gameUI.GetComponentInChildren<PlayerUI>(true); // true = cauta si in dezactivate
-            Debug.Log("PlayerUI gasit: " + (ui != null));
 
             if (ui != null && ObjectiveManager.Instance != null)
                 ui.SetObiectiv(ObjectiveManager.Instance.GetObiectivCurent());
@@ -99,13 +96,11 @@ public class IntroTimelineManager : NetworkBehaviour
             SetPlayerState(catObj, true);
 
             if (IsServer) timelineStarted = true;
-            Debug.Log("timelineStarted setat: " + timelineStarted + " IsServer: " + IsServer);
 
             // legare tracks in timeline
             foreach (var output in director.playableAsset.outputs)
             {
                 var binding = director.GetGenericBinding(output.sourceObject);
-                Debug.Log($"Track: '{output.streamName}' → Binding: {binding}");
 
                 if (output.streamName == "WitchRun" || output.streamName == "WitchAnim")
                     director.SetGenericBinding(output.sourceObject, witchObj.GetComponent<Animator>());

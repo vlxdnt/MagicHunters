@@ -62,7 +62,7 @@ public class MeniuManager : MonoBehaviour
         if (butonStart != null)
             butonStart.gameObject.SetActive(false);
 
-        // Afisare eroare dupa deconectare
+        // afisare eroare dupa deconectare
         if (!string.IsNullOrEmpty(eroareIntreScene))
         {
             AfiseazaEroare(eroareIntreScene);
@@ -118,7 +118,6 @@ public class MeniuManager : MonoBehaviour
         }
         catch (System.Exception e)
         {
-            Debug.LogError("Eroare Host Relay: " + e.Message);
             //intoarcere la meniu
             panelLoading.SetActive(false);
             panelMeniu.SetActive(true);
@@ -130,7 +129,7 @@ public class MeniuManager : MonoBehaviour
         if (!string.IsNullOrEmpty(codJoinCurent))
         {
             GUIUtility.systemCopyBuffer = codJoinCurent;
-            Debug.Log("Codul de join a fost copiat in clipboard: " + codJoinCurent);
+            Debug.Log("Codul de join: " + codJoinCurent);
         }
     }
 

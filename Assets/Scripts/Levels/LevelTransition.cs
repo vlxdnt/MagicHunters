@@ -24,7 +24,6 @@ public class LevelTransition : NetworkBehaviour
         if (triggered) return;
         if (!other.CompareTag("Player")) return;
 
-        // Doar owner-ul notifica serverul
         NetworkObject netObj = other.GetComponent<NetworkObject>();
         if (netObj == null || !netObj.IsOwner) return;
 
@@ -82,11 +81,9 @@ public class LevelTransition : NetworkBehaviour
     [ClientRpc]
     void SchimbaNivelClientRpc(Vector3 pozitieNoua)
     {
-        // Schimba nivelele pe fiecare client
         if (nivelCurent != null) nivelCurent.SetActive(false);
         if (nivelUrmator != null) nivelUrmator.SetActive(true);
 
-        // Teleporteaza owner-ul
         PlayerInput[] players = FindObjectsByType<PlayerInput>(FindObjectsSortMode.None);
         foreach (var player in players)
         {
@@ -94,7 +91,7 @@ public class LevelTransition : NetworkBehaviour
                 player.transform.position = pozitieNoua;
         }
 
-        // Fade in
+        // fade in
         if (SceneFade.Instance != null)
             StartCoroutine(SceneFade.Instance.FadeIn(fadeDuration));
     }

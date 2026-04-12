@@ -8,10 +8,8 @@ public class Fireball : NetworkBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // REGULA DE AUR: Doar serverul calculează logica de damage și distrugere
         if (!IsServer) return;
 
-        // VERIFICARE DE SIGURANȚĂ: Nu facem nimic dacă obiectul nu este încă pe rețea
         if (!IsSpawned) return;
 
         if (collision.CompareTag("Player"))
@@ -22,7 +20,6 @@ public class Fireball : NetworkBehaviour
                 h.TakeDamage(damage);
             }
 
-            Debug.Log("Jucator lovit de fireball-ul inamicului!");
             
             GetComponent<NetworkObject>().Despawn();
         }

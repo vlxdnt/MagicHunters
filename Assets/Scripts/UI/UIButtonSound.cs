@@ -34,8 +34,6 @@ public class UIButtonSound : MonoBehaviour
         {
             btn.onClick.AddListener(() => PlaySound());
         }
-
-        Debug.Log($"UIButtonSound: {butoane.Length} butoane gasite!");
     }
 
     void PlaySound()

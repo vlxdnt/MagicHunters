@@ -130,7 +130,7 @@ public class LobbySelection : NetworkBehaviour
     [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
     void TrimiteAlegereaRpc(int choice, ulong clientId)
     {
-        Debug.Log($"RPC primit! ClientId: {clientId} Choice: {choice}");
+        Debug.Log($"ClientId: {clientId}, choice: {choice}");
         if (clientId == 0)
             hostSelection.Value = choice;
         else

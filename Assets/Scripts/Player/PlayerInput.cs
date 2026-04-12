@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Unity.Netcode;
 using UnityEngine.InputSystem;
-using System.Collections; // ---> ADAUGAT pentru Corutine
+using System.Collections;
 
 // pentru input/miscare comuna a jucatorilor
 // sau individual prin WitchAnimator.cs/CatAnimator.cs
@@ -33,11 +33,9 @@ public class PlayerInput : NetworkBehaviour
     public bool IsJumpHeld { get; private set; }
     public bool controlActiv = false;
 
-    // ---> ADAUGAT PENTRU PLATFORME <---
     private Collider2D playerCollider; 
     private GameObject platformaCurenta; 
     private bool trecePrinPlatforma = false;
-    // ----------------------------------
 
     public NetworkVariable<bool> flipX = new NetworkVariable<bool>(
         false,
@@ -49,7 +47,7 @@ public class PlayerInput : NetworkBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        playerCollider = GetComponent<Collider2D>(); // ---> ADAUGAT
+        playerCollider = GetComponent<Collider2D>();
     }
 
     public override void OnNetworkSpawn()
@@ -124,35 +122,26 @@ public class PlayerInput : NetworkBehaviour
             }
         }
 
-        // ---> ADAUGAT: Logica de a cadea prin platforma <---
-        // Daca jucatorul tine apasat in jos (S), se afla pe o platforma si nu a activat deja caderea
         if (vectorMiscare.y <= -0.5f && estePePodea && platformaCurenta != null && !trecePrinPlatforma)
         {
-            // Ne asiguram ca e o platforma de tip "One Way" (ca sa nu cazi prin podeaua principala)
             if (platformaCurenta.GetComponent<PlatformEffector2D>() != null)
             {
                 StartCoroutine(RutinaTrecerePlatforma(platformaCurenta.GetComponent<Collider2D>()));
             }
         }
-        // ---------------------------------------------------
     }
 
-    // ---> ADAUGAT: Corutina care opreste coliziunea 0.5 secunde <---
     private IEnumerator RutinaTrecerePlatforma(Collider2D colliderPlatforma)
     {
         trecePrinPlatforma = true;
 
-        // Ignoram coliziunea intre jucatorul nostru si platforma (celalalt jucator va putea sta pe ea in continuare)
         Physics2D.IgnoreCollision(playerCollider, colliderPlatforma, true);
 
-        // Asteptam suficient cat sa cada prin ea
         yield return new WaitForSeconds(0.4f);
 
-        // Reactivam coliziunea
         Physics2D.IgnoreCollision(playerCollider, colliderPlatforma, false);
         trecePrinPlatforma = false;
     }
-    // ---------------------------------------------------------------
 
     void LateUpdate()
     {
@@ -169,7 +158,6 @@ public class PlayerInput : NetworkBehaviour
             Collider2D obiectLovit = Physics2D.OverlapBox(verificarePodea.position, dimensiuneVerificare, 0f, stratPodea);
             estePePodea = obiectLovit != null;
 
-            // ---> ADAUGAT: Retinem pe ce obiect stam <---
             platformaCurenta = obiectLovit != null ? obiectLovit.gameObject : null;
 
             if (estePePodea && rb.linearVelocity.y <= 0.01f)

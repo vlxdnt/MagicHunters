@@ -37,7 +37,6 @@ public class BatEnemy : MonoBehaviour
 
     public void JucatorIntrat(Transform jucator)
     {
-        Debug.Log("JucatorIntrat apelat: " + jucator.name);
         if (!jucatoriInZona.Contains(jucator))
             jucatoriInZona.Add(jucator);
 
@@ -60,7 +59,6 @@ public class BatEnemy : MonoBehaviour
 
     void ActualizeazaTarget()
     {
-        Debug.Log("ActualizeazaTarget - jucatori in zona: " + jucatoriInZona.Count);
         float distantaMinima = Mathf.Infinity;
         Transform targetNou = null;
 
@@ -78,7 +76,6 @@ public class BatEnemy : MonoBehaviour
                 targetNou = jucator;
             }
         }
-        Debug.Log("Target setat: " + (destinationSetter.target != null ? destinationSetter.target.name : "NULL"));
 
         destinationSetter.target = targetNou;
         aiPath.isStopped = (targetNou == null);

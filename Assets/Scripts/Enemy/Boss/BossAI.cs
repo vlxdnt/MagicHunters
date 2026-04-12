@@ -3,11 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 
-// Nu mai folosim using Pathfinding;
 public class BossAI : NetworkBehaviour
 {
     [Header("Detection")]
-    public float aggroRadius = 20f; // Raza mare ca sa te vada din toata camera
+    public float aggroRadius = 20f; // raza mare
     public LayerMask playerLayer;
 
     [Header("Abilități - Fireball")]
@@ -51,30 +50,27 @@ public class BossAI : NetworkBehaviour
 
         FindClosestPlayer();
 
-        if (isBusy) return; // Daca e in timpul unui atac/scut, nu face altceva
+        if (isBusy) return; // in timpul unui atac/scut
 
         if (currentTarget != null)
         {
             float distance = Vector2.Distance(transform.position, currentTarget.position);
 
-            // Se intoarce cu fata la jucator chiar daca sta pe loc
+            // se intoarce cu fata la jucator
             spriteRenderer.flipX = (currentTarget.position.x < transform.position.x);
 
-            // 1. Verificam scutul (are prioritate daca jucatorul e foarte aproape - ex: intra la melee)
             if (Time.time >= nextShieldTime && distance <= 8f)
             {
                 StartCoroutine(FolosesteScut());
                 return;
             }
 
-            // 2. Verificam spawn-ul de minioni
             if (Time.time >= nextSpawnTime)
             {
                 StartCoroutine(SpawnMinions());
                 return;
             }
 
-            // 3. Atacul standard cu Fireball
             if (Time.time >= nextFireTime)
             {
                 StartCoroutine(AttackFireball());

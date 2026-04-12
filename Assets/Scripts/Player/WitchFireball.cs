@@ -9,8 +9,6 @@ public class PlayerFireball : NetworkBehaviour
     {
         if (!IsServer) return;
 
-        Debug.Log("Fireball a lovit: " + collision.gameObject.name + " Layer: " + collision.gameObject.layer);
-
         if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
             Health hp = collision.GetComponent<Health>();

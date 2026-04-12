@@ -10,7 +10,7 @@ public class GuardianAI : NetworkBehaviour
     public LayerMask playerLayer;
     private AIPath aiPath;
     private AIDestinationSetter destSetter;
-    private float originalMaxSpeed; // Salvam viteza initiala
+    private float originalMaxSpeed; // salvam viteza
 
     [Header("Atac Melee (Topor)")]
     public float meleeRange = 1.5f;
@@ -23,8 +23,8 @@ public class GuardianAI : NetworkBehaviour
     [Header("Abilitate Scut")]
     public float shieldDuration = 2.5f;
     public float shieldCooldown = 7f;
-    public float multiplicatorVitezaScut = 0.3f; // Scade la 30% din viteza
-    public Color culoareScut = new Color(0.5f, 0.7f, 1f, 1f); // Un albastru deschis/gri
+    public float multiplicatorVitezaScut = 0.3f; 
+    public Color culoareScut = new Color(0.5f, 0.7f, 1f, 1f);
     private float nextShieldTime;
 
     private Transform currentTarget;
@@ -41,7 +41,6 @@ public class GuardianAI : NetworkBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         healthScript = GetComponent<EnemyHealth>();
         
-        // Salvam viteza setata in Inspector la inceput
         if (aiPath != null) originalMaxSpeed = aiPath.maxSpeed;
     }
 
@@ -49,7 +48,6 @@ public class GuardianAI : NetworkBehaviour
     {
         if (!IsServer) return;
 
-        // Cautam mereu jucatorul, chiar si cand suntem "busy" (sa-l urmarim cu scutul)
         FindClosestPlayer();
 
         if (isBusy) return;
@@ -98,27 +96,22 @@ public class GuardianAI : NetworkBehaviour
         currentTarget = nearest;
         destSetter.target = currentTarget;
         
-        // Se poate misca daca are tinta SAU daca e in mijlocul folosirii scutului
         aiPath.canMove = (currentTarget != null);
     }
 
     IEnumerator FolosesteScut()
     {
-        isBusy = true; // Nu poate ataca in acest timp
+        isBusy = true; 
         nextShieldTime = Time.time + shieldCooldown;
 
-        // 1. Scadem viteza pe Server
         aiPath.maxSpeed = originalMaxSpeed * multiplicatorVitezaScut;
         
-        // 2. Activam imunitatea pe Server
         healthScript.isShielded = true;
 
-        // 3. Schimbam culoarea pe toate Clienturile
         SchimbaVizualScutClientRpc(true);
 
         yield return new WaitForSeconds(shieldDuration);
 
-        // 4. Revenim la normal
         healthScript.isShielded = false;
         aiPath.maxSpeed = originalMaxSpeed;
         SchimbaVizualScutClientRpc(false);
@@ -131,14 +124,13 @@ public class GuardianAI : NetworkBehaviour
     {
         if (spriteRenderer == null) return;
         
-        // Daca scutul e activ, facem Sprite-ul albastru/gri, altfel revenim la Alb (normal)
         spriteRenderer.color = activ ? culoareScut : Color.white;
     }
 
     IEnumerator AtacMelee()
     {
         isBusy = true;
-        aiPath.canMove = false; // Se opreste complet cand da cu toporul
+        aiPath.canMove = false;
         nextMeleeTime = Time.time + meleeCooldown;
 
         DeclanseazaAnimatieClientRpc("AttackMelee");

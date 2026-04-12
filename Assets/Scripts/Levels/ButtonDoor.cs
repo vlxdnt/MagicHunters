@@ -1,12 +1,10 @@
 using UnityEngine;
-using Unity.Netcode;
 
-public class ButtonDoor : NetworkBehaviour
+public class ButtonDoor : MonoBehaviour
 {
     [Header("Usa asociata")]
     public GameObject usa;
     public Sprite spriteUsaDeschisa;
-    public Sprite spriteUsaInchisa;
     public Collider2D colliderUsa;
 
     [Header("Buton")]
@@ -26,26 +24,20 @@ public class ButtonDoor : NetworkBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         if (esteApasat) return;
+        if (!other.CompareTag("Player")) return;
 
-        if (other.CompareTag("Player"))
-        {
-            NetworkObject playerNetObj = other.GetComponent<NetworkObject>();
+        Unity.Netcode.NetworkObject netObj = other.GetComponent<Unity.Netcode.NetworkObject>();
+        if (netObj == null || !netObj.IsOwner) return;
 
-            if (playerNetObj != null && playerNetObj.IsOwner)
-            {
-                ApasaButonServerRpc();
-            }
-        }
+        // Apasa local
+        ApasaButon();
+
+        // Notifica prin jucator
+        ButtonPressConnector connector = other.GetComponent<ButtonPressConnector>();
+        if (connector != null) connector.ApasaButonServerRpc(gameObject.name);
     }
 
-    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
-    private void ApasaButonServerRpc()
-    {
-        DeschideUsaClientRpc();
-    }
-
-    [ClientRpc]
-    private void DeschideUsaClientRpc()
+    public void ApasaButon()
     {
         if (esteApasat) return;
         esteApasat = true;
@@ -53,10 +45,8 @@ public class ButtonDoor : NetworkBehaviour
         if (srButon != null && spriteButonApasat != null)
             srButon.sprite = spriteButonApasat;
 
-        if(audioSource != null)
-        {
-            if (sunetButon != null) audioSource.PlayOneShot(sunetButon);
-        }
+        if (audioSource != null && sunetButon != null)
+            audioSource.PlayOneShot(sunetButon);
 
         if (usa != null)
         {

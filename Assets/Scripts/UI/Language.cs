@@ -71,7 +71,6 @@ public class Language : MonoBehaviour
             return;
         }
         texte = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, string>>>(json.text);
-        Debug.Log("Json cu " + texte.Count + " chei.");
     }
 
     // returneaza limba in functie de cheie si cod
@@ -89,7 +88,6 @@ public class Language : MonoBehaviour
     // dropdown
     public void SchimbaLimba(int index)
     {
-        Debug.Log("Schimb limba la: " + index);
         limbaActuala = (Limba)index;
         PlayerPrefs.SetInt("Limba", index);
         //actualizare

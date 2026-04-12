@@ -10,7 +10,6 @@ public class AbilityPickup : NetworkBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // Doar Serverul are voie sa aprobe coliziunea si sa distruga obiectul
         if (!IsServer) return;
 
         if (other.CompareTag("Player"))
@@ -22,7 +21,6 @@ public class AbilityPickup : NetworkBehaviour
 
             if (abilitate == TipAbilitate.DoubleJump)
             {
-                // Daca e pisica, APELAM CLIENT RPC ca sa se schimbe pe toate ecranele
                 if (witch == null && input != null)
                 {
                     input.DeblocheazaDoubleJumpClientRpc();
@@ -31,7 +29,6 @@ public class AbilityPickup : NetworkBehaviour
             }
             else
             {
-                // Daca e vrajitoare, APELAM CLIENT RPC
                 if (witch != null)
                 {
                     witch.DeblocheazaAbilitateClientRpc(abilitate.ToString());
@@ -39,7 +36,6 @@ public class AbilityPickup : NetworkBehaviour
                 }
             }
 
-            // Daca a fost luat cu succes, il scoatem de pe harta
             if (succes)
             {
                 GetComponent<NetworkObject>().Despawn();

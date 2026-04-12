@@ -18,13 +18,10 @@ public class TargetDoor : NetworkBehaviour
         srTarget = GetComponent<SpriteRenderer>();
     }
 
-    // Aceasta functie va fi apelata din scripturile noastre de Atac si Fireball
     public void LovesteTarget()
     {
         if (esteLovit) return;
 
-        // Atacurile noastre se inregistreaza pe Server. 
-        // Serverul aproba lovitura si trimite semnalul catre toti jucatorii.
         if (!IsServer) return;
 
         DeschideUsaClientRpc();
@@ -35,11 +32,9 @@ public class TargetDoor : NetworkBehaviour
     {
         esteLovit = true;
 
-        // 1. Schimbam sprite-ul targetului (ex: din aprins in stins, sau rupt)
         if (srTarget != null && spriteTargetLovit != null)
             srTarget.sprite = spriteTargetLovit;
 
-        // 2. Deschidem usa (exact ca la buton)
         if (usa != null)
         {
             SpriteRenderer srUsa = usa.GetComponent<SpriteRenderer>();

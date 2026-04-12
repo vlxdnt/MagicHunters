@@ -217,6 +217,7 @@ GameObject:
   - component: {fileID: 2212935649579815759}
   - component: {fileID: 3906320731818203720}
   - component: {fileID: -4995068652661399566}
+  - component: {fileID: 3106813526894382150}
   m_Layer: 3
   m_Name: Player2
   m_TagString: Player
@@ -1117,6 +1118,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c14d5cc2e01f98249b3e1816ff82d68c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObjectivePressConnector
+  ShowTopMostFoldoutHeaderGroup: 1
+--- !u!114 &3106813526894382150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6501798312373291870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c2390190f7f7de4184902cc1212de5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonPressConnector
   ShowTopMostFoldoutHeaderGroup: 1
 --- !u!1 &8975131632674171672
 GameObject:
