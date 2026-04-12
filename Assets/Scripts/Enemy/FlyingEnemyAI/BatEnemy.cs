@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Pathfinding;
+using System.Collections.Generic;
 
 public class BatEnemy : MonoBehaviour
 {
@@ -24,6 +25,8 @@ public class BatEnemy : MonoBehaviour
     private float intervalCautare = 0.5f;
     private float timerCautare = 0f;
 
+    private List<Transform> jucatoriInZona = new List<Transform>();
+
     void Awake()
     {
         destinationSetter = GetComponent<AIDestinationSetter>();
@@ -32,49 +35,50 @@ public class BatEnemy : MonoBehaviour
         aiPath.canMove = false;
     }
 
-    public void JucatorIntrat()
+    public void JucatorIntrat(Transform jucator)
     {
-        jucatoriInCamera++;
+        Debug.Log("JucatorIntrat apelat: " + jucator.name);
+        if (!jucatoriInZona.Contains(jucator))
+            jucatoriInZona.Add(jucator);
+
         ActualizeazaTarget();
         aiPath.canMove = true;
     }
 
-    public void JucatorIesit()
+
+    public void JucatorIesit(Transform jucator)
     {
-        jucatoriInCamera = Mathf.Max(0, jucatoriInCamera - 1);
-        
-        if (jucatoriInCamera == 0)
+        jucatoriInZona.Remove(jucator);
+
+        if (jucatoriInZona.Count == 0)
         {
             aiPath.canMove = false;
             destinationSetter.target = null;
         }
-        else
-        {
-            ActualizeazaTarget();
-        }
+        else ActualizeazaTarget();
     }
 
     void ActualizeazaTarget()
     {
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        Debug.Log("ActualizeazaTarget - jucatori in zona: " + jucatoriInZona.Count);
         float distantaMinima = Mathf.Infinity;
         Transform targetNou = null;
 
-        foreach (GameObject player in players)
+        foreach (Transform jucator in jucatoriInZona)
         {
-            WitchAbilities witch = player.GetComponent<WitchAbilities>();
-            if (witch != null && witch.esteInvizibil.Value == true)
-            {
-                continue; 
-            }
+            if (jucator == null) continue;
 
-            float dist = Vector2.Distance(transform.position, player.transform.position);
+            WitchAbilities witch = jucator.GetComponent<WitchAbilities>();
+            if (witch != null && witch.esteInvizibil.Value) continue;
+
+            float dist = Vector2.Distance(transform.position, jucator.position);
             if (dist < distantaMinima)
             {
                 distantaMinima = dist;
-                targetNou = player.transform;
+                targetNou = jucator;
             }
         }
+        Debug.Log("Target setat: " + (destinationSetter.target != null ? destinationSetter.target.name : "NULL"));
 
         destinationSetter.target = targetNou;
         aiPath.isStopped = (targetNou == null);
@@ -83,7 +87,7 @@ public class BatEnemy : MonoBehaviour
     void Update()
     {
         // actualizare target
-        if (jucatoriInCamera > 0)
+        if (jucatoriInZona.Count > 0)
         {
             timerCautare -= Time.deltaTime;
             if (timerCautare <= 0f)

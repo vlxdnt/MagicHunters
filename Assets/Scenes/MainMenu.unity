@@ -3933,6 +3933,8 @@ MonoBehaviour:
       - {fileID: 11400000, guid: f7a31773a4258c14f8069fec0f1db5e2, type: 2}
       - {fileID: 11400000, guid: 4a4535c5e2d572747ba4102aa95a6121, type: 2}
       - {fileID: 11400000, guid: 2f755e14a4eb3aa48866f2b3bc363820, type: 2}
+      - {fileID: 11400000, guid: a32be4fc1e23a7a448cf87772e6b4195, type: 2}
+      - {fileID: 11400000, guid: d17213989cd85cd43a0e3180b8599095, type: 2}
     TickRate: 30
     ClientConnectionBufferTimeout: 10
     ConnectionApproval: 0

@@ -2,6 +2,11 @@
 
 ## [v0.3.0] - 12.04.2026
 
+### Level 2 playable ###
+
+### Rezolvat
+- **Bug la liliac si wizard**: liliacul avea graficul de Pathfinder blocat, iar prefabul de fireball la Wizard nu era initializat in Network corect
+
 ### Level 1 playable ### 
 
 ### Rezolvat

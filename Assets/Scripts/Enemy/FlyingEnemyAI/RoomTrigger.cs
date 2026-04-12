@@ -9,7 +9,7 @@ public class RoomTrigger : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             foreach (BatEnemy inamic in inamiciDinCamera)
-                if (inamic != null) inamic.JucatorIntrat();
+                if (inamic != null) inamic.JucatorIntrat(other.transform);
         }
     }
 
@@ -18,7 +18,7 @@ public class RoomTrigger : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             foreach (BatEnemy inamic in inamiciDinCamera)
-                if (inamic != null) inamic.JucatorIesit();
+                if (inamic != null) inamic.JucatorIesit(other.transform);
         }
     }
 
