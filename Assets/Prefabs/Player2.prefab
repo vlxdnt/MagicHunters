@@ -833,7 +833,7 @@ MonoBehaviour:
   audioOneShot: {fileID: 4612901859312233802}
   durataInvizibilitate: 5
   cooldownInvizibilitate: 8
-  cantitateHeal: 1
+  cantitateHeal: 20
   cooldownHeal: 10
   fireballPrefab: {fileID: 163239802042481224, guid: ffd077c8a7d2c544f8f11a6423742950, type: 3}
   punctSpawnFireball: {fileID: 7596580477688276974}
