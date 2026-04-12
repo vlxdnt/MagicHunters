@@ -1,42 +1,32 @@
 using UnityEngine;
+using System.Collections;
 
 public class DamageOnContact : MonoBehaviour
 {
     public int contactDamage = 20;
+    public float damageDelay = 3f; // delay
 
-    //No Trigger
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
-        {
-            ApplyDamage(collision.gameObject);
-        }
+            StartCoroutine(DamageDelay(collision.gameObject));
     }
 
-    //Maintain damage
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            ApplyDamage(collision.gameObject);
-        }
-    }
-
-    //With Trigger
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
-        {
-            ApplyDamage(collision.gameObject);
-        }
+            StartCoroutine(DamageDelay(collision.gameObject));
+    }
+
+    IEnumerator DamageDelay(GameObject target)
+    {
+        yield return new WaitForSeconds(damageDelay);
+        ApplyDamage(target);
     }
 
     private void ApplyDamage(GameObject target)
     {
         Health h = target.GetComponent<Health>();
-        if (h != null)
-        {
-            h.TakeDamage(contactDamage); // Calls health script
-        }
+        if (h != null) h.TakeDamage(contactDamage);
     }
 }

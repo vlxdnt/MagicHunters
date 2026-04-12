@@ -26,6 +26,7 @@ public class WizardAI : NetworkBehaviour
 
     void Update()
     {
+        if (!IsServer) return;
         FindClosestPlayer();
 
         if (currentTarget != null)
