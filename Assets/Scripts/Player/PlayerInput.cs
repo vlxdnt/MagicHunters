@@ -189,7 +189,6 @@ public class PlayerInput : NetworkBehaviour
     public void DeblocheazaDoubleJumpClientRpc()
     {
         sarituriMaxime = 2;
-        Debug.Log("Pisica a deblocat Double Jump pe retea!");
     }
 
     void OnDrawGizmosSelected()
