@@ -62,6 +62,12 @@ public class BatEnemy : MonoBehaviour
 
         foreach (GameObject player in players)
         {
+            WitchAbilities witch = player.GetComponent<WitchAbilities>();
+            if (witch != null && witch.esteInvizibil.Value == true)
+            {
+                continue; 
+            }
+
             float dist = Vector2.Distance(transform.position, player.transform.position);
             if (dist < distantaMinima)
             {

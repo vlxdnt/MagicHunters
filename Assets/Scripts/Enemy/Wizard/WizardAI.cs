@@ -53,6 +53,11 @@ public class WizardAI : NetworkBehaviour
 
         foreach (Collider2D p in players)
         {
+            WitchAbilities witch = p.GetComponent<WitchAbilities>();
+            if (witch != null && witch.esteInvizibil.Value == true)
+            {
+                continue; // Trece la următorul jucător, ignorându-l pe acesta
+            }
 
             float dist = Vector2.Distance(transform.position, p.transform.position);
             if (dist < shortestDistance)
