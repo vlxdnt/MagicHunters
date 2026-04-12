@@ -4,6 +4,16 @@ using TMPro;
 
 public class ObjectiveManager : NetworkBehaviour
 {
+
+    [Header("Chei obiective (din JSON)")]
+    public string[] cheiObiective = {
+    "obiectiv_1",
+    "obiectiv_2",
+    "obiectiv_3",
+    "obiectiv_4",
+    "obiectiv_5",
+    "obiectiv_6"
+    };
     public static ObjectiveManager Instance;
 
     private NetworkVariable<int> indexObiectiv = new NetworkVariable<int>(
@@ -11,13 +21,6 @@ public class ObjectiveManager : NetworkBehaviour
         NetworkVariableReadPermission.Everyone,
         NetworkVariableWritePermission.Server
     );
-
-    [Header("Obiective")]
-    public string[] listaObiective = {
-        "Explorati castelul!",
-        "Gasiti cheia secreta!",
-        "Deschideti usa mare!"
-    };
 
     void Awake()
     {
@@ -27,36 +30,48 @@ public class ObjectiveManager : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         indexObiectiv.OnValueChanged += OnObiectivSchimbat;
-        // obiectiv initial
-        ActualizeazaUILocal(listaObiective[0]);
+        ActualizeazaUILocal(GetObiectivCurent()); // cheile
     }
+
 
     void OnObiectivSchimbat(int vechi, int nou)
     {
-        if (nou < listaObiective.Length)
-            ActualizeazaUILocal(listaObiective[nou]);
+        ActualizeazaUILocal(GetObiectivCurent());
     }
 
     void ActualizeazaUILocal(string text)
     {
-        PlayerUI ui = FindFirstObjectByType<PlayerUI>();
+        // Aceasta ruleaza pe fiecare client care primeste schimbarea
+        PlayerUI ui = FindFirstObjectByType<PlayerUI>(FindObjectsInactive.Include);
         if (ui != null)
             ui.SetObiectiv(text);
+        else
+            Debug.Log("PlayerUI nu a fost gasit! E activ?");
     }
 
     // apelare
     public void AvaseazaObiectiv()
     {
         if (!IsServer) return;
+        Debug.Log("AvaseazaObiectiv apelat! Index curent: " + indexObiectiv.Value);
         int urmator = indexObiectiv.Value + 1;
-        if (urmator < listaObiective.Length)
+        if (urmator < cheiObiective.Length)
+        {
             indexObiectiv.Value = urmator;
+            Debug.Log("Index nou: " + indexObiectiv.Value);
+        }
     }
 
     public string GetObiectivCurent()
     {
-        if (indexObiectiv.Value < listaObiective.Length)
-            return listaObiective[indexObiectiv.Value];
+        if (indexObiectiv.Value < cheiObiective.Length)
+        {
+            string cheie = cheiObiective[indexObiectiv.Value];
+            // traducere
+            if (Language.Instance != null)
+                return Language.Instance.Get(cheie);
+            return cheie;
+        }
         return "";
     }
 }

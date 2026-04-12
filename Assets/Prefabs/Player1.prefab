@@ -216,6 +216,7 @@ GameObject:
   - component: {fileID: 3226196222303224167}
   - component: {fileID: 1571242468226788728}
   - component: {fileID: 7950909554220475829}
+  - component: {fileID: -5479274766509596063}
   m_Layer: 3
   m_Name: Player1
   m_TagString: Player
@@ -1053,6 +1054,19 @@ MonoBehaviour:
   fortaKnockbackY: 3
   audioOneShot: {fileID: 1505461392141622312}
   sunetAtacMelee: {fileID: 8300000, guid: 6b3d5e5559a0d754f833497705415adc, type: 3}
+--- !u!114 &-5479274766509596063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6501798312373291870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c14d5cc2e01f98249b3e1816ff82d68c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjectivePressConnector
+  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!1 &8975131632674171672
 GameObject:
   m_ObjectHideFlags: 0

@@ -75,4 +75,20 @@ public class PlayerUI : NetworkBehaviour
         else
             Debug.Log("textJucator e NULL!");
     }
+
+    void OnEnable()
+    {
+        Language.OnLimbaSchimbata += ActualizeazaObiectivLimba;
+    }
+
+    void OnDisable()
+    {
+        Language.OnLimbaSchimbata -= ActualizeazaObiectivLimba;
+    }
+
+    void ActualizeazaObiectivLimba()
+    {
+        if (ObjectiveManager.Instance != null)
+            SetObiectiv(ObjectiveManager.Instance.GetObiectivCurent());
+    }
 }

@@ -90,5 +90,29 @@
   "intro_witch_2": {
     "ro": "Trebuie sa ramanem impreuna!",
     "en": "We have to stay together!"
+  },
+  "obiectiv_1": {
+    "ro": "Explorati imprejurimile!",
+    "en": "Explore the surroundings!"
+  },
+  "obiectiv_2": {
+    "ro": "Explorati castelul!",
+    "en": "Explore the castle!"
+  },
+  "obiectiv_3": {
+    "ro": "Luptati cu grija!",
+    "en": "Fight carefully!"
+  },
+  "obiectiv_4": {
+    "ro": "Fereste capul!",
+    "en": "Protect your head!"
+  },
+  "obiectiv_5": {
+    "ro": "Continuati!",
+    "en": "Keep going!"
+  },
+  "obiectiv_6": {
+    "ro": "Oare asta e finalul?",
+    "en": "Is this the end?"
   }
 }
