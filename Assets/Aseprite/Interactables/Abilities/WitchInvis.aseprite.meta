@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 604682387e893834f89174d6e09664bd
+guid: 814cd35a2ebbefd40b7c28f351671338
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -127,9 +127,9 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: CatDoubleJump
+  - name: WitchInvis
     originalName: 
-    pivot: {x: 0.4615385, y: -0.30434784}
+    pivot: {x: 0.69696975, y: -0.44444445}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
@@ -137,9 +137,9 @@ ScriptedImporter:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 26
-      height: 23
-    spriteID: ff5510663c0b6694aaca2d52c6fa7b90
+      width: 33
+      height: 36
+    spriteID: 44fed0f7947ede042865fa2e28cfc3ea
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -153,25 +153,25 @@ ScriptedImporter:
   asepriteLayers:
   - layerIndex: 0
     uuid:
-      value0: 2680653749
+      value0: 124793176
       value1: 0
       value2: 0
       value3: 0
     guid: 0
-    name: CatDoubleJump
+    name: WitchInvis
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: CatDoubleJump
+    - name: WitchInvis
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
-        x: 4
-        y: 7
-        width: 26
-        height: 23
-      spriteId: ff5510663c0b6694aaca2d52c6fa7b90
+        x: 9
+        y: 16
+        width: 33
+        height: 36
+      spriteId: 44fed0f7947ede042865fa2e28cfc3ea
     linkedCells: []
     tileCells: []
     tileSetIndex: 0
@@ -181,5 +181,5 @@ ScriptedImporter:
   generatePhysicsShape: 0
   secondarySpriteTextures: []
   spritePackingTag: 
-  canvasSize: {x: 32, y: 32}
-  previousTextureSize: {x: 64, y: 32}
+  canvasSize: {x: 64, y: 64}
+  previousTextureSize: {x: 64, y: 64}

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: fd10083aa2929c8428f1e5518eac17d8
+guid: d89b6a29fa921fa4cb3b2f99dcf7a5b7
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -127,9 +127,9 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: WitchInvis
+  - name: WitchHeal
     originalName: 
-    pivot: {x: 0.69696975, y: -0.44444445}
+    pivot: {x: 0.6052632, y: -0.3}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
@@ -137,9 +137,9 @@ ScriptedImporter:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 33
-      height: 36
-    spriteID: e458615202b47d84b8f47a22fed738b0
+      width: 38
+      height: 40
+    spriteID: 351412c45fe26ab489fd4d73c68d0afe
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -153,25 +153,25 @@ ScriptedImporter:
   asepriteLayers:
   - layerIndex: 0
     uuid:
-      value0: 124793176
+      value0: 3784730725
       value1: 0
       value2: 0
       value3: 0
     guid: 0
-    name: WitchInvis
+    name: WitchHeal
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: WitchInvis
+    - name: WitchHeal
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
         x: 9
-        y: 16
-        width: 33
-        height: 36
-      spriteId: e458615202b47d84b8f47a22fed738b0
+        y: 12
+        width: 38
+        height: 40
+      spriteId: 351412c45fe26ab489fd4d73c68d0afe
     linkedCells: []
     tileCells: []
     tileSetIndex: 0

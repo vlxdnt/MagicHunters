@@ -197,6 +197,13 @@ public class PlayerInput : NetworkBehaviour
         }
     }
 
+    [ClientRpc]
+    public void DeblocheazaDoubleJumpClientRpc()
+    {
+        sarituriMaxime = 2;
+        Debug.Log("Pisica a deblocat Double Jump pe retea!");
+    }
+
     void OnDrawGizmosSelected()
     {
         if (verificarePodea != null)

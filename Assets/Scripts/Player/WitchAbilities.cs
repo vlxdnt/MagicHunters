@@ -9,6 +9,10 @@ public class WitchAbilities : NetworkBehaviour
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
 
+    [Header("Progresie")]
+    public bool areHealDeblocat = false;
+    public bool areInvizibilitateDeblocata = false;
+
     [Header("Setari Glide")]
     public float vitezaCadereLenta = -1f;
     public float multiplicatorVitezaAer = 1.5f;
@@ -87,7 +91,10 @@ public class WitchAbilities : NetworkBehaviour
     public void OnInvizibilitate(InputAction.CallbackContext context)
     {
         if (!IsOwner) return;
-        if (!playerInput.controlActiv) return; // pt cutscene
+        if (!playerInput.controlActiv) return; 
+        
+        // DACA NU E DEBLOCATA, OPRIM EXECUTIA AICI
+        if (!areInvizibilitateDeblocata) return; 
 
         if (context.started && !abilitateInCooldown)
         {
@@ -111,6 +118,9 @@ public class WitchAbilities : NetworkBehaviour
     public void OnHeal(InputAction.CallbackContext context)
     {
         if (!IsOwner) return;
+
+        // DACA NU E DEBLOCAT, OPRIM EXECUTIA AICI
+        if (!areHealDeblocat) return;
 
         if (context.started)
         {
@@ -196,6 +206,14 @@ public class WitchAbilities : NetworkBehaviour
         {
             netObj.Despawn();
         }
+    }
+
+    [ClientRpc]
+    public void DeblocheazaAbilitateClientRpc(string nume)
+    {
+        if (nume == "Heal") areHealDeblocat = true;
+        if (nume == "Invizibilitate") areInvizibilitateDeblocata = true;
+        Debug.Log("Witch a deblocat: " + nume);
     }
 
     void FixedUpdate()

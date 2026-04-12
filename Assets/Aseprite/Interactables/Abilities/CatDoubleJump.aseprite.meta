@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 664670ee51327584284bc2775f39ca87
+guid: f23788839cd234d4eb679b8266255128
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -127,9 +127,9 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: WitchHeal
+  - name: CatDoubleJump
     originalName: 
-    pivot: {x: 0.6052632, y: -0.3}
+    pivot: {x: 0.4615385, y: -0.30434784}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
@@ -137,9 +137,9 @@ ScriptedImporter:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 38
-      height: 40
-    spriteID: effacd221df31c34888e55a5be51644c
+      width: 26
+      height: 23
+    spriteID: d7b380b8a0e5cb64ebf857335d0b3f91
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -153,25 +153,25 @@ ScriptedImporter:
   asepriteLayers:
   - layerIndex: 0
     uuid:
-      value0: 3784730725
+      value0: 2680653749
       value1: 0
       value2: 0
       value3: 0
     guid: 0
-    name: WitchHeal
+    name: CatDoubleJump
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: WitchHeal
+    - name: CatDoubleJump
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
-        x: 9
-        y: 12
-        width: 38
-        height: 40
-      spriteId: effacd221df31c34888e55a5be51644c
+        x: 4
+        y: 7
+        width: 26
+        height: 23
+      spriteId: d7b380b8a0e5cb64ebf857335d0b3f91
     linkedCells: []
     tileCells: []
     tileSetIndex: 0
@@ -181,5 +181,5 @@ ScriptedImporter:
   generatePhysicsShape: 0
   secondarySpriteTextures: []
   spritePackingTag: 
-  canvasSize: {x: 64, y: 64}
-  previousTextureSize: {x: 64, y: 64}
+  canvasSize: {x: 32, y: 32}
+  previousTextureSize: {x: 64, y: 32}
