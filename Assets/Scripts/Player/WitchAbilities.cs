@@ -87,6 +87,7 @@ public class WitchAbilities : NetworkBehaviour
     public void OnInvizibilitate(InputAction.CallbackContext context)
     {
         if (!IsOwner) return;
+        if (!playerInput.controlActiv) return; // pt cutscene
 
         if (context.started && !abilitateInCooldown)
         {
@@ -152,6 +153,7 @@ public class WitchAbilities : NetworkBehaviour
     public void OnFireball(InputAction.CallbackContext context)
     {
         if (!IsOwner) return;
+        if (!playerInput.controlActiv) return; // pt cutscene
 
         if (context.started && Time.time >= timpUrmatorFireball)
         {

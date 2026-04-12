@@ -1,5 +1,15 @@
 # Istoric Modificări (Changelog)
 
+## [v0.3.0] - 12.04.2026
+
+### Level 1 playable ### 
+
+### Rezolvat
+- **Bug la target** nu se activa usa corect
+- **Bug la cutscene** puteai sa dai abilitati in timpul cutscene-ului
+- **Rezolvat o problema la spawnpoint-ul initial al jucatorilor**
+- **Pus un delay de 3 secunde la collision damage** pentru a nu da damage continuu
+
 ## [v0.2.2] - 11.04.2026
 ### Adaugat
 - **Prefab pentru fireball**

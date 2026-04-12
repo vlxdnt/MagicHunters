@@ -111,11 +111,8 @@ public class PlayerInput : NetworkBehaviour
 
     public void OnDash(InputAction.CallbackContext context)
     {
-        if (!IsOwner) return;
-        if (context.started)
-        {
-            ADashed = true; // semnalizam ca a dat dash
-        }
+        if (!IsOwner || !controlActiv) return; // pt cutscene
+        if (context.started) ADashed = true;
     }
 
     void Update()

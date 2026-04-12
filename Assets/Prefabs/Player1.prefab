@@ -529,7 +529,7 @@ MonoBehaviour:
   fortaSarit: 5
   sarituriMaxime: 2
   verificarePodea: {fileID: 2732546838691258911}
-  dimensiuneVerificare: {x: 0.5, y: 0.1}
+  dimensiuneVerificare: {x: 0.2, y: 0.1}
   stratPodea:
     serializedVersion: 2
     m_Bits: 1024
@@ -1025,7 +1025,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Health
   ShowTopMostFoldoutHeaderGroup: 1
-  maxHealth: 5
+  maxHealth: 100
   currentHealth:
     m_InternalValue: 100
   immunityDuration: 1

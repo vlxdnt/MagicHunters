@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using Unity.Netcode;
 using UnityEngine.InputSystem;
 
@@ -35,6 +35,9 @@ public class PlayerCombat : NetworkBehaviour
     {
         if (!IsOwner) return;
 
+        PlayerInput pi = GetComponent<PlayerInput>();
+        if (pi != null && !pi.controlActiv) return; // pt cutscene
+
         if (context.started && Time.time >= timpulUrmatoruluiAtac)
         {
             EfectueazaAtacMelee();
@@ -68,13 +71,17 @@ public class PlayerCombat : NetworkBehaviour
 
         foreach (Collider2D inamic in inamiciLoviti)
         {
-            //friendly fire))
+            //friendly fire
             Health hp = inamic.GetComponent<Health>();
             if (hp != null) hp.TakeDamage(damageAtac);
 
-            //inamici
+            //inamic
             EnemyHealth ehp = inamic.GetComponent<EnemyHealth>();
             if (ehp != null) ehp.TakeDamage(damageAtac);
+
+            // target
+            TargetDoor target = inamic.GetComponent<TargetDoor>();
+            if (target != null) target.LovesteTarget();
 
             // knockback
             Rigidbody2D rbInamic = inamic.GetComponent<Rigidbody2D>();

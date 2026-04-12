@@ -9,8 +9,13 @@ public class PlayerRespawn : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        if (IsOwner)
-            pozitieRespawn = transform.position; //
+        if (!IsOwner) return;
+
+        GameObject spawnPoint = GameObject.Find("SpawnInitial");
+        if (spawnPoint != null)
+            pozitieRespawn = spawnPoint.transform.position;
+        else
+            pozitieRespawn = transform.position;
     }
 
     public void SetCheckpoint(Vector2 pozitie, int prioritate)

@@ -1,6 +1,7 @@
 using UnityEngine;
+using Unity.Netcode;
 
-public class ButtonDoor : MonoBehaviour
+public class ButtonDoor : NetworkBehaviour
 {
     [Header("Usa asociata")]
     public GameObject usa;
@@ -24,22 +25,39 @@ public class ButtonDoor : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (!other.CompareTag("Player")) return;
         if (esteApasat) return;
 
+        if (other.CompareTag("Player"))
+        {
+            NetworkObject playerNetObj = other.GetComponent<NetworkObject>();
+
+            if (playerNetObj != null && playerNetObj.IsOwner)
+            {
+                ApasaButonServerRpc();
+            }
+        }
+    }
+
+    [Rpc(SendTo.Server, InvokePermission = RpcInvokePermission.Everyone)]
+    private void ApasaButonServerRpc()
+    {
+        DeschideUsaClientRpc();
+    }
+
+    [ClientRpc]
+    private void DeschideUsaClientRpc()
+    {
+        if (esteApasat) return;
         esteApasat = true;
 
-        // sunet
-        if (audioSource != null)
+        if (srButon != null && spriteButonApasat != null)
+            srButon.sprite = spriteButonApasat;
+
+        if(audioSource != null)
         {
             if (sunetButon != null) audioSource.PlayOneShot(sunetButon);
         }
 
-        // sprite buton
-        if (srButon != null && spriteButonApasat != null)
-            srButon.sprite = spriteButonApasat;
-
-        // deschide usa
         if (usa != null)
         {
             SpriteRenderer srUsa = usa.GetComponent<SpriteRenderer>();

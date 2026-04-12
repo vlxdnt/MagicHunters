@@ -16,6 +16,9 @@ public class PlayerFireball : NetworkBehaviour
             Health hp = collision.GetComponent<Health>();
             if (hp != null) hp.TakeDamage(damage);
 
+            TargetDoor target = collision.GetComponent<TargetDoor>();
+            if (target != null) target.LovesteTarget();
+
             EnemyHealth ehp = collision.GetComponent<EnemyHealth>();
             if (ehp != null) ehp.TakeDamage(damage);
 
