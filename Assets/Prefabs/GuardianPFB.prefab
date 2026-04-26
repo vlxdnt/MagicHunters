@@ -93,7 +93,7 @@ SpriteRenderer:
   m_MaskInteraction: 0
   m_Sprite: {fileID: 2079430857695616908, guid: 12455b65834980d4684719a951316a90, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 0.64, y: 0.64}
@@ -135,8 +135,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 2213108814
-  InScenePlacedSourceGlobalObjectIdHash: 0
+  GlobalObjectIdHash: 2512668069
+  InScenePlacedSourceGlobalObjectIdHash: 2213108814
   DeferredDespawnTick: 0
   Ownership: 1
   AlwaysReplicateAsRoot: 0

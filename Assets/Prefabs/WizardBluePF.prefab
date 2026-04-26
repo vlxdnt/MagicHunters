@@ -121,7 +121,7 @@ SpriteRenderer:
   m_MaskInteraction: 0
   m_Sprite: {fileID: 3368024635645914386, guid: 8ea46b01b9653a8449643ef49e2c4222, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 0.38, y: 0.51}
@@ -237,7 +237,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.049999997, y: 0.255}
+  m_Offset: {x: 0.05, y: 0.255}
   m_Size: {x: 0.38, y: 0.51}
   m_Direction: 0
 --- !u!114 &1029099726869481556
@@ -253,7 +253,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WizardAI
   ShowTopMostFoldoutHeaderGroup: 1
-  aggroRadius: 10
+  aggroRadius: 12
   playerLayer:
     serializedVersion: 2
     m_Bits: 8
@@ -274,3 +274,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
   ShowTopMostFoldoutHeaderGroup: 1
   maxHealth: 60
+  isShielded: 0

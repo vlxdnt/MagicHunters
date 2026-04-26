@@ -15,9 +15,19 @@ public class WizardAI : NetworkBehaviour
     private float nextFireTime;
     private float feetOffset = 0.3f;
 
+    private float intervalCautare = 1f;
+    private float timerCautare = 0f;
+
     private Transform currentTarget;
     private Animator animator;
     private SpriteRenderer spriteRenderer;
+
+    // Sincronizăm vizual direcția în care se uită (stânga/dreapta)
+    private NetworkVariable<bool> seUitaSpreDreapta = new NetworkVariable<bool>(
+        false, 
+        NetworkVariableReadPermission.Everyone, 
+        NetworkVariableWritePermission.Server
+    );
 
     void Start()
     {
@@ -27,25 +37,53 @@ public class WizardAI : NetworkBehaviour
 
     void Update()
     {
-        if (!IsServer) return;
-        FindClosestPlayer();
+
+        // Dacă ești Client, doar actualizezi direcția vizual și te oprești aici
+        if (!IsServer)
+        {
+            spriteRenderer.flipX = seUitaSpreDreapta.Value;
+            return;
+        }
+
+        timerCautare -= Time.deltaTime;
+        if (timerCautare <= 0f)
+        {
+            FindClosestPlayer(); // Acum caută jucătorul doar de 2 ori pe secundă, nu de 60 de ori!
+            timerCautare = intervalCautare;
+        }
 
         if (currentTarget != null)
         {
             float directionX = currentTarget.position.x - transform.position.x;
-
-            spriteRenderer.flipX = (directionX > 0);
+            
+            // Serverul dictează direcția pentru toată lumea
+            seUitaSpreDreapta.Value = (directionX > 0);
+            spriteRenderer.flipX = seUitaSpreDreapta.Value;
 
             if (Time.time >= nextFireTime)
             {
+                // Declanșăm animația și pe ecranele clienților
+                DeclanseazaAnimatieClientRpc();
+                
                 StartCoroutine(AttackWithDelay());
                 nextFireTime = Time.time + fireRate;
             }
         }
     }
 
+    [ClientRpc]
+    void DeclanseazaAnimatieClientRpc()
+    {
+        // Serverul își rulează animația din corutină, deci dăm trigger doar dacă suntem Client
+        if (!IsServer)
+        {
+            animator.SetTrigger("Attack");
+        }
+    }
+
     void FindClosestPlayer()
     {
+        // Folosim metoda sigură care ignoră problemele cu inspectorul
         Collider2D[] players = Physics2D.OverlapCircleAll(transform.position, aggroRadius, playerLayer);
 
         float shortestDistance = Mathf.Infinity;
@@ -54,10 +92,7 @@ public class WizardAI : NetworkBehaviour
         foreach (Collider2D p in players)
         {
             WitchAbilities witch = p.GetComponent<WitchAbilities>();
-            if (witch != null && witch.esteInvizibil.Value == true)
-            {
-                continue; // next jucator
-            }
+            if (witch != null && witch.esteInvizibil.Value == true) continue;
 
             float dist = Vector2.Distance(transform.position, p.transform.position);
             if (dist < shortestDistance)
@@ -73,10 +108,8 @@ public class WizardAI : NetworkBehaviour
     {
         animator.SetTrigger("Attack");
 
-        // 0.3 wait time
         yield return new WaitForSeconds(0.3f);
 
-        // daca mai avem tinta
         if (currentTarget != null)
         {
             Shoot();
@@ -90,15 +123,16 @@ public class WizardAI : NetworkBehaviour
             GameObject fireball = Instantiate(fireballPrefab, firePoint.position, Quaternion.identity);
 
             Vector3 pozitieTinta = currentTarget.position + new Vector3(0f, feetOffset, 0f);
-            
             Vector2 direction = (pozitieTinta - firePoint.position).normalized;
+            
             fireball.GetComponent<Rigidbody2D>().linearVelocity = direction * 7f;
-            fireball.transform.right = direction;
+            
+            // Setăm rotația fireball-ului corect
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            fireball.transform.rotation = Quaternion.Euler(0, 0, angle);
 
-            //spawn pe retea
             fireball.GetComponent<NetworkObject>().Spawn();
 
-            //despawn dupa un timp
             StartCoroutine(DespawnDupaTimp(fireball, 3f));
         }
     }

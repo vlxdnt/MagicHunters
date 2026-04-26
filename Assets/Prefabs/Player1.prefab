@@ -217,8 +217,6 @@ GameObject:
   - component: {fileID: 1571242468226788728}
   - component: {fileID: 7950909554220475829}
   - component: {fileID: -5479274766509596063}
-  - component: {fileID: -8722311911891300584}
-  - component: {fileID: 1990096908345594582}
   m_Layer: 3
   m_Name: Player1
   m_TagString: Player
@@ -372,7 +370,7 @@ MonoBehaviour:
   UseHalfFloatPrecision: 0
   InLocalSpace: 0
   SwitchTransformSpaceWhenParented: 0
-  Interpolate: 1
+  Interpolate: 0
   SlerpPosition: 0
 --- !u!114 &8578725457812561309
 MonoBehaviour:
@@ -529,7 +527,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInput
   ShowTopMostFoldoutHeaderGroup: 1
   vitezaMiscare: 2
-  fortaSarit: 5
+  fortaSarit: 6
   sarituriMaxime: 1
   verificarePodea: {fileID: 2732546838691258911}
   dimensiuneVerificare: {x: 0.2, y: 0.1}
@@ -1068,32 +1066,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c14d5cc2e01f98249b3e1816ff82d68c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObjectivePressConnector
-  ShowTopMostFoldoutHeaderGroup: 1
---- !u!114 &-8722311911891300584
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6501798312373291870}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c2390190f7f7de4184902cc1212de5d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ButtonPressConnector
-  ShowTopMostFoldoutHeaderGroup: 1
---- !u!114 &1990096908345594582
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6501798312373291870}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2adb6a27a56da14797ed851f89d9256, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TargetHitConnector
   ShowTopMostFoldoutHeaderGroup: 1
 --- !u!1 &8975131632674171672
 GameObject:

@@ -1,6 +1,7 @@
 using UnityEngine;
+using Unity.Netcode;
 
-public class ButtonDoor : MonoBehaviour
+public class ButtonDoor : NetworkBehaviour
 {
     [Header("Usa asociata")]
     public GameObject usa;
@@ -10,42 +11,61 @@ public class ButtonDoor : MonoBehaviour
     [Header("Buton")]
     public Sprite spriteButonApasat;
     private SpriteRenderer srButon;
-    private bool esteApasat = false;
 
     [Header("Audio")]
     public AudioSource audioSource;
     public AudioClip sunetButon;
+
+    private readonly NetworkVariable<bool> esteApasat = new NetworkVariable<bool>(
+        false, 
+        NetworkVariableReadPermission.Everyone, 
+        NetworkVariableWritePermission.Server
+    );
 
     void Awake()
     {
         srButon = GetComponent<SpriteRenderer>();
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    public override void OnNetworkSpawn()
     {
-        if (esteApasat) return;
-        if (!other.CompareTag("Player")) return;
+        esteApasat.OnValueChanged += OnStateChanged;
 
-        Unity.Netcode.NetworkObject netObj = other.GetComponent<Unity.Netcode.NetworkObject>();
-        if (netObj == null || !netObj.IsOwner) return;
-
-        // Apasa local
-        ApasaButon();
-
-        // Notifica prin jucator
-        ButtonPressConnector connector = other.GetComponent<ButtonPressConnector>();
-        if (connector != null) connector.ApasaButonServerRpc(gameObject.name);
+        if (esteApasat.Value)
+        {
+            ActualizeazaVizual(true, false);
+        }
     }
 
-    public void ApasaButon()
+    public override void OnNetworkDespawn()
     {
-        if (esteApasat) return;
-        esteApasat = true;
+        esteApasat.OnValueChanged -= OnStateChanged;
+    }
+
+    private void OnStateChanged(bool previousValue, bool newValue)
+    {
+        ActualizeazaVizual(newValue, true);
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (!IsServer) return;
+        if (esteApasat.Value) return; 
+
+        if (other.CompareTag("Player"))
+        {
+            esteApasat.Value = true;
+        }
+    }
+
+    private void ActualizeazaVizual(bool apasat, bool cuSunet)
+    {
+        if (!apasat) return;
 
         if (srButon != null && spriteButonApasat != null)
             srButon.sprite = spriteButonApasat;
 
-        if (audioSource != null && sunetButon != null)
+        if (cuSunet && audioSource != null && sunetButon != null)
             audioSource.PlayOneShot(sunetButon);
 
         if (usa != null)

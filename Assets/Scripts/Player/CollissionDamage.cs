@@ -20,8 +20,8 @@ public class DamageOnContact : MonoBehaviour
 
     IEnumerator DamageDelay(GameObject target)
     {
-        yield return new WaitForSeconds(damageDelay);
         ApplyDamage(target);
+        yield return new WaitForSeconds(damageDelay);
     }
 
     private void ApplyDamage(GameObject target)

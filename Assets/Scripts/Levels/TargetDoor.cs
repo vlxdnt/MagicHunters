@@ -1,6 +1,7 @@
 using UnityEngine;
+using Unity.Netcode;
 
-public class TargetDoor : MonoBehaviour
+public class TargetDoor : NetworkBehaviour
 {
     [Header("Usa asociata")]
     public GameObject usa;
@@ -10,26 +11,61 @@ public class TargetDoor : MonoBehaviour
     [Header("Target")]
     public Sprite spriteTargetLovit;
     private SpriteRenderer srTarget;
-    private bool esteLovit = false;
+
+    private readonly NetworkVariable<bool> esteLovit = new NetworkVariable<bool>(
+        false,
+        NetworkVariableReadPermission.Everyone,
+        NetworkVariableWritePermission.Server
+    );
 
     void Awake()
     {
         srTarget = GetComponent<SpriteRenderer>();
     }
 
-    public void LovesteTarget()
+    public override void OnNetworkSpawn()
     {
-        if (esteLovit) return;
-        DeschideUsa();
+        esteLovit.OnValueChanged += OnTargetStateChanged;
 
-        TargetHitConnector connector = FindFirstObjectByType<TargetHitConnector>();
-        if (connector != null) connector.LovesteTargetServerRpc(gameObject.name);
+        if (esteLovit.Value)
+        {
+            AplicaSchimbariVizuale(true);
+        }
     }
 
-    public void DeschideUsa()
+    public override void OnNetworkDespawn()
     {
-        if (esteLovit) return;
-        esteLovit = true;
+        esteLovit.OnValueChanged -= OnTargetStateChanged;
+    }
+
+    private void OnTargetStateChanged(bool previousValue, bool newValue)
+    {
+        AplicaSchimbariVizuale(newValue);
+    }
+
+    public void LovesteTarget()
+    {
+        if (esteLovit.Value) return;
+
+        if (IsServer)
+        {
+            esteLovit.Value = true;
+        }
+        else
+        {
+            LovesteTargetServerRpc();
+        }
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void LovesteTargetServerRpc()
+    {
+        esteLovit.Value = true;
+    }
+
+    private void AplicaSchimbariVizuale(bool lovit)
+    {
+        if (!lovit) return;
 
         if (srTarget != null && spriteTargetLovit != null)
             srTarget.sprite = spriteTargetLovit;

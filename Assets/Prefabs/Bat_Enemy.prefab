@@ -12,13 +12,13 @@ GameObject:
   - component: {fileID: 5543635148231192617}
   - component: {fileID: 7724318311774897858}
   - component: {fileID: 7647286505654344218}
+  - component: {fileID: 1616933194345777756}
   - component: {fileID: 2897464108677585619}
   - component: {fileID: 977814240786683389}
-  - component: {fileID: 592671563954338099}
   - component: {fileID: 4020734044273719350}
-  - component: {fileID: 1616933194345777756}
   - component: {fileID: 4143606894403885606}
   - component: {fileID: 6003385871131603778}
+  - component: {fileID: -1169461334966234997}
   m_Layer: 11
   m_Name: Bat_Enemy
   m_TagString: Untagged
@@ -34,7 +34,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6962418704907773848}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 90, y: 18, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -126,6 +126,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: AstarPathfindingProject::Pathfinding.AIDestinationSetter
   version: 1
   target: {fileID: 0}
+--- !u!114 &1616933194345777756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6962418704907773848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
+  GlobalObjectIdHash: 3098633518
+  InScenePlacedSourceGlobalObjectIdHash: 3098633518
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!114 &2897464108677585619
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -138,12 +163,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15b69520899d2364eba22bfdaf0352a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BatEnemy
+  ShowTopMostFoldoutHeaderGroup: 1
   "for\u021BaKnockback": 10
   cooldownKnockback: 2
   playerLayer:
     serializedVersion: 2
     m_Bits: 8
   damageLaAtac: 20
+  razaDetectie: 12
   audioSource: {fileID: 6003385871131603778}
   sunetAtacLiliac: {fileID: 8300000, guid: 6b3d5e5559a0d754f833497705415adc, type: 3}
 --- !u!58 &977814240786683389
@@ -180,22 +207,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 0.5
---- !u!114 &592671563954338099
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6962418704907773848}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b05a8ffeb14e7544a8b88c9b2f07a4e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DamageOnContact
-  contactDamage: 1
-  damageDelay: 3
+  m_Offset: {x: 0, y: 0.28}
+  m_Radius: 0.3
 --- !u!50 &4020734044273719350
 Rigidbody2D:
   serializedVersion: 5
@@ -223,31 +236,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &1616933194345777756
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6962418704907773848}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 3098633518
-  InScenePlacedSourceGlobalObjectIdHash: 0
-  DeferredDespawnTick: 0
-  Ownership: 1
-  AlwaysReplicateAsRoot: 0
-  SynchronizeTransform: 1
-  ActiveSceneSynchronization: 0
-  SceneMigrationSynchronization: 0
-  SpawnWithObservers: 1
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
-  SyncOwnerTransformWhenParented: 1
-  AllowOwnerToParent: 0
 --- !u!114 &4143606894403885606
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -262,6 +250,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
   ShowTopMostFoldoutHeaderGroup: 1
   maxHealth: 50
+  isShielded: 0
 --- !u!82 &6003385871131603778
 AudioSource:
   m_ObjectHideFlags: 0
@@ -359,6 +348,52 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-1169461334966234997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6962418704907773848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.Components.NetworkTransform
+  ShowTopMostFoldoutHeaderGroup: 1
+  NetworkTransformExpanded: 0
+  AutoOwnerAuthorityTickOffset: 1
+  PositionInterpolationType: 0
+  RotationInterpolationType: 0
+  ScaleInterpolationType: 0
+  PositionLerpSmoothing: 1
+  PositionMaxInterpolationTime: 0.1
+  RotationLerpSmoothing: 1
+  RotationMaxInterpolationTime: 0.1
+  ScaleLerpSmoothing: 1
+  ScaleMaxInterpolationTime: 0.1
+  AuthorityMode: 0
+  TickSyncChildren: 0
+  UseUnreliableDeltas: 0
+  SyncPositionX: 1
+  SyncPositionY: 1
+  SyncPositionZ: 1
+  SyncRotAngleX: 1
+  SyncRotAngleY: 1
+  SyncRotAngleZ: 1
+  SyncScaleX: 1
+  SyncScaleY: 1
+  SyncScaleZ: 1
+  PositionThreshold: 0.001
+  RotAngleThreshold: 0.01
+  ScaleThreshold: 0.01
+  UseQuaternionSynchronization: 0
+  UseQuaternionCompression: 0
+  UseHalfFloatPrecision: 0
+  InLocalSpace: 0
+  SwitchTransformSpaceWhenParented: 0
+  Interpolate: 1
+  SlerpPosition: 0
 --- !u!1001 &6407825084336692858
 PrefabInstance:
   m_ObjectHideFlags: 0

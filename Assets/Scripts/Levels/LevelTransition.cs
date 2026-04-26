@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using Unity.Netcode;
 
 public class LevelTransition : NetworkBehaviour
@@ -8,57 +9,51 @@ public class LevelTransition : NetworkBehaviour
     public Transform spawnUrmatorNivel;
     public float fadeDuration = 0.5f;
 
-    [Header("Nivele")]
-    public GameObject nivelCurent;
-    public GameObject nivelUrmator;
-
     [Header("Audio")]
     public AudioSource audioSource;
     public AudioClip sunetTranzitie;
 
-    private int jucatoriInZona = 0;
+    private HashSet<ulong> jucatoriInZona = new HashSet<ulong>();
     private bool triggered = false;
 
+    // DOAR SERVERUL proceseaza intrarile, fara RPC-uri care dau crash!
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (triggered) return;
+        if (!IsServer || triggered) return;
         if (!other.CompareTag("Player")) return;
 
         NetworkObject netObj = other.GetComponent<NetworkObject>();
-        if (netObj == null || !netObj.IsOwner) return;
-
-        IntraInZonaServerRpc();
+        if (netObj != null && netObj.IsPlayerObject)
+        {
+            jucatoriInZona.Add(netObj.OwnerClientId);
+            VerificaTranzitie();
+        }
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
+        if (!IsServer || triggered) return;
         if (!other.CompareTag("Player")) return;
 
         NetworkObject netObj = other.GetComponent<NetworkObject>();
-        if (netObj == null || !netObj.IsOwner) return;
-
-        IeseZonaServerRpc();
+        if (netObj != null && netObj.IsPlayerObject)
+        {
+            jucatoriInZona.Remove(netObj.OwnerClientId);
+        }
     }
 
-    [ServerRpc(RequireOwnership = false)]
-    void IntraInZonaServerRpc()
+    void VerificaTranzitie()
     {
-        if (triggered) return;
-        jucatoriInZona++;
-        Debug.Log("Jucatori in zona: " + jucatoriInZona);
-        if (jucatoriInZona >= 2)
+        // Cati jucatori sunt pe server acum?
+        int jucatoriConectati = NetworkManager.Singleton.ConnectedClients.Count;
+        
+        // Daca toti jucatorii conectati sunt la usa (suporta 1 singur jucator sau 2)
+        if (jucatoriInZona.Count >= jucatoriConectati && jucatoriConectati > 0)
         {
             triggered = true;
             StartCoroutine(TeleportareNivel());
         }
     }
-
-    [ServerRpc(RequireOwnership = false)]
-    void IeseZonaServerRpc()
-    {
-        jucatoriInZona = Mathf.Max(0, jucatoriInZona - 1);
-    }
-
 
     IEnumerator TeleportareNivel()
     {
@@ -81,9 +76,6 @@ public class LevelTransition : NetworkBehaviour
     [ClientRpc]
     void SchimbaNivelClientRpc(Vector3 pozitieNoua)
     {
-        if (nivelCurent != null) nivelCurent.SetActive(false);
-        if (nivelUrmator != null) nivelUrmator.SetActive(true);
-
         PlayerInput[] players = FindObjectsByType<PlayerInput>(FindObjectsSortMode.None);
         foreach (var player in players)
         {
